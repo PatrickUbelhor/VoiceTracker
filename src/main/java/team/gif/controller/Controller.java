@@ -1,0 +1,66 @@
+package team.gif.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import team.gif.model.Interval;
+import team.gif.model.RawData;
+import team.gif.service.DataReader;
+
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+
+@RestController
+@RequestMapping(value = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
+public class Controller {
+	
+	private final DataReader dataReader;
+	
+	@Autowired
+	public Controller() {
+		this.dataReader = new DataReader();
+	}
+	
+	/*
+	 * Assumption: we will never see two joins or two leaves from the same user in a row
+	 *     Although this is a fair assumption, it may not hold if the bot goes offline
+	 *     (such as for a restart/update).
+	 */
+	@GetMapping()
+	public void getData() {
+		List<RawData> rawData = dataReader.getData("VoiceTracker.csv");
+		
+		// Iterate through list of keys in Map to create User object (this is where you resolve users' names).
+		// Split data into days at some point?
+		
+		// Make list of intervals. Place them in HashMap with snowflake as key.
+		HashMap<Long, LinkedList<Interval>> intervals = new HashMap<>();
+		for (RawData rd : rawData) {
+			intervals.putIfAbsent(rd.getSnowflake(), new LinkedList<>());
+			LinkedList<Interval> list = intervals.get(rd.getSnowflake());
+			
+			if (rd.getAction().equals("J")) { // User joined VC
+				if (list.isEmpty() || list.getLast().getEnd() != Interval.MAX_TIME) {
+					list.addLast(new Interval());
+				}
+				
+				// TODO: turn the Instant into a minute value
+				list.getLast().setStart(rd.getInstant().getEpochSecond());
+			} else { // User left VC
+				if (list.isEmpty()) {
+					list.addLast(new Interval());
+				}
+				
+				// TODO: turn the Instant into a minute value
+				list.getLast().setEnd(rd.getInstant().getEpochSecond());
+			}
+		}
+		
+		// TODO: Run through each list of intervals. Coalesce if end0 = start1. Remove if length = 0.
+		
+	}
+	
+}

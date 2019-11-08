@@ -21,4 +21,17 @@ public class RawData {
 		this.instant = Instant.ofEpochMilli(instant);
 	}
 	
+	
+	public String getAction() {
+		return action;
+	}
+	
+	public Long getSnowflake() {
+		return snowflake;
+	}
+	
+	public Instant getInstant() {
+		return instant;
+	}
+	
 }
