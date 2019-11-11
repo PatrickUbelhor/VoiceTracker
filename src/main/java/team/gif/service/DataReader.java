@@ -6,6 +6,7 @@ import team.gif.model.RawData;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,6 +20,8 @@ public class DataReader {
 			result = br.lines()
 					.map(RawData::parse)
 					.collect(Collectors.toList());
+			
+			result.sort(Comparator.comparing(RawData::getInstant));
 			
 		} catch (IOException e) {
 			throw new DataParseException("Failed to read data from MyloBot!");
