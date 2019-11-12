@@ -8,8 +8,6 @@ public class RawData {
 	private Long snowflake;
 	private Instant instant;
 	
-	// TODO: Can use SimpleDateFormat to make human-readable date. Can take timezone as input.
-	
 	public static RawData parse(String line) {
 		String[] data = line.split(",");
 		return new RawData(data[0], Long.parseLong(data[1]), Long.parseLong(data[2]));
