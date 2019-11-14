@@ -9,6 +9,7 @@ import team.gif.model.Interval;
 import team.gif.model.RawData;
 import team.gif.service.DataReader;
 
+import java.time.ZoneOffset;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -47,15 +48,15 @@ public class Controller {
 					list.addLast(new Interval());
 				}
 				
-				// TODO: turn the Instant into a minute value
-				list.getLast().setStart(rd.getInstant().getEpochSecond());
+				list.getLast().setStart(rd.getInstant().atZone(ZoneOffset.UTC).getMinute()
+						+ 60 * rd.getInstant().atZone(ZoneOffset.UTC).getHour());
 			} else { // User left VC
 				if (list.isEmpty()) {
 					list.addLast(new Interval());
 				}
 				
-				// TODO: turn the Instant into a minute value
-				list.getLast().setEnd(rd.getInstant().getEpochSecond());
+				list.getLast().setEnd(rd.getInstant().atZone(ZoneOffset.UTC).getMinute()
+						+ 60 * rd.getInstant().atZone(ZoneOffset.UTC).getHour());
 			}
 		}
 		
