@@ -60,7 +60,28 @@ public class Controller {
 			}
 		}
 		
-		// TODO: Run through each list of intervals. Coalesce if end0 = start1. Remove if length = 0.
+		// Run through each list of intervals. Remove if length = 0. Coalesce if end0 = start1.
+		for (Long snowflake : intervals.keySet()) {
+			LinkedList<Interval> list = intervals.get(snowflake);
+			LinkedList<Interval> refinedList = new LinkedList<>();
+			
+			for (int i = 0; i < list.size(); i++) {
+				Interval interval = list.get(i);
+				
+				// Ignore if length = 0
+				if (interval.getEnd() - interval.getStart() == 0) {
+					continue;
+				}
+				
+				// If this interval ends at the same time the next one starts, then coalesce
+				if (i + 1 < list.size() && interval.getEnd() == list.get(i + 1).getStart()) {
+					list.get(i + 1).setStart(interval.getStart());
+					continue;
+				}
+				
+				refinedList.addLast(interval);
+			}
+		}
 		
 	}
 	
