@@ -11,7 +11,7 @@ class Header extends React.Component {
 					<Typography id="home" variant="h6" color="inherit">Home</Typography>
 				</Toolbar>
 			</AppBar>
-		)
+		);
 	}
 
 }
