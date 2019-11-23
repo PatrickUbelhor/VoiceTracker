@@ -33,7 +33,7 @@ public class Controller {
 	 */
 	@GetMapping()
 	@CrossOrigin
-	public void getData() {
+	public List<Interval> getData() {
 		List<RawData> rawData = dataReader.getData("VoiceTracker.csv");
 		
 		// Iterate through list of keys in Map to create User object (this is where you resolve users' names).
@@ -62,10 +62,10 @@ public class Controller {
 			}
 		}
 		
-		// Run through each list of intervals. Remove if length = 0. Coalesce if end0 = start1.
+		// Run through each list of intervals. Remove if length = 0. Coalesce if gap between intervals is .
+		LinkedList<Interval> refinedList = new LinkedList<>();
 		for (Long snowflake : intervals.keySet()) {
 			LinkedList<Interval> list = intervals.get(snowflake);
-			LinkedList<Interval> refinedList = new LinkedList<>();
 			
 			for (int i = 0; i < list.size(); i++) {
 				Interval interval = list.get(i);
@@ -76,7 +76,7 @@ public class Controller {
 				}
 				
 				// If this interval ends at the same time the next one starts, then coalesce
-				if (i + 1 < list.size() && interval.getEnd() == list.get(i + 1).getStart()) {
+				if (i + 1 < list.size() && list.get(i + 1).getStart() - interval.getEnd() <= 1) {
 					list.get(i + 1).setStart(interval.getStart());
 					continue;
 				}
@@ -85,6 +85,7 @@ public class Controller {
 			}
 		}
 		
+		return refinedList;
 	}
 	
 }
