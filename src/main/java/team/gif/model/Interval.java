@@ -5,10 +5,10 @@ import lombok.Data;
 @Data
 public class Interval {
 	
-	public static final long MAX_TIME = 1440; // Number of minutes in a day
+	public static final int MAX_TIME = 1440; // Number of minutes in a day
 	
-	private long start;
-	private long end;
+	private int start; // Minute of day
+	private int end;   // Minute of day
 	
 	public Interval() {
 		this.start = 0;
