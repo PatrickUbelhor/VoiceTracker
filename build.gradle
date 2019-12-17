@@ -31,8 +31,8 @@ dependencies {
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-cache'
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
-	compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.12.1'
-	compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.12.1'
+	compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.13.0'
+	compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.13.0'
 
 	compileOnly 'org.projectlombok:lombok:1.18.10'
 	annotationProcessor 'org.projectlombok:lombok:1.18.10'
@@ -55,9 +55,9 @@ task appNpmBuild(type: NpmTask) {
 	args = ['run', 'build']
 }
 
-appNpmBuild.dependsOn appNpmInstall
-copyReact.dependsOn appNpmBuild
-compileJava.dependsOn copyReact
+//appNpmBuild.dependsOn appNpmInstall
+//copyReact.dependsOn appNpmBuild
+//compileJava.dependsOn copyReact
 
 node {
 	version = '10.6.0'
