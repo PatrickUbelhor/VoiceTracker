@@ -1,5 +1,7 @@
 package team.gif.controller;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,16 +18,19 @@ import java.util.List;
 @RequestMapping(value = "/tracker/api", produces = MediaType.APPLICATION_JSON_VALUE)
 public class Controller {
 	
+	private Logger logger = LogManager.getLogger(this.getClass().getName());
 	private DataStorageService storage = new DataStorageService();
 	
 	@PostMapping("/join/{snowflake}")
 	public void join(@PathVariable Long snowflake) {
+		logger.info("JOIN " + snowflake);
 		LocalDateTime now = LocalDateTime.now();
 		storage.addJoinEvent(snowflake, 60 * now.getHour() + now.getMinute());
 	}
 	
 	@PostMapping("/leave/{snowflake}")
 	public void leave(@PathVariable Long snowflake) {
+		logger.info("LEAVE " + snowflake);
 		LocalDateTime now = LocalDateTime.now();
 		storage.addLeaveEvent(snowflake, 60 * now.getHour() + now.getMinute());
 	}
