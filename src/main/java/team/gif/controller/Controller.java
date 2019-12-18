@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import team.gif.model.Day;
 import team.gif.service.DataStorageService;
+import team.gif.service.SnowflakeConverter;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,6 +21,7 @@ public class Controller {
 	
 	private static final Logger logger = LogManager.getLogger(Controller.class);
 	private final DataStorageService storage = new DataStorageService();
+	private final SnowflakeConverter snowflakeConverter = new SnowflakeConverter();
 	
 	@PostMapping("/join/{snowflake}")
 	public void join(@PathVariable Long snowflake) {
@@ -38,6 +40,11 @@ public class Controller {
 	@GetMapping()
 	public List<Day> getDays() {
 		return storage.getDays();
+	}
+	
+	@GetMapping("/refresh")
+	public void updateSnowflakes() {
+		snowflakeConverter.update("Snowflakes.txt");
 	}
 	
 }

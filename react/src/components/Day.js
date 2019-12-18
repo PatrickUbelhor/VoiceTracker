@@ -1,14 +1,22 @@
 import React from 'react';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
+import User from './User';
+import Typography from '@material-ui/core/Typography';
 
 function Day(props) {
+
+	const entries = props.users.map((user) => {
+		return (
+			<div key={user.snowflake}>
+				<User name={user.snowflake} intervals={user.intervals} />
+			</div>
+		);
+	});
+
 	return (
-		<Card>
-			<CardContent>
-				This is a Day
-			</CardContent>
-		</Card>
+		<div className="Day">
+			<Typography>{props.date}</Typography>
+			{entries}
+		</div>
 	);
 }
 
