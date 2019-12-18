@@ -1,3 +1,4 @@
+import '../css/User.css';
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 
@@ -15,7 +16,7 @@ function User(props) {
 		let box = (
 			<div key={props.intervals[i].start} style={{
 				marginLeft: 100 * leftMargin + '%',
-				border: '4px solid pink',
+				border: '2px solid pink',
 				width: 100 * length + '%',
 				height: '1em'
 			}}>
@@ -28,7 +29,9 @@ function User(props) {
 	return (
 		<div className="User">
 			<Typography>{props.name}</Typography>
-			{boxes}
+			<div className="Intervals">
+				{boxes}
+			</div>
 		</div>
 	);
 }

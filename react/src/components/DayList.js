@@ -1,3 +1,4 @@
+import '../css/DayList.css'
 import React from 'react';
 import Day from './Day';
 

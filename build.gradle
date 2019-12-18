@@ -55,12 +55,12 @@ task appNpmBuild(type: NpmTask) {
 	args = ['run', 'build']
 }
 
-//appNpmBuild.dependsOn appNpmInstall
-//copyReact.dependsOn appNpmBuild
-//compileJava.dependsOn copyReact
+appNpmBuild.dependsOn appNpmInstall
+copyReact.dependsOn appNpmBuild
+compileJava.dependsOn copyReact
 
 node {
-	version = '10.6.0'
-	npmVersion = '6.10.2'
+	version = '12.6.0'
+	npmVersion = '6.13.4'
 	download = false
 }
