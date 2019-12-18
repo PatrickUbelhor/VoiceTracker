@@ -4,6 +4,6 @@ import App from './components/App';
 
 // Render the component
 ReactDOM.render(
-<App/>,
+	<App/>,
 	document.querySelector('#root')
 );

@@ -1,19 +1,17 @@
 import React from 'react';
+import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
-class Header extends React.Component {
+function Header(props) {
 
-	render() {
-		return (
-			<AppBar id="appBar" position="static">
-				<Toolbar>
-					<Typography id="home" variant="h6" color="inherit">Home</Typography>
-				</Toolbar>
-			</AppBar>
-		);
-	}
-
+	return (
+		<AppBar id="appBar" position="static">
+			<Toolbar>
+				<Typography id="home" variant="h6" color="inherit">Voice Tracker</Typography>
+			</Toolbar>
+		</AppBar>
+	);
 }
 
 export default Header;
