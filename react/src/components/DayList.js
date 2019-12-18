@@ -12,7 +12,7 @@ function DayList(props) {
 	});
 
 	return (
-		<div>
+		<div className="DayList">
 			{entries}
 		</div>
 	);

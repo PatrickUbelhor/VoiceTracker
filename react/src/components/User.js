@@ -1,4 +1,5 @@
 import React from 'react';
+import Typography from '@material-ui/core/Typography';
 
 function User(props) {
 
@@ -12,19 +13,21 @@ function User(props) {
 			: (props.intervals[i].start - props.intervals[i - 1].end) / LENGTH_OF_DAY;
 
 		let box = (
-			<div style={{
-				marginLeft: leftMargin + '%',
+			<div key={props.intervals[i].start} style={{
+				marginLeft: 100 * leftMargin + '%',
 				border: '4px solid pink',
-				width: length + '%'
+				width: 100 * length + '%',
+				height: '1em'
 			}}>
 			</div>
 		);
 
-		boxes += box;
+		boxes.push(box);
 	}
 
 	return (
-		<div>
+		<div className="User">
+			<Typography>{props.name}</Typography>
 			{boxes}
 		</div>
 	);

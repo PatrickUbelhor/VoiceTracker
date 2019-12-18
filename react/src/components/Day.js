@@ -1,5 +1,6 @@
 import React from 'react';
 import User from './User';
+import Typography from '@material-ui/core/Typography';
 
 function Day(props) {
 
@@ -12,7 +13,8 @@ function Day(props) {
 	});
 
 	return (
-		<div className="day">
+		<div className="Day">
+			<Typography>{props.date}</Typography>
 			{entries}
 		</div>
 	);
