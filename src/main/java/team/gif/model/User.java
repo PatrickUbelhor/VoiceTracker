@@ -1,22 +1,25 @@
 package team.gif.model;
 
+import team.gif.service.SnowflakeConverter;
+
 import java.util.LinkedList;
 
 public class User {
 	
 	private final int COALESCE_TIME = 1;
 	
-	private final Long snowflake;
+	private final Long id; // Stored as Discord snowflake, returned as colloquial name
 	private final LinkedList<Interval> intervals;
+	private final SnowflakeConverter converter = new SnowflakeConverter();
 	
 	public User(Long snowflake) {
-		this.snowflake = snowflake;
+		this.id = snowflake;
 		this.intervals = new LinkedList<>();
 	}
 	
 	
-	public Long getSnowflake() {
-		return snowflake;
+	public String getId() {
+		return converter.convert(id);
 	}
 	
 	public LinkedList<Interval> getIntervals() {
