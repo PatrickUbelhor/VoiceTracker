@@ -3,6 +3,8 @@ package team.gif.model;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Day {
 	
@@ -19,8 +21,8 @@ public class Day {
 		return date;
 	}
 	
-	public HashMap<Long, User> getUsers() {
-		return users;
+	public List<User> getUsers() {
+		return new LinkedList<User>(users.values());
 	}
 	
 	public void addJoin(Long snowflake, int minute) {
