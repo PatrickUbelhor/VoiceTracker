@@ -18,8 +18,8 @@ import java.util.List;
 @RequestMapping(value = "/tracker/api", produces = MediaType.APPLICATION_JSON_VALUE)
 public class Controller {
 	
-	private Logger logger = LogManager.getLogger(this.getClass().getName());
-	private DataStorageService storage = new DataStorageService();
+	private static final Logger logger = LogManager.getLogger(Controller.class);
+	private final DataStorageService storage = new DataStorageService();
 	
 	@PostMapping("/join/{snowflake}")
 	public void join(@PathVariable Long snowflake) {

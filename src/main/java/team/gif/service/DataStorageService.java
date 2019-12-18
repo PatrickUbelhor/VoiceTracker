@@ -12,6 +12,7 @@ public class DataStorageService {
 	
 	public DataStorageService() {
 		this.days = new LinkedList<>();
+		days.add(new Day());
 	}
 	
 	

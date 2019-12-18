@@ -25,7 +25,7 @@ public class User {
 	
 	public void addJoin(int minute) {
 		// Coalesce with last interval if they joined right after they left
-		if (minute - intervals.getLast().getEnd() <= COALESCE_TIME) {
+		if (!intervals.isEmpty() && minute - intervals.getLast().getEnd() <= COALESCE_TIME) {
 			intervals.getLast().setEnd(Interval.MAX_TIME);
 			return;
 		}
@@ -38,7 +38,7 @@ public class User {
 	
 	public void addLeave(int minute) {
 		// Remove interval if user was only online for very short period
-		if (minute - intervals.getLast().getStart() <= COALESCE_TIME) {
+		if (!intervals.isEmpty() && minute - intervals.getLast().getStart() <= COALESCE_TIME) {
 			intervals.removeLast();
 			return;
 		}
