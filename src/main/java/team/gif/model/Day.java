@@ -10,7 +10,7 @@ public class Day {
 	private final HashMap<Long, User> users;
 	
 	public Day() {
-		this.date = LocalDate.now().format(DateTimeFormatter.ofPattern("c dd LLLL yyyy"));
+		this.date = LocalDate.now().format(DateTimeFormatter.ofPattern("eeee LLLL dd, yyyy"));
 		this.users = new HashMap<>();
 	}
 	
