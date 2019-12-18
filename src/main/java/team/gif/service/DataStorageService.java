@@ -1,5 +1,7 @@
 package team.gif.service;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.scheduling.annotation.Scheduled;
 import team.gif.model.Day;
 
@@ -8,6 +10,7 @@ import java.util.List;
 
 public class DataStorageService {
 	
+	private static final Logger logger = LogManager.getLogger(DataStorageService.class);
 	private final LinkedList<Day> days;
 	
 	public DataStorageService() {
@@ -25,6 +28,7 @@ public class DataStorageService {
 		// Any intervals that haven't explicitly been given an end time will default to 1440 (end of day)
 		// We don't need to start new intervals for each user that's logged in
 		// When they leave, the event will create a new interval with default start of 0
+		logger.info("Adding new day");
 		synchronized (days) {
 			days.addLast(new Day());
 		}
