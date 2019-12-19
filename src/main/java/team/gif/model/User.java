@@ -47,7 +47,7 @@ public class User {
 		}
 		
 		// If interval exists, set end time accordingly
-		if (!intervals.isEmpty() && intervals.getLast().getEnd() == Interval.MAX_TIME) {
+		if (!intervals.isEmpty()) {
 			intervals.getLast().setEnd(minute);
 			return;
 		}
