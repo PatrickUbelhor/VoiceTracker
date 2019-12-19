@@ -1,8 +1,7 @@
-import '../css/User.css';
+import '../css/Intervals.css';
 import React from 'react';
-import Typography from '@material-ui/core/Typography';
 
-function User(props) {
+function Intervals(props) {
 
 	const LENGTH_OF_DAY = 1440;
 
@@ -14,11 +13,9 @@ function User(props) {
 			: (props.intervals[i].start - props.intervals[i - 1].end) / LENGTH_OF_DAY;
 
 		let box = (
-			<div key={props.intervals[i].start} style={{
+			<div key={props.intervals[i].start} className="Bar" style={{
 				marginLeft: 100 * leftMargin + '%',
-				border: '2px solid pink',
-				width: 100 * length + '%',
-				height: '1em'
+				width: 100 * length + '%'
 			}}>
 			</div>
 		);
@@ -27,13 +24,10 @@ function User(props) {
 	}
 
 	return (
-		<div className="User">
-			<Typography>{props.name}</Typography>
-			<div className="Intervals">
-				{boxes}
-			</div>
+		<div className="Intervals">
+			{boxes}
 		</div>
 	);
 }
 
-export default User;
+export default Intervals;

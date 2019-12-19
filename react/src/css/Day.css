@@ -1,4 +1,27 @@
 
-.Date {
+.Day .Date {
 	margin-bottom: 0.75em !important;
+}
+
+.Day .Content {
+	display: flex;
+}
+
+.Day .Names, .Day .BarGraphs {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	padding-bottom: 0.5em;
+	padding-top: 0.5em;
+	font-family: Roboto, sans-serif;
+}
+
+.Day .Names {
+	margin-right: 1em;
+}
+
+.Day .BarGraphs {
+	border-left: black 1px solid;
+	border-right: black 1px solid;
+	width: 100%;
 }
