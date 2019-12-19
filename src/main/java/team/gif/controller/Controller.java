@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import team.gif.model.Day;
+import team.gif.service.DataLoaderService;
 import team.gif.service.DataStorageService;
 import team.gif.service.SnowflakeConverter;
 
@@ -20,6 +21,7 @@ import java.util.List;
 public class Controller {
 	
 	private static final Logger logger = LogManager.getLogger(Controller.class);
+	private final DataLoaderService loaderService = new DataLoaderService();
 	private final DataStorageService storage = new DataStorageService();
 	private final SnowflakeConverter snowflakeConverter = new SnowflakeConverter();
 	
@@ -45,6 +47,13 @@ public class Controller {
 	@GetMapping("/refresh")
 	public void updateSnowflakes() {
 		snowflakeConverter.update("Snowflakes.txt");
+	}
+	
+	@GetMapping("/load")
+	public void loadData() {
+		logger.info("Loading data...");
+		storage.replaceDays(loaderService.load("vclog.csv"));
+		logger.info("Finished loading data");
 	}
 	
 }

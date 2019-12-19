@@ -11,7 +11,7 @@ import java.util.List;
 public class DataStorageService {
 	
 	private static final Logger logger = LogManager.getLogger(DataStorageService.class);
-	private final LinkedList<Day> days;
+	private LinkedList<Day> days;
 	
 	public DataStorageService() {
 		this.days = new LinkedList<>();
@@ -29,20 +29,26 @@ public class DataStorageService {
 		// We don't need to start new intervals for each user that's logged in
 		// When they leave, the event will create a new interval with default start of 0
 		logger.info("Adding new day");
-		synchronized (days) {
+		synchronized (this) {
 			days.addLast(new Day());
 		}
 	}
 	
 	public void addJoinEvent(Long snowflake, int minute) {
-		synchronized (days) {
+		synchronized (this) {
 			days.getLast().addJoin(snowflake, minute);
 		}
 	}
 	
 	public void addLeaveEvent(Long snowflake, int minute) {
-		synchronized (days) {
+		synchronized (this) {
 			days.getLast().addLeave(snowflake, minute);
+		}
+	}
+	
+	public void replaceDays(LinkedList<Day> days) {
+		synchronized (this) {
+			this.days = days;
 		}
 	}
 	

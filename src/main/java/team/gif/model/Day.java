@@ -1,6 +1,7 @@
 package team.gif.model;
 
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -16,13 +17,18 @@ public class Day {
 		this.users = new HashMap<>();
 	}
 	
+	public Day(ZonedDateTime time) {
+		this.date = time.format(DateTimeFormatter.ofPattern("eeee LLLL dd, yyyy"));
+		this.users = new HashMap<>();
+	}
+	
 	
 	public String getDate() {
 		return date;
 	}
 	
 	public List<User> getUsers() {
-		return new LinkedList<User>(users.values());
+		return new LinkedList<>(users.values());
 	}
 	
 	public void addJoin(Long snowflake, int minute) {
