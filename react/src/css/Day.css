@@ -1,4 +1,8 @@
 
+.Day {
+	margin-bottom: 0.5em;
+}
+
 .Day .Date {
 	margin-bottom: 0.75em !important;
 }
@@ -17,7 +21,8 @@
 }
 
 .Day .Names {
-	margin-right: 1em;
+	margin-right: 0.5em;
+	width: 5em;
 }
 
 .Day .BarGraphs {

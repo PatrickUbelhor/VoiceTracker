@@ -7,14 +7,29 @@ import Typography from '@material-ui/core/Typography';
 
 function Day(props) {
 
+	// Sort users alphabetically
+	props.users.sort((a, b) => a.id.localeCompare(b.id));
+
 	let names = [];
 	let intervals = [];
+	let others = [];
+	let otherIntervals = [];
 	for (let i = 0; i < props.users.length; i++) {
 		if (props.users[i].intervals.length > 0) {
+			// We want to put "others" at bottom of list
+			if (props.users[i].id === "Other") {
+				others.push(<div key={i}>{props.users[i].id}</div>);
+				otherIntervals.push(<Intervals key={i} intervals={props.users[i].intervals} />);
+				continue;
+			}
+
 			names.push(<div key={i}>{props.users[i].id}</div>);
 			intervals.push(<Intervals key={i} intervals={props.users[i].intervals} />);
 		}
 	}
+
+	names.push(...others);
+	intervals.push(...otherIntervals);
 
 	return (
 		<Card className="Day" elevation={2}>
