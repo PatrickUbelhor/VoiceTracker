@@ -11,8 +11,8 @@ function Day(props) {
 	let intervals = [];
 	for (let i = 0; i < props.users.length; i++) {
 		if (props.users[i].intervals.length > 0) {
-			names.push(<div key={props.users[i].id}>{props.users[i].id}</div>);
-			intervals.push(<Intervals key={props.users[i].id} intervals={props.users[i].intervals} />);
+			names.push(<div key={i}>{props.users[i].id}</div>);
+			intervals.push(<Intervals key={i} intervals={props.users[i].intervals} />);
 		}
 	}
 
