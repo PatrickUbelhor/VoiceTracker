@@ -16,15 +16,19 @@ function Day(props) {
 	let otherIntervals = [];
 	for (let i = 0; i < props.users.length; i++) {
 		if (props.users[i].intervals.length > 0) {
+			let intervalDiv = <Intervals key={i} color={props.users[i].color} intervals={props.users[i].intervals} />;
+			let nameDiv = <div className="NameListing" key={i} style={{borderLeftColor: props.users[i].color}}>{props.users[i].id}</div>;
+
+
 			// We want to put "others" at bottom of list
 			if (props.users[i].id === "Other") {
-				others.push(<div key={i}>{props.users[i].id}</div>);
-				otherIntervals.push(<Intervals key={i} intervals={props.users[i].intervals} />);
+				others.push(nameDiv);
+				otherIntervals.push(intervalDiv);
 				continue;
 			}
 
-			names.push(<div key={i}>{props.users[i].id}</div>);
-			intervals.push(<Intervals key={i} intervals={props.users[i].intervals} />);
+			names.push(nameDiv);
+			intervals.push(intervalDiv);
 		}
 	}
 

@@ -15,9 +15,9 @@ function Intervals(props) {
 		let box = (
 			<div key={props.intervals[i].start} className="Bar" style={{
 				marginLeft: 100 * leftMargin + '%',
-				width: 100 * length + '%'
-			}}>
-			</div>
+				width: 100 * length + '%',
+				backgroundColor: props.color
+			}} />
 		);
 
 		boxes.push(box);

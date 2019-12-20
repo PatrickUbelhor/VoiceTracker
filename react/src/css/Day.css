@@ -25,6 +25,12 @@
 	width: 5em;
 }
 
+.Day .NameListing {
+	border-left-width: 0.25em;
+	border-left-style: solid;
+	padding-left: 0.25em;
+}
+
 .Day .BarGraphs {
 	border-left: black 1px solid;
 	border-right: black 1px solid;

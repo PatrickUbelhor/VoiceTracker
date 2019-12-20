@@ -9,17 +9,23 @@ public class User {
 	private final int COALESCE_TIME = 1;
 	
 	private final Long id; // Stored as Discord snowflake, returned as colloquial name
+	private final String color;
 	private final LinkedList<Interval> intervals;
 	private final SnowflakeConverter converter = new SnowflakeConverter();
 	
 	public User(Long snowflake) {
 		this.id = snowflake;
+		this.color = "#757575";
 		this.intervals = new LinkedList<>();
 	}
 	
 	
 	public String getId() {
 		return converter.convert(id);
+	}
+	
+	public String getColor() {
+		return converter.getColor(id);
 	}
 	
 	public LinkedList<Interval> getIntervals() {

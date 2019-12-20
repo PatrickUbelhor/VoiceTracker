@@ -10,6 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class SnowflakeConverter {
 	
 	private static ConcurrentHashMap<Long, String> converter = new ConcurrentHashMap<>();
+	private static ConcurrentHashMap<Long, String> colorPicker = new ConcurrentHashMap<>();
 	
 	public SnowflakeConverter() {}
 	
@@ -23,6 +24,10 @@ public class SnowflakeConverter {
 		return converter.getOrDefault(snowflake, "Other");
 	}
 	
+	public String getColor(Long snowflake) {
+		return colorPicker.getOrDefault(snowflake, "#757575");
+	}
+	
 	
 	public void update(String filename) {
 		converter.clear();
@@ -32,6 +37,7 @@ public class SnowflakeConverter {
 			br.lines().forEach(line -> {
 				String[] split = line.split("=");
 				converter.put(Long.valueOf(split[0]), split[1]);
+				colorPicker.put(Long.valueOf(split[0]), split[2]);
 			});
 			
 		} catch (IOException e) {
