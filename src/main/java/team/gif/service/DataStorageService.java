@@ -25,7 +25,7 @@ public class DataStorageService {
 		return days;
 	}
 
-	@Scheduled(cron = "0 0 0 ? * * *")
+	@Scheduled(cron = "0 0 0 ? * * ")
 	public void addNewDay() {
 		// Any intervals that haven't explicitly been given an end time will default to 1440 (end of day)
 		// We don't need to start new intervals for each user that's logged in
