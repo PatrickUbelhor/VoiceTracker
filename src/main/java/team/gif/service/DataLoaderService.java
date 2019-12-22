@@ -1,5 +1,6 @@
 package team.gif.service;
 
+import org.springframework.stereotype.Service;
 import team.gif.exception.DataLoadException;
 import team.gif.model.Day;
 
@@ -11,6 +12,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.LinkedList;
 
+@Service
 public class DataLoaderService {
 	
 	public LinkedList<Day> load(String filename) {
