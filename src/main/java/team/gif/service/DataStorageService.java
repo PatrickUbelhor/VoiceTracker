@@ -32,19 +32,19 @@ public class DataStorageService {
 		// When they leave, the event will create a new interval with default start of 0
 		logger.info("Adding new day");
 		synchronized (this) {
-			days.addLast(new Day());
+			days.addFirst(new Day());
 		}
 	}
 	
 	public void addJoinEvent(Long snowflake, int minute) {
 		synchronized (this) {
-			days.getLast().addJoin(snowflake, minute);
+			days.getFirst().addJoin(snowflake, minute);
 		}
 	}
 	
 	public void addLeaveEvent(Long snowflake, int minute) {
 		synchronized (this) {
-			days.getLast().addLeave(snowflake, minute);
+			days.getFirst().addLeave(snowflake, minute);
 		}
 	}
 	

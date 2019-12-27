@@ -7,6 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import team.gif.model.Day;
@@ -47,8 +48,10 @@ public class Controller {
 	}
 	
 	@GetMapping()
-	public List<Day> getDays() {
-		return storage.getDays();
+	public List<Day> getDays(@RequestHeader(defaultValue = "0") Integer newestDay,
+	                         @RequestHeader(defaultValue = "30") Integer oldestDay) {
+		
+		return storage.getDays().subList(newestDay, oldestDay);
 	}
 	
 	@GetMapping("/refresh")
