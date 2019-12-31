@@ -36,6 +36,7 @@ public class User {
 		// Coalesce with last interval if they joined right after they left
 		if (!intervals.isEmpty() && minute - intervals.getLast().getEnd() <= COALESCE_TIME) {
 			intervals.getLast().setEnd(Interval.MAX_TIME);
+			intervals.getLast().setFinished(false);
 			return;
 		}
 		
@@ -55,13 +56,21 @@ public class User {
 		// If interval exists, set end time accordingly
 		if (!intervals.isEmpty()) {
 			intervals.getLast().setEnd(minute);
+			intervals.getLast().setFinished(true);
 			return;
 		}
 		
 		// Create a new interval [0, minute]
 		Interval interval = new Interval();
 		interval.setEnd(minute);
+		interval.setFinished(true);
 		intervals.addLast(interval);
+	}
+	
+	public void truncateCurrentInterval(int minute) {
+		if (!intervals.isEmpty() && !intervals.getLast().getFinished()) {
+			intervals.getLast().setEnd(minute);
+		}
 	}
 	
 }

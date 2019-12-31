@@ -14,7 +14,7 @@ function DayList(props) {
 
 	return (
 		<div className="DayList">
-			{entries.reverse()}
+			{entries}
 		</div>
 	);
 }

@@ -31,11 +31,11 @@ public class DataLoaderService {
 				// If we've crossed over into a new day, add a new day to the list
 				if (dayId != 366 * time.getYear() + time.getDayOfYear()) {
 					dayId = 366 * time.getYear() + time.getDayOfYear();
-					days.addLast(new Day(time));
+					days.addFirst(new Day(time));
 				}
 				
-				// Add event to last day
-				Day day = days.getLast();
+				// Add event to latest day
+				Day day = days.getFirst();
 				if (event.equals("J")) {
 					day.addJoin(snowflake, 60 * time.getHour() + time.getMinute());
 				} else {

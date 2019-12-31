@@ -41,4 +41,10 @@ public class Day {
 		users.get(snowflake).addLeave(minute);
 	}
 	
+	public void truncateCurrentIntervals(int minute) {
+		for (User user : users.values()) {
+			user.truncateCurrentInterval(minute);
+		}
+	}
+	
 }

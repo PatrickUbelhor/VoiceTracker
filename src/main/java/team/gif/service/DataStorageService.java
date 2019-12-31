@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import team.gif.model.Day;
+import team.gif.model.Interval;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -21,7 +22,11 @@ public class DataStorageService {
 	}
 	
 	
-	public List<Day> getDays() {
+	public List<Day> getDays(int currentMinute) {
+		synchronized (this) {
+			days.getFirst().truncateCurrentIntervals(currentMinute);
+		}
+		
 		return days;
 	}
 
@@ -32,6 +37,7 @@ public class DataStorageService {
 		// When they leave, the event will create a new interval with default start of 0
 		logger.info("Adding new day");
 		synchronized (this) {
+			days.getFirst().truncateCurrentIntervals(Interval.MAX_TIME);
 			days.addFirst(new Day());
 		}
 	}

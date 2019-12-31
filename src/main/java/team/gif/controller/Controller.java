@@ -49,9 +49,13 @@ public class Controller {
 	
 	@GetMapping()
 	public List<Day> getDays(@RequestHeader(defaultValue = "0") Integer newestDay,
-	                         @RequestHeader(defaultValue = "30") Integer oldestDay) {
+	                         @RequestHeader(defaultValue = "1000") Integer oldestDay) {
 		
-		return storage.getDays().subList(newestDay, oldestDay);
+		LocalDateTime now = LocalDateTime.now();
+		List<Day> days = storage.getDays(60 * now.getHour() + now.getMinute());
+		
+		oldestDay = Math.min(oldestDay, days.size());
+		return days.subList(newestDay, oldestDay);
 	}
 	
 	@GetMapping("/refresh")
