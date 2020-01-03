@@ -1,11 +1,14 @@
 package team.gif.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Day {
 	
@@ -29,6 +32,14 @@ public class Day {
 	
 	public List<User> getUsers() {
 		return new LinkedList<>(users.values());
+	}
+	
+	@JsonIgnore
+	public List<User> getOnlineUsers() {
+		return users.values()
+				.stream()
+				.filter(User::isOnline)
+				.collect(Collectors.toList());
 	}
 	
 	public void addJoin(Long snowflake, int minute) {

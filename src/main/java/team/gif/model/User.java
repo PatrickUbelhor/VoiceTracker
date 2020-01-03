@@ -1,5 +1,6 @@
 package team.gif.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import team.gif.service.SnowflakeConverter;
 
 import java.util.LinkedList;
@@ -30,6 +31,16 @@ public class User {
 	
 	public LinkedList<Interval> getIntervals() {
 		return intervals;
+	}
+	
+	@JsonIgnore
+	public Long getSnowflake() {
+		return id;
+	}
+	
+	@JsonIgnore
+	public boolean isOnline() {
+		return !intervals.getLast().getFinished();
 	}
 	
 	public void addJoin(int minute) {

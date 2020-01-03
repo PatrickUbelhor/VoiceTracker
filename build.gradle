@@ -17,7 +17,7 @@ apply plugin: 'io.spring.dependency-management'
 apply plugin: 'com.moowork.node'
 
 group 'team.gif'
-version '1.0.0'
+version '1.1.0'
 
 sourceCompatibility = 1.11
 targetCompatibility = 1.11

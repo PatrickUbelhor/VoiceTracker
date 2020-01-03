@@ -6,6 +6,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import team.gif.model.Day;
 import team.gif.model.Interval;
+import team.gif.model.User;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -37,8 +38,18 @@ public class DataStorageService {
 		// When they leave, the event will create a new interval with default start of 0
 		logger.info("Adding new day");
 		synchronized (this) {
-			days.getFirst().truncateCurrentIntervals(Interval.MAX_TIME);
-			days.addFirst(new Day());
+			Day yesterday = days.getFirst(); // Day that just ended
+			Day today = new Day(); // Day that is just starting
+			
+			// For each user still on at end of day, make sure they appear at start of new day
+			// Not necessary, but is useful for live reporting on front end (don't have to wait
+			// until they leave to create an interval for that session)
+			for (User user : yesterday.getOnlineUsers()) {
+				today.addJoin(user.getSnowflake(), 0);
+			}
+			
+			yesterday.truncateCurrentIntervals(Interval.MAX_TIME);
+			days.addFirst(today);
 		}
 	}
 	
