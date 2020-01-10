@@ -2,6 +2,7 @@ import React from 'react';
 import tracker from '../api/Tracker';
 import DayList from './DayList';
 import Header from './Header';
+import HistogramList from './HistogramList';
 import LoadingPage from './LoadingPage';
 
 
