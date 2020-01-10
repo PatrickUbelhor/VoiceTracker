@@ -1,0 +1,10 @@
+
+#message {
+	display: flex;
+	align-items: center;
+	font-size: 1.2em;
+}
+
+#errorIcon {
+	margin-right: 0.5em;
+}

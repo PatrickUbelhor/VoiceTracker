@@ -7,12 +7,20 @@ import Typography from '@material-ui/core/Typography';
 
 function Header(props) {
 
+	function onDaysButtonClick(event) {
+		props.onClick(0);
+	}
+
+	function onHistogramButtonClick(event) {
+		props.onClick(1);
+	}
+
 	return (
 		<AppBar id="appBar" position="static">
 			<Toolbar>
 				<Typography id="home" variant="h6" color="inherit">Voice Tracker</Typography>
-				<Button color="secondary">Days</Button>
-				<Button color="secondary">Histograms</Button>
+				<Button color="secondary" onClick={onDaysButtonClick}>Days</Button>
+				<Button color="secondary" onClick={onHistogramButtonClick}>Histograms</Button>
 			</Toolbar>
 		</AppBar>
 	);
