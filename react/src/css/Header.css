@@ -5,4 +5,9 @@
 
 #home {
 	/*cursor: pointer;*/
+	margin-right: 2em;
+}
+
+#appBar .tabButton {
+	margin-left: 1em;
 }

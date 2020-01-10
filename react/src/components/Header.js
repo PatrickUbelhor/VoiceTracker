@@ -19,8 +19,8 @@ function Header(props) {
 		<AppBar id="appBar" position="static">
 			<Toolbar>
 				<Typography id="home" variant="h6" color="inherit">Voice Tracker</Typography>
-				<Button color="secondary" onClick={onDaysButtonClick}>Days</Button>
-				<Button color="secondary" onClick={onHistogramButtonClick}>Histograms</Button>
+				<Button className="tabButton" variant="contained" color="default" onClick={onDaysButtonClick}>Days</Button>
+				<Button className="tabButton" variant="contained" color="default" onClick={onHistogramButtonClick}>Histograms</Button>
 			</Toolbar>
 		</AppBar>
 	);
