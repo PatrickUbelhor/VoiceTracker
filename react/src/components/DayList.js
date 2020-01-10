@@ -1,4 +1,4 @@
-import '../css/DayList.css'
+import '../css/DayList.css';
 import React from 'react';
 import Day from './Day';
 
@@ -9,7 +9,7 @@ function DayList(props) {
 			<div key={day.date}>
 				<Day date={day.date} users={day.users} />
 			</div>
-		)
+		);
 	});
 
 	return (

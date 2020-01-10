@@ -11,7 +11,9 @@ class App extends React.Component {
 		super(props);
 
 		this.state = {
-			days: null
+			days: null,
+			histograms: null,
+			tab: 0 // 0 for days, 1 for histograms
 		};
 	}
 
@@ -39,14 +41,46 @@ class App extends React.Component {
 		});
 	};
 
+	getHistograms = async () => {
+		console.log("Getting histograms");
+		let histograms = null;
+		try {
+			let histoReq = await tracker.get('/histogram');
+			histograms = histoReq.data;
+			console.log("Got histograms");
+		} catch (error) {
+			if (error.response !== undefined) {
+				console.log(error.response);
+				return;
+			}
+
+			console.log("An unknown error has occurred");
+			return;
+		}
+
+		this.setState((state, props) => {
+			return {
+				histograms: histograms
+			};
+		});
+	};
+
 	componentDidMount() {
 		this.getDays();
 	}
 
 	render() {
-		const content = this.state.days
-			? <DayList days={this.state.days} />
-			: <LoadingPage />;
+		let content = null;
+
+		if (this.state.tab === 0) {
+			content = this.state.days
+				? <DayList days={this.state.days} />
+				: <LoadingPage />;
+		} else if (this.state.tab === 1) {
+			content = this.state.histograms
+				? <HistogramList histograms={this.state.histograms} />
+				: <LoadingPage />;
+		}
 
 		return (
 			<div>
