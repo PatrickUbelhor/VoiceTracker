@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class Histogram {
 	
-	public final static int LENGTH_OF_HISTO_BAR = 5;
+	public final static int LENGTH_OF_HISTO_BAR = 5; // Each bar is 5 minutes
 	private final String name;
 	private final int[] data;
 	
@@ -17,8 +17,9 @@ public class Histogram {
 	public void addInterval(Interval interval) {
 		
 		// Could start i = start % LENGTH_BAR to reduce resolution (and therefore processing time)
+		// Could increase i += LENGTH_BAR and add LENGTH_BAR to each entry in array, with leftovers after
 		for (int i = interval.getStart(); i < interval.getEnd(); i++) {
-			data[i]++;
+			data[i / LENGTH_OF_HISTO_BAR]++;
 		}
 	}
 	
