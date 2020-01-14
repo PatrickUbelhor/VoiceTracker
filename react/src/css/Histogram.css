@@ -1,0 +1,16 @@
+
+.Histogram {
+	margin-bottom: 0.5em;
+}
+
+.HistogramContent {
+	display: flex;
+	flex-direction: row;
+	height: 20em;
+	border: 1px solid black;
+}
+
+.HistogramBar {
+	margin-top: auto;
+	background-color: #3f51b5;
+}
