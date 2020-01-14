@@ -40,7 +40,7 @@ public class User {
 	
 	@JsonIgnore
 	public boolean isOnline() {
-		return !intervals.getLast().getFinished();
+		return !intervals.isEmpty() && !intervals.getLast().getFinished();
 	}
 	
 	public void addJoin(int minute) {
