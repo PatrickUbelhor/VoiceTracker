@@ -96,4 +96,10 @@ public class Controller {
 		logger.info("Finished loading data");
 	}
 	
+	@GetMapping("/start")
+	public void reloadAllData() {
+		updateSnowflakes();
+		loadData();
+	}
+	
 }
