@@ -5,9 +5,11 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import team.gif.model.Day;
+import team.gif.model.Histogram;
 import team.gif.model.Interval;
 import team.gif.model.User;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -16,9 +18,12 @@ public class DataStorageService {
 	
 	private static final Logger logger = LogManager.getLogger(DataStorageService.class);
 	private LinkedList<Day> days;
+	private LinkedList<Histogram> histograms;
 	
 	public DataStorageService() {
 		this.days = new LinkedList<>();
+		this.histograms = null;
+		
 		days.add(new Day());
 	}
 	
@@ -30,8 +35,16 @@ public class DataStorageService {
 		
 		return days;
 	}
+	
+	public List<Histogram> getHistograms() {
+		if (histograms == null) {
+			computeHistograms();
+		}
+		
+		return histograms;
+	}
 
-	@Scheduled(cron = "0 0 0 ? * * ")
+	@Scheduled(cron = "0 0 0 ? * *")
 	public void addNewDay() {
 		// Any intervals that haven't explicitly been given an end time will default to 1440 (end of day)
 		// We don't need to start new intervals for each user that's logged in
@@ -51,6 +64,29 @@ public class DataStorageService {
 			yesterday.truncateCurrentIntervals(Interval.MAX_TIME);
 			days.addFirst(today);
 		}
+		
+		computeHistograms();
+	}
+	
+	public void computeHistograms() {
+		// TODO: Make this an iterative process: remove day 31 data, add yesterday's data
+		// How would this be impacted by name changes?
+		HashMap<String, Histogram> histograms = new HashMap<>();
+		List<Day> days = this.days.subList(1, 31); // Only get data for last 30 finished days
+		
+		// Add each interval to the respective user's histogram
+		for (Day day : days) {
+			for (User user : day.getUsers()) {
+				histograms.putIfAbsent(user.getId(), new Histogram(user.getId()));
+				
+				Histogram histogram = histograms.get(user.getId());
+				for (Interval interval : user.getIntervals()) {
+					histogram.addInterval(interval);
+				}
+			}
+		}
+		
+		this.histograms = new LinkedList<>(histograms.values());
 	}
 	
 	public void addJoinEvent(Long snowflake, int minute) {

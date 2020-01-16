@@ -12,15 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import team.gif.model.Day;
 import team.gif.model.Histogram;
-import team.gif.model.Interval;
-import team.gif.model.User;
 import team.gif.service.DataLoaderService;
 import team.gif.service.DataStorageService;
 import team.gif.service.SnowflakeConverter;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 
 @RestController
@@ -65,23 +61,7 @@ public class Controller {
 	
 	@GetMapping("/histogram")
 	public List<Histogram> getHistograms() {
-	
-		HashMap<String, Histogram> histograms = new HashMap<>();
-		List<Day> days = getDays(0, 30);
-		
-		// Add each interval to the respective user's histogram
-		for (Day day : days) {
-			for (User user : day.getUsers()) {
-				histograms.putIfAbsent(user.getId(), new Histogram(user.getId()));
-				
-				Histogram histogram = histograms.get(user.getId());
-				for (Interval interval : user.getIntervals()) {
-					histogram.addInterval(interval);
-				}
-			}
-		}
-		
-		return new LinkedList<>(histograms.values());
+		return storage.getHistograms();
 	}
 	
 	@GetMapping("/refresh")
