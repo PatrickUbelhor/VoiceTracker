@@ -7,16 +7,14 @@ import Typography from '@material-ui/core/Typography';
 function Histogram(props) {
 
 	const NUM_DAYS_AGGREGATE = 30; // Each bar sums up last 30 days
-	const BAR_DURATION = 5; // Each bar is 5 minutes
-	const MAX_BAR_HEIGHT = BAR_DURATION * NUM_DAYS_AGGREGATE; // The maximum value any entry in data can have
-	const BAR_WIDTH = 100 * (1 / (props.data.length));
+	const BAR_DURATION = 1440 / props.data.length; // The time interval each bar represents
+	const MAX_BAR_HEIGHT = NUM_DAYS_AGGREGATE * BAR_DURATION; // The maximum value any entry in data can have
 
 	let bars = [];
 	for (let i = 0; i < props.data.length; i++) {
 		let barDiv = (
 			<div key={i} className="HistogramBar" style={{
-				width: BAR_WIDTH + '%',
-				height: 100 * (props.data[i] / MAX_BAR_HEIGHT) + '%',
+				height: 100 * props.data[i] / MAX_BAR_HEIGHT + '%'
 			}} />
 		);
 
