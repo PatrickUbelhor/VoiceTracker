@@ -64,22 +64,18 @@ public class Controller {
 		return storage.getHistograms();
 	}
 	
-	@GetMapping("/refresh")
-	public void updateSnowflakes() {
-		snowflakeConverter.update("Snowflakes.txt");
-	}
-	
-	@GetMapping("/load")
-	public void loadData() {
+	@GetMapping("/start")
+	public void reloadAllData() {
 		logger.info("Loading data...");
 		storage.replaceDays(loaderService.load("vclog.csv"));
 		logger.info("Finished loading data");
-	}
-	
-	@GetMapping("/start")
-	public void reloadAllData() {
-		updateSnowflakes();
-		loadData();
+		
+		logger.info("Loading names...");
+		snowflakeConverter.update("Snowflakes.txt");
+		logger.info("Finished loading names");
+		
+		// Recompute histograms, since names and data were updated
+		storage.computeHistograms();
 	}
 	
 }
