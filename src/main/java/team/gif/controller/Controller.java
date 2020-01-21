@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import team.gif.model.Day;
 import team.gif.model.Histogram;
@@ -60,8 +61,8 @@ public class Controller {
 	}
 	
 	@GetMapping("/histogram")
-	public List<Histogram> getHistograms() {
-		return storage.getHistograms();
+	public List<Histogram> getHistograms(@RequestParam(defaultValue = "30") Integer numDays) {
+		return storage.getHistograms(numDays);
 	}
 	
 	@GetMapping("/start")
@@ -75,7 +76,7 @@ public class Controller {
 		logger.info("Finished loading names");
 		
 		// Recompute histograms, since names and data were updated
-		storage.computeHistograms();
+		storage.updateHistogramCache();
 	}
 	
 }

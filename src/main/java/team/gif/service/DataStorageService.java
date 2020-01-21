@@ -18,11 +18,13 @@ public class DataStorageService {
 	
 	private static final Logger logger = LogManager.getLogger(DataStorageService.class);
 	private LinkedList<Day> days;
-	private LinkedList<Histogram> histograms;
+	private LinkedList<Histogram> histograms7;  // Histograms of last 7 days
+	private LinkedList<Histogram> histograms30; // Histograms of last 30 days
 	
 	public DataStorageService() {
 		this.days = new LinkedList<>();
-		this.histograms = null;
+		this.histograms7 = new LinkedList<>();
+		this.histograms30 = new LinkedList<>();
 		
 		days.add(new Day());
 	}
@@ -36,12 +38,16 @@ public class DataStorageService {
 		return days;
 	}
 	
-	public List<Histogram> getHistograms() {
-		if (histograms == null) {
-			computeHistograms();
+	public List<Histogram> getHistograms(int numDays) {
+		if (numDays == 7) {
+			return histograms7;
 		}
 		
-		return histograms;
+		if (numDays == 30) {
+			return histograms30;
+		}
+		
+		return computeHistograms(numDays);
 	}
 
 	@Scheduled(cron = "0 0 0 ? * *")
@@ -65,14 +71,17 @@ public class DataStorageService {
 			days.addFirst(today);
 		}
 		
-		computeHistograms();
+		updateHistogramCache();
 	}
 	
-	public void computeHistograms() {
-		// TODO: Make this an iterative process: remove day 31 data, add yesterday's data
-		// How would this be impacted by name changes?
+	public void updateHistogramCache() {
+		this.histograms7 = computeHistograms(7);
+		this.histograms30 = computeHistograms(30);
+	}
+	
+	public LinkedList<Histogram> computeHistograms(int numDays) {
 		HashMap<String, Histogram> histograms = new HashMap<>();
-		List<Day> days = this.days.subList(1, 31); // Only get data for last 30 finished days
+		List<Day> days = this.days.subList(1, numDays + 1); // Only get data for last 30 finished days (excludes today)
 		
 		// Add each interval to the respective user's histogram
 		for (Day day : days) {
@@ -86,7 +95,7 @@ public class DataStorageService {
 			}
 		}
 		
-		this.histograms = new LinkedList<>(histograms.values());
+		return new LinkedList<>(histograms.values());
 	}
 	
 	public void addJoinEvent(Long snowflake, int minute) {
