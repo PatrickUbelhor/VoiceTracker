@@ -5,7 +5,11 @@ import ErrorSnackbar from './ErrorSnackbar';
 import Header from './Header';
 import HistogramList from './HistogramList';
 import LoadingPage from './LoadingPage';
-
+import {
+	BrowserRouter as Router,
+	Route,
+	Switch
+} from 'react-router-dom';
 
 class App extends React.Component {
 
@@ -15,32 +19,9 @@ class App extends React.Component {
 		this.state = {
 			days: null,
 			histograms: null,
-			tab: 0, // 0 for days, 1 for histograms
 			message: null // Used to show error messages
 		};
 	}
-
-	// Callback function for header buttons
-	setTab = (tabNum) => {
-		this.loadTab(tabNum);
-
-		this.setState((state, props) => {
-			return {
-				tab: tabNum
-			};
-		});
-	};
-
-	loadTab = (tabNum) => {
-		if (tabNum === 0) {
-			this.getDays();
-		} else if (tabNum === 1) {
-			this.getHistograms();
-		} else {
-			console.log("Invalid tab number: " + tabNum);
-			this.setSnackbar("An invalid tab was selected. Looks like I have a bug to fix.");
-		}
-	};
 
 	// Used to set the message displayed on the snackbar
 	setSnackbar = (value) => {
@@ -104,35 +85,27 @@ class App extends React.Component {
 	};
 
 	componentDidMount() {
-		this.loadTab(this.state.tab);
+		// TODO: Only load the current tab; don't load anything else until it's clicked on
+		this.getDays();
+		this.getHistograms();
 	}
 
 	render() {
-		let content = null;
-
-		// Decide what content to display based on which tab the user is in
-		if (this.state.tab === 0) {
-			content = this.state.days
-				? <DayList days={this.state.days} />
-				: <LoadingPage />;
-		} else if (this.state.tab === 1) {
-			content = this.state.histograms
-				? <HistogramList histograms={this.state.histograms} />
-				: <LoadingPage />;
-		}
-
-		const message = (
-			<div>
-				<ErrorSnackbar message={this.state.message} resetMessage={this.setSnackbar} />
-			</div>
-		);
-
 		return (
-			<div>
-				<Header onClick={this.setTab} />
-				{content}
-				{message}
-			</div>
+			<Router>
+				<Header getDays={this.getDays} getHistograms={this.getHistograms} />
+
+				<Switch>
+					<Route path="/histograms">
+						{this.state.histograms ? <HistogramList histograms={this.state.histograms} /> : <LoadingPage />}
+					</Route>
+					<Route path="/">
+						{this.state.days ? <DayList days={this.state.days} /> : <LoadingPage />}
+					</Route>
+				</Switch>
+
+				<ErrorSnackbar message={this.state.message} resetMessage={this.setSnackbar} />
+			</Router>
 		);
 	}
 
