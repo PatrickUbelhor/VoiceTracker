@@ -16,8 +16,8 @@ function Intervals(props) {
 
 		let box = (
 			// TODO: Maybe make custom tooltip that doesn't take forever to load?
-			<Tooltip arrow title={Math.floor(duration / 60) + "h " + (duration % 60) + "m"}>
-				<div key={props.intervals[i].start} className="Bar" style={{
+			<Tooltip key={props.intervals[i].start} arrow title={Math.floor(duration / 60) + "h " + (duration % 60) + "m"}>
+				<div className="Bar" style={{
 					marginLeft: 100 * leftMargin + '%',
 					width: 100 * width + '%',
 					backgroundColor: props.color
