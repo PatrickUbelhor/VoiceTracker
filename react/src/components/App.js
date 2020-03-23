@@ -85,9 +85,7 @@ class App extends React.Component {
 	};
 
 	componentDidMount() {
-		// TODO: Only load the current tab; don't load anything else until it's clicked on
 		this.getDays();
-		this.getHistograms();
 	}
 
 	render() {
