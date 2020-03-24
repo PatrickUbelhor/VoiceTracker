@@ -61,8 +61,10 @@ public class Controller {
 	}
 	
 	@GetMapping("/histogram")
-	public List<Histogram> getHistograms(@RequestParam(defaultValue = "30") Integer numDays) {
-		return storage.getHistograms(numDays);
+	public List<Histogram> getHistograms(@RequestParam(defaultValue = "30") Integer numDays,
+	                                     @RequestParam(defaultValue = "1") Integer minActiveDays) {
+		
+		return storage.computeHistograms(numDays, minActiveDays);
 	}
 	
 	@GetMapping("/start")

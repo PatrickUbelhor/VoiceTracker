@@ -38,18 +38,17 @@ public class DataStorageService {
 		return days;
 	}
 	
-	public List<Histogram> getHistograms(int numDays) {
-		if (numDays == 7) {
-			return histograms7;
-		}
-		
-		if (numDays == 30) {
-			return histograms30;
-		}
-		
-		return computeHistograms(numDays);
+	
+	public List<Histogram> get7DayHistogram() {
+		return histograms7;
+	}
+	
+	
+	public List<Histogram> get30DayHistogram() {
+		return histograms30;
 	}
 
+	
 	@Scheduled(cron = "0 0 0 ? * *")
 	public void addNewDay() {
 		// Any intervals that haven't explicitly been given an end time will default to 1440 (end of day)
@@ -74,13 +73,21 @@ public class DataStorageService {
 		updateHistogramCache();
 	}
 	
+	
 	public void updateHistogramCache() {
-		this.histograms7 = computeHistograms(7);
-		this.histograms30 = computeHistograms(30);
+		this.histograms7 = computeHistograms(7, 1);
+		this.histograms30 = computeHistograms(30, 5);
 	}
 	
+	
 	public LinkedList<Histogram> computeHistograms(int numDays) {
+		return computeHistograms(numDays, 1);
+	}
+	
+	
+	public LinkedList<Histogram> computeHistograms(int numDays, int minActiveDays) {
 		HashMap<String, Histogram> histograms = new HashMap<>();
+		HashMap<String, Integer> numActiveDays = new HashMap<>(); // Number of days each user was in call
 		List<Day> days = this.days.subList(1, numDays + 1); // Only get data for last 30 finished days (excludes today)
 		
 		// Add each interval to the respective user's histogram
@@ -88,15 +95,28 @@ public class DataStorageService {
 			for (User user : day.getUsers()) {
 				histograms.putIfAbsent(user.getId(), new Histogram(user.getId()));
 				
+				// Add intervals to user's histogram
 				Histogram histogram = histograms.get(user.getId());
 				for (Interval interval : user.getIntervals()) {
 					histogram.addInterval(interval);
 				}
+				
+				// Increment number of active days for user
+				numActiveDays.putIfAbsent(user.getId(), 0);
+				numActiveDays.put(user.getId(), numActiveDays.get(user.getId()) + 1);
+			}
+		}
+		
+		// Remove users that weren't on for enough days
+		for (String user : numActiveDays.keySet()) {
+			if (numActiveDays.get(user) < minActiveDays) {
+				histograms.remove(user);
 			}
 		}
 		
 		return new LinkedList<>(histograms.values());
 	}
+	
 	
 	public void addJoinEvent(Long snowflake, int minute) {
 		synchronized (this) {
@@ -104,11 +124,13 @@ public class DataStorageService {
 		}
 	}
 	
+	
 	public void addLeaveEvent(Long snowflake, int minute) {
 		synchronized (this) {
 			days.getFirst().addLeave(snowflake, minute);
 		}
 	}
+	
 	
 	public void replaceDays(LinkedList<Day> days) {
 		synchronized (this) {
