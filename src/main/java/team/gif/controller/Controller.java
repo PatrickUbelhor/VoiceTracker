@@ -64,7 +64,8 @@ public class Controller {
 	public List<Histogram> getHistograms(@RequestParam(defaultValue = "30") Integer numDays,
 	                                     @RequestParam(defaultValue = "1") Integer minActiveDays) {
 		
-		// Get 'cached' histogram list if applicable
+		// Get precomputed histogram list if applicable
+		// TODO: Will have to recompute if minActiveDays is anything other than default for cached histograms
 		if (numDays == 7) return storage.get7DayHistogram();
 		if (numDays == 30) return storage.get30DayHistogram();
 		
