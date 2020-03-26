@@ -21,9 +21,9 @@ function Header(props) {
 	}
 
 	return (
-		<AppBar id="appBar" position="static">
+		<AppBar id="appBar" position="sticky">
 			<Toolbar>
-				<Typography id="home" variant="h6" color="inherit">Voice Tracker</Typography>
+				<Typography id="home" variant="h5" color="inherit">Voice Tracker</Typography>
 				<Button className="tabButton" variant="contained" color="default" onClick={gotoDays}>
 					Days
 				</Button>
