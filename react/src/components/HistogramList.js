@@ -12,6 +12,7 @@ class HistogramList extends React.Component {
 		super(props);
 
 		this.state = {
+			setErrMsg: props.setErrMsg,
 			histograms: null,
 			numDays: 30,
 			minActiveDays: 5
@@ -29,12 +30,12 @@ class HistogramList extends React.Component {
 		} catch (error) {
 			if (error.response !== undefined) {
 				console.log(error.response);
-				this.setSnackbar("Something went wrong when getting the data :/");
+				this.state.setErrMsg("Something went wrong when getting the data");
 				return;
 			}
 
 			console.log("An unknown error has occurred");
-			this.setSnackbar("Something went wrong when getting the data :/");
+			this.state.setErrMsg("Something went wrong when getting the data");
 			return;
 		}
 
@@ -49,33 +50,32 @@ class HistogramList extends React.Component {
 
 
 	componentDidMount() {
-		this.getHistograms(this.state.numDays, this.state.minActiveDays)
+		this.getHistograms(this.state.numDays, this.state.minActiveDays);
 	}
 
 
 	render() {
-		let entries = [];
-		if (this.state.histograms) {
-			this.state.histograms.sort((a, b) => a.name.localeCompare(b.name));
-			entries = this.state.histograms.map((histogram) => {
-
-				return (
-					<div key={histogram.name}>
-						<Histogram name={histogram.name} numDays={this.state.numDays} data={histogram.data} />
-					</div>
-				);
-			});
+		if (this.state.histograms == null) {
+			return <LoadingPage/>;
 		}
 
+
+		this.state.histograms.sort((a, b) => a.name.localeCompare(b.name));
+		const entries = this.state.histograms.map((histogram) => {
+
+			return (
+				<div key={histogram.name}>
+					<Histogram name={histogram.name} numDays={this.state.numDays} data={histogram.data} />
+				</div>
+			);
+		});
+
 		return (
-			this.state.histograms
-				? (
-					<div className="HistogramList">
-						<Button className="filterButton" variant="contained" color="primary" onClick={() => this.getHistograms(7, 2)}>7</Button>
-						<Button className="filterButton" variant="contained" color="primary" onClick={() => this.getHistograms(30, 5)}>30</Button>
-						{entries}
-					</div>
-				) : <LoadingPage/>
+			<div className="HistogramList">
+				<Button className="filterButton" variant="contained" color="primary" onClick={() => this.getHistograms(7, 2)}>7</Button>
+				<Button className="filterButton" variant="contained" color="primary" onClick={() => this.getHistograms(30, 5)}>30</Button>
+				{entries}
+			</div>
 		);
 	}
 }

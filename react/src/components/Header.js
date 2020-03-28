@@ -11,7 +11,6 @@ function Header(props) {
 	let history = useHistory();
 
 	function gotoDays() {
-		props.getDays();
 		history.push("/");
 	}
 

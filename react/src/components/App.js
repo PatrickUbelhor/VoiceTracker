@@ -1,10 +1,8 @@
 import React from 'react';
-import tracker from '../api/Tracker';
 import DayList from './DayList';
 import ErrorSnackbar from './ErrorSnackbar';
 import Header from './Header';
 import HistogramList from './HistogramList';
-import LoadingPage from './LoadingPage';
 import {
 	BrowserRouter as Router,
 	Route,
@@ -23,6 +21,7 @@ class App extends React.Component {
 		};
 	}
 
+
 	// Used to set the message displayed on the snackbar
 	setSnackbar = (value) => {
 		this.setState((state, props) => {
@@ -32,47 +31,18 @@ class App extends React.Component {
 		})
 	};
 
-	getDays = async (newestDay = 0, oldestDay = 30) => {
-		console.log("Getting days");
-		let days = null;
-		try {
-			let daysReq = await tracker.get(`?newestDay=${newestDay}&oldestDay=${oldestDay}`);
-			days = daysReq.data;
-			console.log(days);
-		} catch (error) {
-			if (error.response !== undefined) {
-				console.log(error.response);
-				this.setSnackbar("Something went wrong when getting the data :/");
-				return;
-			}
-
-			console.log("An unknown error has occurred");
-			this.setSnackbar("Something went wrong when getting the data :/");
-			return;
-		}
-
-		this.setState((state, props) => {
-			return {
-				days: days
-			};
-		});
-	};
-
-	componentDidMount() {
-		this.getDays();
-	}
 
 	render() {
 		return (
 			<Router>
-				<Header getDays={this.getDays} getHistograms={this.getHistograms} />
+				<Header />
 
 				<Switch>
 					<Route path="/histograms">
-						<HistogramList />
+						<HistogramList setErrMsg={this.setSnackbar} />
 					</Route>
 					<Route path="/">
-						{this.state.days ? <DayList days={this.state.days} /> : <LoadingPage />}
+						<DayList setErrMsg={this.setSnackbar} />
 					</Route>
 				</Switch>
 
@@ -80,7 +50,6 @@ class App extends React.Component {
 			</Router>
 		);
 	}
-
 }
 
 export default App;
