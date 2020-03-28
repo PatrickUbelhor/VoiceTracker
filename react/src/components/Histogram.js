@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 
 function Histogram(props) {
 
-	const NUM_DAYS_AGGREGATE = 30; // Each bar sums up last 30 days
+	const NUM_DAYS_AGGREGATE = props.numDays; // Each bar sums up last N days
 	const BAR_DURATION = 1440 / props.data.length; // The time interval each bar represents
 	const MAX_BAR_HEIGHT = NUM_DAYS_AGGREGATE * BAR_DURATION; // The maximum value any entry in data can have
 

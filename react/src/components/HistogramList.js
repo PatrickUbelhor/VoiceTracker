@@ -38,9 +38,11 @@ class HistogramList extends React.Component {
 			return;
 		}
 
-		this.setState((state, props) => {
+		this.setState(() => {
 			return {
-				histograms: histograms
+				histograms: histograms,
+				numDays: numDays,
+				minActiveDays: minActiveDays
 			};
 		});
 	};
@@ -59,7 +61,7 @@ class HistogramList extends React.Component {
 
 				return (
 					<div key={histogram.name}>
-						<Histogram name={histogram.name} data={histogram.data} />
+						<Histogram name={histogram.name} numDays={this.state.numDays} data={histogram.data} />
 					</div>
 				);
 			});
