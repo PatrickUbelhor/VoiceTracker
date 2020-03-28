@@ -36,7 +36,7 @@ function Day(props) {
 	intervals.push(...otherIntervals);
 
 	return (
-		<Card className="Day" elevation={2}>
+		<Card className="Day" elevation={4}>
 			<CardContent>
 				<Typography className="Date" variant="h6">{props.date}</Typography>
 				<div className="Content">

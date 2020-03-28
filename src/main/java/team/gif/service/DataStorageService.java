@@ -75,7 +75,7 @@ public class DataStorageService {
 	
 	
 	public void updateHistogramCache() {
-		this.histograms7 = computeHistograms(7, 1);
+		this.histograms7 = computeHistograms(7, 2);
 		this.histograms30 = computeHistograms(30, 5);
 		logger.info("Updated histogram cache");
 	}

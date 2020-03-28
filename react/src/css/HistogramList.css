@@ -3,3 +3,8 @@
 	padding-left: 5%;
 	padding-right: 5%;
 }
+
+.filterButton {
+	margin-right: 0.75em !important;
+	margin-bottom: 1em !important;
+}

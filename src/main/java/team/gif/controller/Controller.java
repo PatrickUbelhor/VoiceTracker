@@ -7,7 +7,6 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -50,8 +49,8 @@ public class Controller {
 	}
 	
 	@GetMapping()
-	public List<Day> getDays(@RequestHeader(defaultValue = "0") Integer newestDay,
-	                         @RequestHeader(defaultValue = "1000") Integer oldestDay) {
+	public List<Day> getDays(@RequestParam(defaultValue = "0") Integer newestDay,
+	                         @RequestParam(defaultValue = "1000") Integer oldestDay) {
 		
 		LocalDateTime now = LocalDateTime.now();
 		List<Day> days = storage.getDays(60 * now.getHour() + now.getMinute());

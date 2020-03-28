@@ -16,7 +16,6 @@ function Header(props) {
 	}
 
 	function gotoHistograms() {
-		props.getHistograms();
 		history.push("/histograms");
 	}
 

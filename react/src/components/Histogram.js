@@ -22,7 +22,7 @@ function Histogram(props) {
 	}
 
 	return (
-		<Card className="Histogram" elevation={2}>
+		<Card className="Histogram" elevation={4}>
 			<CardContent>
 				<Typography className="HistogramTitle" variant="h6">{props.name}</Typography>
 				<div className="HistogramContent">

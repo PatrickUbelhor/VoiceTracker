@@ -32,11 +32,11 @@ class App extends React.Component {
 		})
 	};
 
-	getDays = async () => {
+	getDays = async (newestDay = 0, oldestDay = 30) => {
 		console.log("Getting days");
 		let days = null;
 		try {
-			let daysReq = await tracker.get('/');
+			let daysReq = await tracker.get(`?newestDay=${newestDay}&oldestDay=${oldestDay}`);
 			days = daysReq.data;
 			console.log(days);
 		} catch (error) {
@@ -58,32 +58,6 @@ class App extends React.Component {
 		});
 	};
 
-	getHistograms = async () => {
-		console.log("Getting histograms");
-		let histograms = null;
-		try {
-			let histoReq = await tracker.get('/histogram');
-			histograms = histoReq.data;
-			console.log("Got histograms");
-		} catch (error) {
-			if (error.response !== undefined) {
-				console.log(error.response);
-				this.setSnackbar("Something went wrong when getting the data :/");
-				return;
-			}
-
-			console.log("An unknown error has occurred");
-			this.setSnackbar("Something went wrong when getting the data :/");
-			return;
-		}
-
-		this.setState((state, props) => {
-			return {
-				histograms: histograms
-			};
-		});
-	};
-
 	componentDidMount() {
 		this.getDays();
 	}
@@ -95,7 +69,7 @@ class App extends React.Component {
 
 				<Switch>
 					<Route path="/histograms">
-						{this.state.histograms ? <HistogramList histograms={this.state.histograms} /> : <LoadingPage />}
+						<HistogramList />
 					</Route>
 					<Route path="/">
 						{this.state.days ? <DayList days={this.state.days} /> : <LoadingPage />}
