@@ -1,6 +1,9 @@
 
 .Histogram {
 	margin-bottom: 0.5em;
+	background: var(--elements) !important;
+	color: var(--text) !important;
+	transition: background 500ms ease-in-out, color 1000ms ease-in-out !important;
 }
 
 .HistogramContent {
@@ -9,10 +12,10 @@
 	align-items: flex-end;
 	height: 20em;
 	width: 100%;
-	border: 0.05em solid black;
+	border: 0.05em solid var(--text);
 }
 
 .HistogramBar {
-	background-color: #3f51b5;
+	background-color: var(--primary);
 	flex-grow: 1;
 }

@@ -1,6 +1,9 @@
 
 .Day {
 	margin-bottom: 0.5em;
+	background: var(--elements) !important;
+	color: var(--text) !important;
+	transition: background 500ms ease-in-out, color 1000ms ease-in-out !important;
 }
 
 .Day .Date {
@@ -32,7 +35,7 @@
 }
 
 .Day .BarGraphs {
-	border-left: black 1px solid;
-	border-right: black 1px solid;
+	border-left: 1px solid var(--text);
+	border-right: 1px solid var(--text);
 	width: 100%;
 }

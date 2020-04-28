@@ -1,6 +1,8 @@
 #appBar {
 	margin-bottom: 1.4em;
 	padding-right: 1em;
+	color: var(--header_text);
+	background: var(--header);
 }
 
 #home {
@@ -10,4 +12,12 @@
 
 #appBar .tabButton {
 	margin-left: 1em;
+}
+
+#lightModeIcon {
+	margin-left: auto;
+}
+
+#lightModeIcon:hover {
+	cursor: pointer;
 }

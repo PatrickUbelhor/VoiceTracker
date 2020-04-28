@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import {useHistory} from 'react-router-dom';
+import Icon from '@material-ui/core/Icon';
 
 function Header(props) {
 
@@ -18,6 +19,16 @@ function Header(props) {
 		history.push("/histograms");
 	}
 
+	function invertTheme() {
+		const body = document.body;
+
+		if (body.classList.replace('light', 'dark')) {
+			return;
+		}
+
+		body.classList.replace('dark', 'light');
+	}
+
 	return (
 		<AppBar id="appBar" position="sticky">
 			<Toolbar>
@@ -28,6 +39,7 @@ function Header(props) {
 				<Button className="tabButton" variant="contained" color="default" onClick={gotoHistograms}>
 					Histograms
 				</Button>
+				<Icon id="lightModeIcon" color="inherit" onClick={invertTheme}>cloud</Icon>
 			</Toolbar>
 		</AppBar>
 	);
