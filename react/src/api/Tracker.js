@@ -1,6 +1,6 @@
 import axios from 'axios';
 
 export default axios.create({
-	baseURL: '/tracker/api'
-	// baseURL: 'https://patrickubelhor.com:81/tracker/api'
+	baseURL: '/api'
+	// baseURL: 'https://voicetracker.patrickubelhor.com:81/api'
 });
