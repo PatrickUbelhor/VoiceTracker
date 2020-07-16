@@ -1,4 +1,5 @@
 import React from 'react';
+import AnalyticsPage from './AnalyticsPage';
 import DayList from './DayList';
 import ErrorSnackbar from './ErrorSnackbar';
 import Header from './Header';
@@ -38,6 +39,9 @@ class App extends React.Component {
 				<Header />
 
 				<Switch>
+					<Route path="/analytics">
+						<AnalyticsPage setErrMsg={this.setSnackbar} />
+					</Route>
 					<Route path="/histograms">
 						<HistogramList setErrMsg={this.setSnackbar} />
 					</Route>

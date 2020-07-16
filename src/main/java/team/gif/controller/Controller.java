@@ -71,6 +71,15 @@ public class Controller {
 		return storage.computeHistograms(numDays, minActiveDays);
 	}
 	
+	@GetMapping("/analytics")
+	public String getAnalytics(
+			@RequestParam(defaultValue = "30") Integer numDays,
+			@RequestParam() String username1,
+			@RequestParam() String username2
+	) {
+		return storage.getAnalysis(numDays, username1, username2);
+	}
+	
 	@GetMapping("/start")
 	public void reloadAllData() {
 		logger.info("Loading data...");

@@ -13,7 +13,11 @@ body {
 	padding: 0;
 	background: var(--wallpaper);
 	color: var(--text);
-	transition: background 500ms ease-in-out, color 1000ms ease-in-out;
+	transition: var(--background-transition), var(--color-transition);
+	font-family: Roboto, sans-serif;
+
+	--background-transition: background 500ms ease-in-out;
+	--color-transition: color 1000ms ease-in-out;
 }
 
 .light {

@@ -6,8 +6,8 @@ buildscript {
 		}
 	}
 	dependencies {
-		classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.2.5.RELEASE'
-		classpath 'com.github.node-gradle:gradle-node-plugin:2.2.3'
+		classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.3.1.RELEASE'
+		classpath 'com.github.node-gradle:gradle-node-plugin:2.2.4'
 	}
 }
 
@@ -17,7 +17,7 @@ apply plugin: 'io.spring.dependency-management'
 apply plugin: 'com.github.node-gradle.node'
 
 group 'team.gif'
-version '1.5.0'
+version '1.6.0'
 
 sourceCompatibility = 1.11
 targetCompatibility = 1.11
@@ -31,7 +31,7 @@ dependencies {
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-cache'
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
-	implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.13.1'
+	implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.13.3'
 }
 
 task copyReact(type: Copy) {
@@ -54,8 +54,8 @@ copyReact.dependsOn appNpmBuild
 compileJava.dependsOn copyReact
 
 node {
-	version = '13.8.0'
-	npmVersion = '6.13.7'
+	version = '14.5.0'
+	npmVersion = '6.14.5'
 	download = false
 	nodeModulesDir = file("${project.projectDir}/react")
 }

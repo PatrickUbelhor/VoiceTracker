@@ -3,7 +3,7 @@
 	margin-bottom: 0.5em;
 	background: var(--elements) !important;
 	color: var(--text) !important;
-	transition: background 500ms ease-in-out, color 1000ms ease-in-out !important;
+	transition: var(--background-transition), var(--color-transition) !important;
 }
 
 .Day .Date {

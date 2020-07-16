@@ -12,7 +12,6 @@ class HistogramList extends React.Component {
 		super(props);
 
 		this.state = {
-			setErrMsg: props.setErrMsg,
 			histograms: null,
 			numDays: 30,
 			minActiveDays: 5
@@ -30,12 +29,12 @@ class HistogramList extends React.Component {
 		} catch (error) {
 			if (error.response !== undefined) {
 				console.log(error.response);
-				this.state.setErrMsg("Something went wrong when getting the data");
+				this.props.setErrMsg("Something went wrong when getting the data");
 				return;
 			}
 
 			console.log("An unknown error has occurred");
-			this.state.setErrMsg("Something went wrong when getting the data");
+			this.props.setErrMsg("Something went wrong when getting the data");
 			return;
 		}
 
