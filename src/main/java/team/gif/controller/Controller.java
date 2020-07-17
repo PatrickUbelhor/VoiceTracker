@@ -28,11 +28,13 @@ public class Controller {
 	private final DataStorageService storage;
 	private final SnowflakeConverter snowflakeConverter = new SnowflakeConverter();
 	
+	
 	@Autowired
 	public Controller(DataLoaderService loaderService, DataStorageService storage) {
 		this.loaderService = loaderService;
 		this.storage = storage;
 	}
+	
 	
 	@PostMapping("/join/{snowflake}")
 	public void join(@PathVariable Long snowflake) {
@@ -41,12 +43,21 @@ public class Controller {
 		storage.addJoinEvent(snowflake, 60 * now.getHour() + now.getMinute());
 	}
 	
+	
 	@PostMapping("/leave/{snowflake}")
 	public void leave(@PathVariable Long snowflake) {
 		logger.info("LEAVE " + snowflake);
 		LocalDateTime now = LocalDateTime.now();
 		storage.addLeaveEvent(snowflake, 60 * now.getHour() + now.getMinute());
 	}
+	
+	
+	@GetMapping("/users")
+	public List<String> getUsers() {
+		logger.info("Received getUsers request");
+		return snowflakeConverter.getAllUsers();
+	}
+	
 	
 	@GetMapping()
 	public List<Day> getDays(@RequestParam(defaultValue = "0") Integer newestDay,
@@ -58,6 +69,7 @@ public class Controller {
 		oldestDay = Math.min(oldestDay, days.size());
 		return days.subList(newestDay, oldestDay);
 	}
+	
 	
 	@GetMapping("/histogram")
 	public List<Histogram> getHistograms(@RequestParam(defaultValue = "30") Integer numDays,
@@ -71,6 +83,7 @@ public class Controller {
 		return storage.computeHistograms(numDays, minActiveDays);
 	}
 	
+	
 	@GetMapping("/analytics")
 	public String getAnalytics(
 			@RequestParam(defaultValue = "30") Integer numDays,
@@ -79,6 +92,7 @@ public class Controller {
 	) {
 		return storage.getAnalysis(numDays, username1, username2);
 	}
+	
 	
 	@GetMapping("/start")
 	public void reloadAllData() {

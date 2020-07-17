@@ -20,7 +20,7 @@ class DayList extends React.Component {
 		console.log("Getting days");
 		let days = null;
 		try {
-			let daysReq = await tracker.get(`?newestDay=${newestDay}&oldestDay=${oldestDay}`);
+			let daysReq = await tracker.getDays(newestDay, oldestDay);
 			days = daysReq.data;
 			console.log(days);
 		} catch (error) {

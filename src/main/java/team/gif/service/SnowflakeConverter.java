@@ -5,12 +5,14 @@ import team.gif.exception.ConfigParseException;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 public class SnowflakeConverter {
 	
-	private static ConcurrentHashMap<Long, String> converter = new ConcurrentHashMap<>();
-	private static ConcurrentHashMap<Long, String> colorPicker = new ConcurrentHashMap<>();
+	private static final ConcurrentHashMap<Long, String> converter = new ConcurrentHashMap<>();
+	private static final ConcurrentHashMap<Long, String> colorPicker = new ConcurrentHashMap<>();
 	
 	public SnowflakeConverter() {}
 	
@@ -43,6 +45,11 @@ public class SnowflakeConverter {
 		} catch (IOException e) {
 			throw new ConfigParseException("Failed to read from config '" + filename + "'");
 		}
+	}
+	
+	
+	public List<String> getAllUsers() {
+		return converter.values().stream().sorted().collect(Collectors.toList());
 	}
 	
 }

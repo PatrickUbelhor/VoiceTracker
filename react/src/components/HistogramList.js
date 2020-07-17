@@ -15,26 +15,26 @@ class HistogramList extends React.Component {
 			histograms: null,
 			numDays: 30,
 			minActiveDays: 5
-		}
+		};
 	}
 
 
 	getHistograms = async (numDays = 30, minActiveDays = 5) => {
-		console.log("Getting histograms");
+		console.log('Getting histograms');
 		let histograms = null;
 		try {
-			let histoReq = await tracker.get(`/histogram?numDays=${numDays}&minActiveDays=${minActiveDays}`);
+			let histoReq = await tracker.getHistograms(numDays, minActiveDays);
 			histograms = histoReq.data;
-			console.log("Got histograms");
+			console.log('Got histograms');
 		} catch (error) {
 			if (error.response !== undefined) {
 				console.log(error.response);
-				this.props.setErrMsg("Something went wrong when getting the data");
+				this.props.setErrMsg('Something went wrong when getting the data');
 				return;
 			}
 
-			console.log("An unknown error has occurred");
-			this.props.setErrMsg("Something went wrong when getting the data");
+			console.log('An unknown error has occurred');
+			this.props.setErrMsg('Something went wrong when getting the data');
 			return;
 		}
 
@@ -64,7 +64,7 @@ class HistogramList extends React.Component {
 
 			return (
 				<div key={histogram.name}>
-					<Histogram name={histogram.name} numDays={this.state.numDays} data={histogram.data} />
+					<Histogram name={histogram.name} numDays={this.state.numDays} data={histogram.data}/>
 				</div>
 			);
 		});

@@ -16,8 +16,6 @@ class App extends React.Component {
 		super(props);
 
 		this.state = {
-			days: null,
-			histograms: null,
 			message: null // Used to show error messages
 		};
 	}
