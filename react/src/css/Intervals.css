@@ -1,8 +1,11 @@
 
-.Intervals {
+.intervals {
+	position: relative;
 	display: flex;
+	height: 1em;
 }
 
-.Intervals .Bar {
-	height: 1em;
+.intervals .bar {
+	position: absolute;
+	height: 100%;
 }
