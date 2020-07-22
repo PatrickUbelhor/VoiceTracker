@@ -6,15 +6,14 @@ function Intervals(props) {
 
 	const LENGTH_OF_DAY = 1440;
 
-	let boxes = [];
-	for (let i = 0; i < props.intervals.length; i++) {
-		let duration = props.intervals[i].end - props.intervals[i].start;
-		let width = 100 * duration / LENGTH_OF_DAY;
-		let leftMargin = 100 * props.intervals[i].start / LENGTH_OF_DAY;
+	let boxes = props.intervals?.map(interval => {
+		const duration = interval.end - interval.start;
+		const width = 100 * duration / LENGTH_OF_DAY;
+		const leftMargin = 100 * interval.start / LENGTH_OF_DAY;
 
-		let box = (
+		return (
 			// TODO: Maybe make custom tooltip that doesn't take forever to load?
-			<Tooltip key={props.intervals[i].start} arrow title={Math.floor(duration / 60) + "h " + (duration % 60) + "m"}>
+			<Tooltip key={interval.start} arrow title={Math.floor(duration / 60) + 'h ' + (duration % 60) + 'm'}>
 				<div className="bar" style={{
 					left: leftMargin + '%',
 					width: width + '%',
@@ -22,9 +21,7 @@ function Intervals(props) {
 				}} />
 			</Tooltip>
 		);
-
-		boxes.push(box);
-	}
+	});
 
 	return (
 		<div className="intervals">

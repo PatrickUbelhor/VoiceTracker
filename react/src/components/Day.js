@@ -8,20 +8,19 @@ import Typography from '@material-ui/core/Typography';
 function Day(props) {
 
 	// Sort users alphabetically
-	props.users.sort((a, b) => a.id.localeCompare(b.id));
+	let users = props.users.slice().sort((a, b) => a.id.localeCompare(b.id));
 
 	let names = [];
 	let intervals = [];
 	let others = [];
 	let otherIntervals = [];
-	for (let i = 0; i < props.users.length; i++) {
-		if (props.users[i].intervals.length > 0) {
-			let intervalDiv = <Intervals key={i} color={props.users[i].color} intervals={props.users[i].intervals} />;
-			let nameDiv = <div className="NameListing" key={i} style={{borderLeftColor: props.users[i].color}}>{props.users[i].id}</div>;
-
+	for (let i = 0; i < users.length; i++) {
+		if (users[i].intervals.length > 0) {
+			let intervalDiv = <Intervals key={i} color={users[i].color} intervals={users[i].intervals} />;
+			let nameDiv = <div className="name-listing" key={i} style={{borderLeftColor: users[i].color}}>{users[i].id}</div>;
 
 			// We want to put "others" at bottom of list
-			if (props.users[i].id === "Other") {
+			if (users[i].id === "Other") {
 				others.push(nameDiv);
 				otherIntervals.push(intervalDiv);
 				continue;
@@ -36,16 +35,17 @@ function Day(props) {
 	intervals.push(...otherIntervals);
 
 	return (
-		<Card className="Day" elevation={4}>
+		<Card className="day" elevation={4}>
 			<CardContent>
-				<Typography className="Date" variant="h6">{props.date}</Typography>
-				<div className="Content">
-					<div className="Names" style={{height: (names.length * 1.75) + "em"}}>
+				<Typography className="date" variant="h6">{props.date}</Typography>
+				<div className="content">
+					<div className="names" style={{height: (names.length * 1.75) + "em"}}>
 						{names}
 					</div>
-					<div className="BarGraphs">
+					<div className="bar-graphs">
 						{intervals}
 					</div>
+					{/*<div className="label" />*/}
 				</div>
 			</CardContent>
 		</Card>

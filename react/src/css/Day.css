@@ -1,20 +1,21 @@
 
-.Day {
+.day {
 	margin-bottom: 0.5em;
 	background: var(--elements) !important;
 	color: var(--text) !important;
 	transition: var(--background-transition), var(--color-transition) !important;
 }
 
-.Day .Date {
+.day .date {
 	margin-bottom: 0.75em !important;
 }
 
-.Day .Content {
+.day .content {
+	position: relative;
 	display: flex;
 }
 
-.Day .Names, .Day .BarGraphs {
+.day .names, .day .bar-graphs {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
@@ -23,19 +24,29 @@
 	font-family: Roboto, sans-serif;
 }
 
-.Day .Names {
+.day .names {
 	margin-right: 0.5em;
 	width: 5em;
 }
 
-.Day .NameListing {
+.day .name-listing {
 	border-left-width: 0.25em;
 	border-left-style: solid;
 	padding-left: 0.25em;
 }
 
-.Day .BarGraphs {
+.day .bar-graphs {
 	border-left: 1px solid var(--text);
 	border-right: 1px solid var(--text);
 	width: 100%;
+	z-index: 2;
+}
+
+.day .label {
+	position: absolute;
+	left: 50%;
+	z-index: 1;
+	height: 100%;
+	border-left: 1px dashed white;
+	width: 0;
 }
