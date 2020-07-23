@@ -97,7 +97,7 @@ class AnalyticsPage extends React.Component {
 
 
 	render() {
-		const users = this.state.users.map(username => <MenuItem value={username}>{username}</MenuItem>);
+		const users = this.state.users.map(username => <MenuItem key={username} value={username}>{username}</MenuItem>);
 		const data = this.state.loading ? "loading" : this.state.results.map((line, i) => <div key={i}>{line}</div>);
 
 		return (
