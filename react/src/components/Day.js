@@ -39,9 +39,10 @@ function Day(props) {
 	markers.push(<span className="label" style={{ left: '-0.9em' }}>0:00</span>);
 	for (let i = 1; i < numMarkers; i++) {
 		const left = (i * 100 / numMarkers);
+		const negativeOffset = (i < 5) ? -0.75 : -1.25;
 		markers.push(
 			<>
-				<span className="label" style={{ left: `calc(-1.25em + ${left}%)` }}>{i * 2}:00</span>
+				<span className="label" style={{ left: `calc(${negativeOffset}em + ${left}%)` }}>{i * 2}:00</span>
 				<div className={i % 2 === 0 ? 'marker bold' : 'marker'} style={{ left: left + '%' }} />
 			</>
 		);
