@@ -1,6 +1,6 @@
 
 .day {
-	margin-bottom: 0.5em;
+	margin-bottom: 1em;
 	background: var(--elements) !important;
 	color: var(--text) !important;
 	transition: var(--background-transition), var(--color-transition) !important;
@@ -13,15 +13,16 @@
 .day .content {
 	position: relative;
 	display: flex;
+	margin-bottom: 1em;
+	margin-right: 1em;
 }
 
 .day .names, .day .bar-graphs {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	padding-bottom: 0.5em;
 	padding-top: 0.5em;
-	font-family: Roboto, sans-serif;
+	padding-bottom: 0.5em;
 }
 
 .day .names {
@@ -36,17 +37,28 @@
 }
 
 .day .bar-graphs {
+	position: relative;
 	border-left: 1px solid var(--text);
 	border-right: 1px solid var(--text);
 	width: 100%;
 	z-index: 2;
 }
 
-.day .label {
+.day .marker {
 	position: absolute;
-	left: 50%;
+	top: 0;
 	z-index: 1;
 	height: 100%;
-	border-left: 1px dashed white;
+	border-left: 1px dashed var(--border-color-bold);
 	width: 0;
+}
+
+.day .marker.bold {
+	border-left: 1px dashed var(--border-color-bolder);
+}
+
+.day .label {
+	position: absolute;
+	bottom: -1.5em;
+	z-index: 1;
 }

@@ -7,5 +7,6 @@
 
 .intervals .bar {
 	position: absolute;
+	z-index: 5;
 	height: 100%;
 }

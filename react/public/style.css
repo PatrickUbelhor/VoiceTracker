@@ -27,6 +27,9 @@ body {
 	--text: var(--black);
 	--header_text: var(--white);
 	--primary: var(--blue);
+	--border-color: rgba(0, 0, 0, 0.12);
+	--border-color-bold: rgba(0, 0, 0, 0.24);
+	--border-color-bolder: rgba(0, 0, 0, 0.72);
 }
 
 .dark {
@@ -36,4 +39,7 @@ body {
 	--text: var(--white);
 	--header_text: var(--white);
 	--primary: var(--blue);
+	--border-color: rgba(255, 255, 255, 0.12);
+	--border-color-bold: rgba(255, 255, 255, 0.24);
+	--border-color-bolder: rgba(255, 255, 255, 0.72);
 }
