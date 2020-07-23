@@ -1,11 +1,15 @@
 import '../css/Header.css';
 import React from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import Button from '@material-ui/core/Button';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import { useHistory } from 'react-router-dom';
-import Icon from '@material-ui/core/Icon';
+import {
+	AppBar,
+	Button,
+	Icon,
+	IconButton,
+	Toolbar,
+	Tooltip,
+	Typography
+} from '@material-ui/core';
 
 function Header(props) {
 
@@ -46,7 +50,11 @@ function Header(props) {
 				<Button className="tabButton" variant="contained" color="default" onClick={gotoAnalytics}>
 					Analytics
 				</Button>
-				<Icon id="lightModeIcon" color="inherit" onClick={invertTheme}>cloud</Icon>
+				<Tooltip title="Toggle light/dark mode">
+					<IconButton className="lightModeButton" onClick={invertTheme}>
+						<Icon color="inherit" >cloud</Icon>
+					</IconButton>
+				</Tooltip>
 			</Toolbar>
 		</AppBar>
 	);
