@@ -1,12 +1,13 @@
 import '../css/Markers.css';
 import React from 'react';
 
-function Markers({ numZones }) {
+function Markers(props) {
 
 	let markers = [];
+	const numMarkers = 12;
 	markers.push(<span key="label0" className="label" style={{ left: '-0.9em' }}>0:00</span>);
-	for (let i = 1; i < numZones; i++) {
-		const left = (i * 100 / numZones);
+	for (let i = 1; i < numMarkers; i++) {
+		const left = (i * 100 / numMarkers);
 		const negativeOffset = (i < 5) ? -0.75 : -1.25; // Used to align smaller labels to marker
 		markers.push(
 			// TODO The key of the label should be named after the time
@@ -16,7 +17,7 @@ function Markers({ numZones }) {
 			</React.Fragment>
 		);
 	}
-	markers.push(<span key={'label' + numZones} className="label" style={{ left: 'calc(-1.25em + 100%)' }}>24:00</span>);
+	markers.push(<span key={'label' + numMarkers} className="label" style={{ left: 'calc(-1.25em + 100%)' }}>24:00</span>);
 
 	return <>{markers}</>;
 }
