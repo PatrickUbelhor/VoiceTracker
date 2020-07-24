@@ -1,8 +1,11 @@
 import '../css/Histogram.css';
 import React from 'react';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
+import Markers from './Markers';
+import {
+	Card,
+	CardContent,
+	Typography
+} from '@material-ui/core';
 
 function Histogram(props) {
 
@@ -13,7 +16,7 @@ function Histogram(props) {
 	let bars = [];
 	for (let i = 0; i < props.data.length; i++) {
 		let barDiv = (
-			<div key={i} className="HistogramBar" style={{
+			<div key={i} className="histogram-bar" style={{
 				height: 100 * props.data[i] / MAX_BAR_HEIGHT + '%'
 			}} />
 		);
@@ -22,11 +25,12 @@ function Histogram(props) {
 	}
 
 	return (
-		<Card className="Histogram" elevation={4}>
-			<CardContent>
-				<Typography className="HistogramTitle" variant="h6">{props.name}</Typography>
-				<div className="HistogramContent">
+		<Card className="histogram" elevation={4}>
+			<CardContent className="histogram-content-wrapper">
+				<Typography className="histogram-title" variant="h6">{props.name}</Typography>
+				<div className="histogram-content">
 					{bars}
+					<Markers />
 				</div>
 			</CardContent>
 		</Card>

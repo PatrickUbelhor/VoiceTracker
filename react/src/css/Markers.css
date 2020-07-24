@@ -1,0 +1,19 @@
+
+.marker {
+	position: absolute;
+	top: 0;
+	z-index: 1;
+	height: 100%;
+	border-left: 1px dashed var(--border-color-bold);
+	width: 0;
+}
+
+.marker.bold {
+	border-left: 1px dashed var(--border-color-bolder);
+}
+
+.label {
+	position: absolute;
+	bottom: -1.5em;
+	z-index: 1;
+}

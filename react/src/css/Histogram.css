@@ -1,21 +1,28 @@
 
-.Histogram {
-	margin-bottom: 0.5em;
+.histogram {
+	margin-bottom: 1em;
 	background: var(--elements) !important;
 	color: var(--text) !important;
 	transition: var(--background-transition), var(--color-transition) !important;
 }
 
-.HistogramContent {
+.histogram-content-wrapper {
+	padding-left: calc(16px + 0.75em) !important;
+	padding-right: calc(16px + 1.25em) !important;
+}
+
+.histogram-content {
+	position: relative;
 	display: flex;
 	flex-direction: row;
 	align-items: flex-end;
 	height: 20em;
 	width: 100%;
 	border: 0.05em solid var(--text);
+	margin-bottom: 1em;
 }
 
-.HistogramBar {
+.histogram-bar {
 	background-color: var(--primary);
 	flex-grow: 1;
 }
