@@ -12,7 +12,7 @@ function Markers(props) {
 		markers.push(
 			// TODO The key of the label should be named after the time
 			<React.Fragment key={'label' + i}>
-				<span className="label" style={{ left: `calc(-1.25em + ${left}%)` }}>{i * 2}:00</span>
+				<span className="label" style={{ left: `calc(${negativeOffset}em + ${left}%)` }}>{i * 2}:00</span>
 				<div className={i % 2 === 0 ? 'marker bold' : 'marker'} style={{ left: left + '%' }} />
 			</React.Fragment>
 		);
