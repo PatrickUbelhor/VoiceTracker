@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import team.gif.model.Day;
 import team.gif.model.Histogram;
+import team.gif.model.Stats;
 import team.gif.service.DataLoaderService;
 import team.gif.service.DataStorageService;
 import team.gif.service.SnowflakeConverter;
@@ -85,12 +86,11 @@ public class Controller {
 	
 	
 	@GetMapping("/analytics")
-	public String getAnalytics(
+	public List<Stats> getAnalytics(
 			@RequestParam(defaultValue = "30") Integer numDays,
-			@RequestParam() String username1,
-			@RequestParam() String username2
+			@RequestParam() String username
 	) {
-		return storage.getAnalysis(numDays, username1, username2);
+		return storage.getAnalysis(numDays, username);
 	}
 	
 	

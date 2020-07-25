@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import team.gif.model.Day;
 import team.gif.model.Histogram;
 import team.gif.model.Interval;
+import team.gif.model.Stats;
 import team.gif.model.User;
 
 import java.util.Arrays;
@@ -50,81 +51,6 @@ public class DataStorageService {
 	}
 	
 	
-	public String getAnalysis(int numDays, String username1, String username2) {
-		int totalTime1 = 0;
-		int totalTime2 = 0;
-		int totalTimeBoth = 0;
-		int totalTime = 1440 * numDays;
-		
-		numDays = Math.min(numDays, this.days.size());
-		List<Day> days = this.days.subList(1, numDays + 1);
-		for (Day day : days) {
-			User user1 = null;
-			User user2 = null;
-			for (User user : day.getUsers()) {
-				if (user.getId().equals(username1)) {
-					user1 = user;
-				}
-				
-				if (user.getId().equals(username2)) {
-					user2 = user;
-				}
-			}
-			
-			if (user1 != null) {
-				for (Interval interval : user1.getIntervals()) {
-					totalTime1 += interval.getEnd() - interval.getStart();
-				}
-			}
-			
-			if (user2 != null) {
-				for (Interval interval : user2.getIntervals()) {
-					totalTime2 += interval.getEnd() - interval.getStart();
-				}
-			}
-			
-			if (user1 == null || user2 == null) continue;
-			
-			// Calculate time that both were online
-			int[] userDay1 = new int[1440];
-			Arrays.fill(userDay1, 0);
-			for (Interval interval : user1.getIntervals()) {
-				for (int i = interval.getStart(); i < interval.getEnd(); i++) {
-					userDay1[i] = 1;
-				}
-			}
-			
-			int[] userDay2 = new int[1440];
-			Arrays.fill(userDay2, 0);
-			for (Interval interval : user2.getIntervals()) {
-				for (int i = interval.getStart(); i < interval.getEnd(); i++) {
-					userDay2[i] = 1;
-				}
-			}
-			
-			for (int i = 0; i < 1440; i++) {
-				totalTimeBoth += (userDay1[i] + userDay2[i]) / 2;
-			}
-		}
-		
-		double probOne = ((double) totalTime1) / ((double) totalTime);
-		double probTwo = ((double) totalTime2) / ((double) totalTime);
-		double probBoth = ((double) totalTimeBoth) / ((double) totalTime);
-		double probOneGivenTwo = probBoth / probTwo;
-		double probTwoGivenOne = probBoth / probOne;
-		
-		String output =
-				String.format("P(%s) = %f\n", username1, probOne)
-				+ String.format("P(%s) = %f\n", username2, probTwo)
-				+ String.format("P(%s, %s) = %f\n", username1, username2, probBoth)
-				+ String.format("P(%s | %s) = %f\n", username1, username2, probOneGivenTwo)
-				+ String.format("P(%s | %s) = %f\n", username2, username1, probTwoGivenOne)
-				;
-		
-		return output;
-	}
-
-	
 	@Scheduled(cron = "0 0 0 ? * *")
 	public void addNewDay() {
 		// Any intervals that haven't explicitly been given an end time will default to 1440 (end of day)
@@ -150,15 +76,78 @@ public class DataStorageService {
 	}
 	
 	
+	public List<Stats> getAnalysis(int numDays, String username) {
+		HashMap<String, Integer> time = new HashMap<>(); // Time each individual user is in call
+		HashMap<String, Integer> jointTime = new HashMap<>(); // Time users have spent with origin user
+		
+		numDays = Math.min(numDays, this.days.size());
+		List<Day> days = this.days.subList(1, numDays + 1);
+		for (Day day : days) {
+			HashMap<String, Integer[]> schedules = new HashMap<>();
+			
+			// Get all users' schedules as arrays
+			for (User user : day.getUsers()) {
+				Integer[] schedule = new Integer[1440];
+				Arrays.fill(schedule, 0);
+				
+				for (Interval interval : user.getIntervals()) {
+					Arrays.fill(schedule, interval.getStart(), interval.getEnd(), 1);
+				}
+				
+				schedules.put(user.getId(), schedule);
+			}
+			
+			// Compute daily time and joint time
+			Integer[] zeros = new Integer[1440];
+			Arrays.fill(zeros, 0);
+			Integer[] originSchedule = schedules.getOrDefault(username, zeros);
+			for (String key : schedules.keySet()) {
+				Integer[] schedule = schedules.get(key);
+				int subTime = 0;
+				int subJointTime = 0;
+				time.putIfAbsent(key, 0);
+				jointTime.putIfAbsent(key, 0);
+				
+				for (int i = 0; i < 1440; i++) {
+					subTime += schedule[i];
+					subJointTime += (schedule[i] + originSchedule[i]) / 2;
+				}
+				
+				time.put(key, time.get(key) + subTime);
+				jointTime.put(key, jointTime.get(key) + subJointTime);
+			}
+		}
+		
+		// Compute dependent statistics for origin user
+		// NOTE: this is the only part that needs to be altered to efficiently get stats for evey user to every other user
+		int totalTime = 1440 * numDays;
+		double probOrigin = ((double) time.get(username)) / ((double) totalTime);
+		LinkedList<Stats> stats = new LinkedList<>();
+		for (String key : time.keySet()) {
+			if (username.equals(key)) continue; // Skip origin user
+			
+			double probTarget = ((double) time.get(key)) / ((double) totalTime);
+			double probJoint = ((double) jointTime.get(key)) / ((double) totalTime);
+			double probOriginGivenTarget = probJoint / probTarget;
+			double probTargetGivenOrigin = probJoint / probOrigin;
+			String data = String.format("P(%s) = %f\n", username, probOrigin)
+					+ String.format("P(%s) = %f\n", key, probTarget)
+					+ String.format("P(%s, %s) = %f\n", username, key, probJoint)
+					+ String.format("P(%s | %s) = %f\n", username, key, probOriginGivenTarget)
+					+ String.format("P(%s | %s) = %f\n", key, username, probTargetGivenOrigin)
+			;
+			
+			stats.push(new Stats(username, key, data));
+		}
+		
+		return stats;
+	}
+	
+	
 	public void updateHistogramCache() {
 		this.histograms7 = computeHistograms(7, 2);
 		this.histograms30 = computeHistograms(30, 5);
 		logger.info("Updated histogram cache");
-	}
-	
-	
-	public LinkedList<Histogram> computeHistograms(int numDays) {
-		return computeHistograms(numDays, 1);
 	}
 	
 	

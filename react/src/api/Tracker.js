@@ -23,8 +23,8 @@ class Tracker {
 	}
 
 
-	getAnalytics = (numDays, username1, username2) => {
-		return this.tracker.get(`analytics?numDays=${numDays}&username1=${username1}&username2=${username2}`)
+	getAnalytics = (numDays, username) => {
+		return this.tracker.get(`analytics?numDays=${numDays}&username=${username}`)
 	}
 
 }

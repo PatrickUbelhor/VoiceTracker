@@ -9,7 +9,8 @@ import {
 	InputLabel,
 	MenuItem,
 	Select,
-	TextField
+	TextField,
+	Typography
 } from '@material-ui/core';
 
 class AnalyticsPage extends React.Component {
@@ -19,8 +20,7 @@ class AnalyticsPage extends React.Component {
 
 		this.state = {
 			users: [],
-			username1: '',
-			username2: '',
+			username: '',
 			numDays: 30,
 			results: [],
 			loading: false
@@ -34,7 +34,6 @@ class AnalyticsPage extends React.Component {
 		try {
 			let usersResponse = await tracker.getUsers();
 			const users = usersResponse.data;
-			console.log(users)
 			this.setState({
 				users: users
 			});
@@ -51,14 +50,15 @@ class AnalyticsPage extends React.Component {
 	}
 
 
-	getAnalytics = async (username1, username2, numDays) => {
+	getAnalytics = async (numDays, username) => {
 		console.log('Getting analytics');
 
 		try {
 			this.setState({ loading: true });
-			let analyticsResponse = await tracker.getAnalytics(numDays, username1, username2);
+			let analyticsResponse = await tracker.getAnalytics(numDays, username);
+			let results = analyticsResponse.data.sort((a, b) => a.target.localeCompare(b.target));
 			this.setState({
-				results: analyticsResponse.data.split('\n'),
+				results: results,
 				loading: false
 			});
 		} catch (error) {
@@ -77,7 +77,7 @@ class AnalyticsPage extends React.Component {
 
 	handleSubmit = (event) => {
 		event.preventDefault()
-		this.getAnalytics(this.state.username1, this.state.username2, this.state.numDays);
+		this.getAnalytics(this.state.numDays, this.state.username);
 	};
 
 
@@ -98,53 +98,59 @@ class AnalyticsPage extends React.Component {
 
 	render() {
 		const users = this.state.users.map(username => <MenuItem key={username} value={username}>{username}</MenuItem>);
-		const data = this.state.loading ? "loading" : this.state.results.map((line, i) => <div key={i}>{line}</div>);
+
+		let userCards = [];
+		for (let i = 0; i < this.state.results.length; i++) {
+			let user = this.state.results[i];
+			let data = user.data.split('\n').map((line, i) => <div key={i}>{line}</div>);
+
+			userCards.push(
+				<Card key={user.target} className="stats-card" elevation={4}>
+					<CardContent>
+						<Typography variant="h6">{user.target}</Typography>
+						{data}
+					</CardContent>
+				</Card>
+			);
+		}
 
 		return (
-			<Card className="analytics-card" elevation={4}>
-				<CardContent>
-					<div className="analytics-form-div">
-						<form className="analytics-form" onSubmit={this.handleSubmit}>
-							<FormControl variant="outlined" margin="normal">
-								<InputLabel id="analytics-username1-label">Username1</InputLabel>
-								<Select className="analytics-user-select"
-								        name="username1"
-								        value={this.state.username1}
-								        labelId="analytics-username1-label"
-								        label="Username1"
-								        onChange={this.handleChange}
-								>
-									{users}
-								</Select>
-							</FormControl>
-							<FormControl variant="outlined" margin="normal">
-								<InputLabel id="analytics-username2-label">Username2</InputLabel>
-								<Select className="analytics-user-select"
-								        name="username2"
-								        value={this.state.username2}
-								        labelId="analytics-username2-label"
-								        label="Username2"
-								        onChange={this.handleChange}
-								>
-									{users}
-								</Select>
-							</FormControl>
-							<TextField className="analytics-input"
-							           name="numDays"
-							           value={this.state.numDays}
-							           placeholder="Number of Days"
-							           label="Number of Days"
-							           variant="outlined"
-							           type="number"
-							           margin="normal"
-							           onChange={this.handleChange}
-							/>
-							<Button className="analytics-submit-button" color="primary" type="submit" variant="contained">Submit</Button>
-						</form>
-					</div>
-					<div className="analytics-data">{data}</div>
-				</CardContent>
-			</Card>
+			<>
+				<Card className="analytics-card" elevation={4}>
+					<CardContent>
+						<div className="analytics-form-div">
+							<form className="analytics-form" onSubmit={this.handleSubmit}>
+								<FormControl variant="outlined" margin="normal">
+									<InputLabel id="analytics-username-label">Username</InputLabel>
+									<Select className="analytics-user-select"
+									        name="username"
+									        value={this.state.username}
+									        labelId="analytics-username-label"
+									        label="Username"
+									        onChange={this.handleChange}
+									>
+										{users}
+									</Select>
+								</FormControl>
+								<TextField className="analytics-input"
+								           name="numDays"
+								           value={this.state.numDays}
+								           placeholder="Number of Days"
+								           label="Number of Days"
+								           variant="outlined"
+								           type="number"
+								           margin="normal"
+								           onChange={this.handleChange}
+								/>
+								<Button className="analytics-submit-button" color="primary" type="submit" variant="contained">Submit</Button>
+							</form>
+						</div>
+					</CardContent>
+				</Card>
+				<div className="stats">
+					{this.state.loading ? <div>Loading</div> : userCards}
+				</div>
+			</>
 		);
 	}
 }

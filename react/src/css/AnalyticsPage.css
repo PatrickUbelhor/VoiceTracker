@@ -24,6 +24,16 @@
 	margin-top: 0.5em !important;
 }
 
-.analytics-data {
-	margin-top: 1em;
+.stats {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(16em, 1fr));
+	gap: 1em;
+	margin: 1em 5%;
+}
+
+.stats-card {
+	background: var(--elements) !important;
+	color: var(--text) !important;
+	transition: var(--background-transition), var(--color-transition) !important;
+	min-width: 16em;
 }
