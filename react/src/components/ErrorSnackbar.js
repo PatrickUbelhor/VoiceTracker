@@ -7,10 +7,6 @@ import ErrorIcon from '@material-ui/icons/Error';
 
 class ErrorSnackbar extends React.Component {
 
-	constructor(props) {
-		super(props);
-	}
-
 	handleClose = (event, reason) => {
 		if (reason === 'clickaway') {
 			return;
