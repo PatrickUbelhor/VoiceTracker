@@ -23,11 +23,9 @@ class App extends React.Component {
 
 	// Used to set the message displayed on the snackbar
 	setSnackbar = (value) => {
-		this.setState((state, props) => {
-			return {
-				message: value
-			}
-		})
+		this.setState({
+			message: value
+		});
 	};
 
 

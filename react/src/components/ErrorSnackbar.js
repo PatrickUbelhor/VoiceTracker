@@ -9,10 +9,6 @@ class ErrorSnackbar extends React.Component {
 
 	constructor(props) {
 		super(props);
-
-		this.state = {
-			resetMessage: props.resetMessage,
-		}
 	}
 
 	handleClose = (event, reason) => {
@@ -20,7 +16,7 @@ class ErrorSnackbar extends React.Component {
 			return;
 		}
 
-		this.state.resetMessage(null);
+		this.props.resetMessage(null);
 	};
 
 	render() {
