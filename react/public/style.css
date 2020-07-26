@@ -1,5 +1,7 @@
 
 :root {
+	font-family: Roboto, sans-serif;
+
 	--white: #FFFFFF;
 	--blue: #3f51b5;
 	--grey_dark: #23272A;
@@ -14,7 +16,6 @@ body {
 	background: var(--wallpaper);
 	color: var(--text);
 	transition: var(--background-transition), var(--color-transition);
-	font-family: Roboto, sans-serif;
 
 	--background-transition: background 500ms ease-in-out;
 	--color-transition: color 1000ms ease-in-out;

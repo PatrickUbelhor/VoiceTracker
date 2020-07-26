@@ -1,9 +1,10 @@
 import '../css/Header.css';
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import {
+	NavLink,
+} from 'react-router-dom';
 import {
 	AppBar,
-	Button,
 	Icon,
 	IconButton,
 	Toolbar,
@@ -11,45 +12,41 @@ import {
 	Typography
 } from '@material-ui/core';
 
+
+function invertTheme() {
+	const body = document.body;
+
+	if (body.classList.replace('light', 'dark')) {
+		return;
+	}
+
+	body.classList.replace('dark', 'light');
+}
+
+
 function Header(props) {
-
-	let history = useHistory();
-
-	function gotoDays() {
-		history.push('/');
-	}
-
-	function gotoHistograms() {
-		history.push('/histograms');
-	}
-
-	function gotoAnalytics() {
-		history.push('/analytics');
-	}
-
-	function invertTheme() {
-		const body = document.body;
-
-		if (body.classList.replace('light', 'dark')) {
-			return;
-		}
-
-		body.classList.replace('dark', 'light');
-	}
-
 	return (
 		<AppBar id="appBar" position="sticky">
 			<Toolbar>
 				<Typography id="home" variant="h5" color="inherit">Voice Tracker</Typography>
-				<Button className="tabButton" variant="contained" color="default" onClick={gotoDays}>
-					Days
-				</Button>
-				<Button className="tabButton" variant="contained" color="default" onClick={gotoHistograms}>
-					Histograms
-				</Button>
-				<Button className="tabButton" variant="contained" color="default" onClick={gotoAnalytics}>
-					Analytics
-				</Button>
+				<ul className="header-nav">
+					<li className="header-nav-item">
+						<NavLink exact to="/" className="header-nav-link" activeClassName="header-nav-link-active">
+							<span className="header-nav-link-text">DAYS</span>
+						</NavLink>
+					</li>
+					<li className="header-nav-item">
+						<NavLink to="/histograms" className="header-nav-link" activeClassName="header-nav-link-active">
+							<span className="header-nav-link-text">HISTOGRAMS</span>
+						</NavLink>
+					</li>
+					<li className="header-nav-item">
+						<NavLink to="/analytics" className="header-nav-link" activeClassName="header-nav-link-active">
+							<span className="header-nav-link-text">ANALYTICS</span>
+						</NavLink>
+					</li>
+				</ul>
+
 				<Tooltip title="Toggle light/dark mode">
 					<IconButton className="lightModeButton" onClick={invertTheme}>
 						<Icon color="inherit" >cloud</Icon>

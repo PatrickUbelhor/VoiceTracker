@@ -1,17 +1,50 @@
 #appBar {
 	margin-bottom: 1.4em;
-	padding-right: 1em;
 	color: var(--header_text);
 	background: var(--header);
+	transition: var(--background-transition) !important;
 }
 
 #home {
 	/*cursor: pointer;*/
-	margin-right: 2em;
+	margin-right: 24px;
 }
 
-#appBar .tabButton {
-	margin-left: 1em;
+.header-nav {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.header-nav-item {}
+
+.header-nav-link {
+	box-sizing: border-box;
+	text-decoration: none;
+	color: inherit;
+	display: flex;
+	align-items: center;
+	height: 64px;
+	padding-left: 16px;
+	padding-right: 16px;
+	cursor: pointer;
+	transition: background-color 100ms ease-in-out;
+}
+
+.header-nav-link-active {
+	border-bottom: 2px solid pink;
+}
+
+.header-nav-link:hover {
+	background-color: var(--grey);
+}
+
+.header-nav-link-text {
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .lightModeButton {
