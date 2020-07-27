@@ -5,9 +5,35 @@
 	transition: var(--background-transition) !important;
 }
 
+.drawer-content {
+	height: 100%;
+	min-width: 250px;
+	padding-left: var(--content-margin);
+	padding-right: var(--content-margin);
+	padding-top: 0.5em;
+	color: var(--text);
+	background: var(--elements);
+	transition: var(--background-transition) var(--color-transition);
+}
+
+.drawer-divider {
+	height: 0;
+	width: 100%;
+	border-bottom: 1px solid var(--border-color-bold);
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
 #home {
 	/*cursor: pointer;*/
 	margin-right: var(--content-margin);
+}
+
+.menu-button {
+	position: relative;
+	left: -12px;
+	margin-right: -8px !important;
+	color: var(--header_text) !important;
 }
 
 .header-nav {
