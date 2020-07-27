@@ -1,0 +1,21 @@
+
+.wrapper {
+	min-height: 100vh;
+}
+
+.footer {
+	display: flex;
+	flex-direction: row;
+	font-size: 0.75rem;
+	color: var(--border-color-bold);
+	width: 100%;
+}
+
+.version {
+	margin-right: var(--content-margin);
+	margin-left: auto;
+}
+
+.copyright {
+	margin-left: var(--content-margin);
+}
