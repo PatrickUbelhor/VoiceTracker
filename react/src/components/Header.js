@@ -80,18 +80,22 @@ function Header(props) {
 	const drawer = (
 		<Drawer className="drawer" anchor="left" open={open} onClose={toggleDrawer(false)}>
 			<div className="drawer-content">
-				{title}
-				<div>v{process.env.REACT_APP_VERSION}</div>
+				<div className="drawer-header">
+					{title}
+					<div>v{process.env.REACT_APP_VERSION}</div>
+				</div>
 				<div className="drawer-divider" />
-				<NavLink exact to="/" className="header-nav-link" activeClassName="header-nav-link-active">
-					<span className="header-nav-link-text">DAYS</span>
-				</NavLink>
-				<NavLink to="/histograms" className="header-nav-link" activeClassName="header-nav-link-active">
-					<span className="header-nav-link-text">HISTOGRAMS</span>
-				</NavLink>
-				<NavLink to="/analytics" className="header-nav-link" activeClassName="header-nav-link-active">
-					<span className="header-nav-link-text">ANALYTICS</span>
-				</NavLink>
+				<ul className="drawer-nav">
+					<NavLink exact to="/" className="drawer-nav-link" activeClassName="drawer-nav-link-active" onClick={toggleDrawer(false)}>
+						<div className="drawer-nav-link-text">Days</div>
+					</NavLink>
+					<NavLink to="/histograms" className="drawer-nav-link" activeClassName="drawer-nav-link-active" onClick={toggleDrawer(false)}>
+						<div className="drawer-nav-link-text">Histograms</div>
+					</NavLink>
+					<NavLink to="/analytics" className="drawer-nav-link" activeClassName="drawer-nav-link-active" onClick={toggleDrawer(false)}>
+						<div className="drawer-nav-link-text">Analytics</div>
+					</NavLink>
+				</ul>
 			</div>
 		</Drawer>
 	);

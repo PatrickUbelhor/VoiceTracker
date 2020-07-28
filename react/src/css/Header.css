@@ -5,25 +5,6 @@
 	transition: var(--background-transition) !important;
 }
 
-.drawer-content {
-	height: 100%;
-	min-width: 250px;
-	padding-left: var(--content-margin);
-	padding-right: var(--content-margin);
-	padding-top: 0.5em;
-	color: var(--text);
-	background: var(--elements);
-	transition: var(--background-transition) var(--color-transition);
-}
-
-.drawer-divider {
-	height: 0;
-	width: 100%;
-	border-bottom: 1px solid var(--border-color-bold);
-	margin-top: 0.5em;
-	margin-bottom: 0.5em;
-}
-
 #home {
 	/*cursor: pointer;*/
 	margin-right: var(--content-margin);
@@ -76,4 +57,48 @@
 .lightModeButton {
 	margin-left: auto !important;
 	color: var(--header_text) !important;
+}
+
+.drawer-content {
+	height: 100%;
+	min-width: 250px;
+	color: var(--text);
+	background: var(--elements);
+	transition: var(--background-transition) var(--color-transition);
+}
+
+.drawer-header {
+	box-sizing: border-box;
+	padding: 0.5em var(--content-margin);
+	height: var(--header-height);
+}
+
+.drawer-divider {
+	height: 0;
+	width: 100%;
+	border-bottom: 1px solid var(--border-color-bold);
+	/*margin-top: 0.5em;*/
+	/*margin-bottom: 0.5em;*/
+}
+
+.drawer-nav {
+	display: flex;
+	flex-direction: column;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.drawer-nav-link {
+	text-decoration: none;
+	color: inherit;
+	padding: 16px var(--content-margin);
+}
+
+.drawer-nav-link-active {
+	background-color: var(--border-color);
+}
+
+.drawer-nav-link:hover {
+	background-color: var(--border-color-bold);
 }
