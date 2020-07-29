@@ -47,7 +47,7 @@ function Day(props) {
 					</div>
 					<div className="bar-graphs">
 						{intervals}
-						<Markers />
+						<Markers variant="percent" />
 					</div>
 				</div>
 			</CardContent>

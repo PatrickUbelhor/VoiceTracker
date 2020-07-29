@@ -30,7 +30,7 @@ function Histogram(props) {
 				<Typography className="histogram-title" variant="h6">{props.name}</Typography>
 				<div className="histogram-content">
 					{bars}
-					<Markers />
+					<Markers variant="time" />
 				</div>
 			</CardContent>
 		</Card>
