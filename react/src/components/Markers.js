@@ -19,11 +19,11 @@ const timeLabels = [
 
 const percentLabels = [
 	{ label: '0%', offset: -0.25 },
-	{ label: '20%', offset: -0.5 },
-	{ label: '40%', offset: -0.5 },
-	{ label: '60%', offset: -0.5 },
-	{ label: '80%', offset: -0.5 },
-	{ label: '100%', offset: -0.5 }
+	{ label: '20%', offset: -0.55 },
+	{ label: '40%', offset: -0.55 },
+	{ label: '60%', offset: -0.55 },
+	{ label: '80%', offset: -0.55 },
+	{ label: '100%', offset: -0.80 }
 ];
 
 function Markers(props) {

@@ -7,7 +7,7 @@
 }
 
 .histogram-content-wrapper {
-	padding-left: calc(16px + 2em) !important;
+	padding-left: calc(16px + 2.5em) !important;
 	padding-right: calc(16px + 1.25em) !important;
 }
 

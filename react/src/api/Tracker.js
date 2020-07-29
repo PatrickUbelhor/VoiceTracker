@@ -3,8 +3,8 @@ import axios from 'axios';
 class Tracker {
 
 	tracker = axios.create({
-		baseURL: '/api'
-		// baseURL: 'https://voicetracker.patrickubelhor.com/api'
+		// baseURL: '/api'
+		baseURL: 'https://voicetracker.patrickubelhor.com/api'
 	});
 
 

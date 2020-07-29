@@ -28,7 +28,7 @@
 }
 
 .label-horizontal {
-	left: -1.5em;
+	right: calc(100% + 0.25em);
 }
 
 .label-vertical {
