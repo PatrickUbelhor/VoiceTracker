@@ -1,23 +1,88 @@
 import '../css/Markers.css';
 import React from 'react';
 
+const timeLabels = [
+	{ label: '0:00', offset: -0.9 },
+	{ label: '2:00', offset: -0.75 },
+	{ label: '4:00', offset: -0.75 },
+	{ label: '6:00', offset: -0.75 },
+	{ label: '8:00', offset: -0.75 },
+	{ label: '10:00', offset: -1.25 },
+	{ label: '12:00', offset: -1.25 },
+	{ label: '14:00', offset: -1.25 },
+	{ label: '16:00', offset: -1.25 },
+	{ label: '18:00', offset: -1.25 },
+	{ label: '20:00', offset: -1.25 },
+	{ label: '22:00', offset: -1.25 },
+	{ label: '24:00', offset: -1.25 }
+];
+
+const percentLabels = [
+	{ label: '0%', offset: -0.25 },
+	{ label: '20%', offset: -0.55 },
+	{ label: '40%', offset: -0.55 },
+	{ label: '60%', offset: -0.55 },
+	{ label: '80%', offset: -0.55 },
+	{ label: '100%', offset: -0.80 }
+];
+
 function Markers(props) {
 
+	// Default direction to horizontal
+	let offsetDirection = 'left'
+	let direction = 'vertical';
+	if (props.direction && props.direction === 'horizontal') {
+		offsetDirection = 'bottom';
+		direction = 'horizontal';
+	}
+
+	let labels;
+	switch (props.variant) {
+		case 'time':
+			labels = timeLabels;
+			break;
+		case 'percent':
+			labels = percentLabels;
+			break;
+		default:
+			labels = timeLabels;
+	}
+
 	let markers = [];
-	const numMarkers = 12;
-	markers.push(<span key="label0" className="label" style={{ left: '-0.9em' }}>0:00</span>);
-	for (let i = 1; i < numMarkers; i++) {
-		const left = (i * 100 / numMarkers);
-		const negativeOffset = (i < 5) ? -0.75 : -1.25; // Used to align smaller labels to marker
+
+	// Insert left label
+	markers.push(
+		<span key="label0"
+		      className={`label label-${direction}`}
+		      style={{ [offsetDirection]: labels[0].offset + 'em' }}>
+			{labels[0].label}
+		</span>
+	);
+
+	// Insert middle lines + labels
+	for (let i = 1; i < labels.length - 1; i++) {
+		const left = (i * 100 / (labels.length - 1));
 		markers.push(
-			// TODO The key of the label should be named after the time
-			<React.Fragment key={'label' + i}>
-				<span className="label" style={{ left: `calc(${negativeOffset}em + ${left}%)` }}>{i * 2}:00</span>
-				<div className={i % 2 === 0 ? 'marker bold' : 'marker'} style={{ left: left + '%' }} />
+			<React.Fragment key={labels[i].label}>
+				<span className={`label label-${direction}`}
+				      style={{ [offsetDirection]: `calc(${labels[i].offset}em + ${left}%)` }}>
+					{labels[i].label}
+				</span>
+				<div className={i % 2 === 0 && labels.length > 6 ? `marker marker-${direction} bold` : `marker marker-${direction}`}
+				     style={{ [offsetDirection]: left + '%' }}
+				/>
 			</React.Fragment>
 		);
 	}
-	markers.push(<span key={'label' + numMarkers} className="label" style={{ left: 'calc(-1.25em + 100%)' }}>24:00</span>);
+
+	// Insert right label
+	const lastLabel = labels[labels.length - 1];
+	markers.push(
+		<span key={lastLabel.label}
+		      className={`label label-${direction}`}
+		      style={{ [offsetDirection]: `calc(${lastLabel.offset}em + 100%)` }}>
+			{lastLabel.label}
+		</span>);
 
 	return <>{markers}</>;
 }

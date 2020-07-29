@@ -47,7 +47,7 @@ function Day(props) {
 					</div>
 					<div className="bar-graphs">
 						{intervals}
-						<Markers />
+						<Markers variant="time" direction="vertical" />
 					</div>
 				</div>
 			</CardContent>
