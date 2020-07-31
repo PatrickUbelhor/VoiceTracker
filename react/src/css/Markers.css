@@ -19,7 +19,7 @@
 }
 
 .marker.bold {
-	border-color: 1px dashed var(--border-color-bolder);
+	/*border-color: var(--border-color-bolder);*/
 }
 
 .label {
