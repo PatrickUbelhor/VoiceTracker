@@ -6,6 +6,7 @@
 	width: 50%;
 	margin-left: auto;
 	margin-right: auto;
+	margin-bottom: 1em;
 }
 
 .analytics-form {
@@ -22,18 +23,4 @@
 
 .analytics-submit-button {
 	margin-top: 0.5em !important;
-}
-
-.stats {
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(18em, 1fr));
-	gap: 1em;
-	margin: 1em var(--content-margin);
-}
-
-.stats-card {
-	background: var(--elements) !important;
-	color: var(--text) !important;
-	transition: var(--background-transition), var(--color-transition) !important;
-	min-width: 18em;
 }

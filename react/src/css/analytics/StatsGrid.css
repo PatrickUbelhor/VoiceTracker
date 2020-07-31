@@ -1,0 +1,14 @@
+
+.stats-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(18em, 1fr));
+	gap: 1em;
+	margin: 1em var(--content-margin);
+}
+
+.stats-card {
+	background: var(--elements) !important;
+	color: var(--text) !important;
+	transition: var(--background-transition), var(--color-transition) !important;
+	min-width: 18em;
+}

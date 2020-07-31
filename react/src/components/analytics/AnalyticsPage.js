@@ -1,6 +1,6 @@
-import '../css/AnalyticsPage.css';
+import '../../css/analytics/AnalyticsPage.css';
 import React from 'react';
-import tracker from '../api/Tracker';
+import tracker from '../../api/Tracker';
 import {
 	Button,
 	Card,
@@ -9,15 +9,9 @@ import {
 	InputLabel,
 	MenuItem,
 	Select,
-	Table,
-	TableBody,
-	TableContainer,
-	TableHead,
-	TableRow,
-	TableCell,
-	TextField,
-	Typography
+	TextField
 } from '@material-ui/core';
+import StatsComponentSelector from './StatsComponentSelector';
 
 class AnalyticsPage extends React.Component {
 
@@ -35,7 +29,7 @@ class AnalyticsPage extends React.Component {
 
 
 	getUsers = async () => {
-		console.log("Getting users");
+		console.log('Getting users');
 
 		try {
 			let usersResponse = await tracker.getUsers();
@@ -53,7 +47,7 @@ class AnalyticsPage extends React.Component {
 			console.log('An unknown error has occurred');
 			this.props.setErrMsg('Something went wrong getting the list of users');
 		}
-	}
+	};
 
 
 	getAnalytics = async (numDays, username) => {
@@ -82,7 +76,7 @@ class AnalyticsPage extends React.Component {
 
 
 	handleSubmit = (event) => {
-		event.preventDefault()
+		event.preventDefault();
 		this.getAnalytics(this.state.numDays, this.state.username);
 	};
 
@@ -105,34 +99,8 @@ class AnalyticsPage extends React.Component {
 	render() {
 		const users = this.state.users.map(username => <MenuItem key={username} value={username}>{username}</MenuItem>);
 
-		let userCards = [];
-		let rows = [];
-		for (let i = 0; i < this.state.results.length; i++) {
-			let user = this.state.results[i];
-			let data = user.data.split('\n').map((line, i) => <div key={i}>{line}</div>);
-
-			userCards.push(
-				<Card key={user.target} className="stats-card" elevation={4}>
-					<CardContent>
-						<Typography variant="h6">{user.target}</Typography>
-						{data}
-					</CardContent>
-				</Card>
-			);
-
-			rows.push(
-				<TableRow key={user.target}>
-					<TableCell align="left">{user.target}</TableCell>
-					<TableCell align="left">{data[1]}</TableCell>
-					<TableCell align="left">{data[2]}</TableCell>
-					<TableCell align="left">{data[3]}</TableCell>
-					<TableCell align="left">{data[4]}</TableCell>
-				</TableRow>
-			);
-		}
-
 		return (
-			<>
+			<React.Fragment>
 				<Card className="analytics-card" elevation={4}>
 					<CardContent>
 						<div className="analytics-form-div">
@@ -145,8 +113,7 @@ class AnalyticsPage extends React.Component {
 									        labelId="analytics-username-label"
 									        label="Username"
 									        onChange={this.handleChange}
-									>
-										{users}
+									>{users}
 									</Select>
 								</FormControl>
 								<TextField className="analytics-input"
@@ -159,31 +126,19 @@ class AnalyticsPage extends React.Component {
 								           margin="normal"
 								           onChange={this.handleChange}
 								/>
-								<Button className="analytics-submit-button" color="primary" type="submit" variant="contained">Submit</Button>
+								<Button className="analytics-submit-button"
+								        color="primary"
+								        type="submit"
+								        variant="contained"
+								>Submit
+								</Button>
 							</form>
 						</div>
 					</CardContent>
 				</Card>
-				<div className="stats">
-					{this.state.loading ? <div>Loading</div> : userCards}
-				</div>
-				<TableContainer>
-					<Table>
-						<TableHead>
-							<TableRow>
-								<TableCell>Name</TableCell>
-								<TableCell>P(X)</TableCell>
-								<TableCell>P({this.state.username}, X)</TableCell>
-								<TableCell>P({this.state.username} | X)</TableCell>
-								<TableCell>P(X | {this.state.username})</TableCell>
-							</TableRow>
-						</TableHead>
-						<TableBody>
-							{rows}
-						</TableBody>
-					</Table>
-				</TableContainer>
-			</>
+				{this.state.loading ? <div>Loading</div> : null}
+				<StatsComponentSelector username={this.state.username} stats={this.state.results}/>
+			</React.Fragment>
 		);
 	}
 }

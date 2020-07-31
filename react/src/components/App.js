@@ -1,6 +1,6 @@
 import '../css/App.css';
 import React from 'react';
-import AnalyticsPage from './AnalyticsPage';
+import AnalyticsPage from './analytics/AnalyticsPage';
 import DayList from './DayList';
 import ErrorSnackbar from './ErrorSnackbar';
 import Header from './Header';
