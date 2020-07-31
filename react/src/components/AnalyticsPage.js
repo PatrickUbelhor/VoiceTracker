@@ -9,6 +9,12 @@ import {
 	InputLabel,
 	MenuItem,
 	Select,
+	Table,
+	TableBody,
+	TableContainer,
+	TableHead,
+	TableRow,
+	TableCell,
 	TextField,
 	Typography
 } from '@material-ui/core';
@@ -100,6 +106,7 @@ class AnalyticsPage extends React.Component {
 		const users = this.state.users.map(username => <MenuItem key={username} value={username}>{username}</MenuItem>);
 
 		let userCards = [];
+		let rows = [];
 		for (let i = 0; i < this.state.results.length; i++) {
 			let user = this.state.results[i];
 			let data = user.data.split('\n').map((line, i) => <div key={i}>{line}</div>);
@@ -111,6 +118,16 @@ class AnalyticsPage extends React.Component {
 						{data}
 					</CardContent>
 				</Card>
+			);
+
+			rows.push(
+				<TableRow key={user.target}>
+					<TableCell align="left">{user.target}</TableCell>
+					<TableCell align="left">{data[1]}</TableCell>
+					<TableCell align="left">{data[2]}</TableCell>
+					<TableCell align="left">{data[3]}</TableCell>
+					<TableCell align="left">{data[4]}</TableCell>
+				</TableRow>
 			);
 		}
 
@@ -150,6 +167,22 @@ class AnalyticsPage extends React.Component {
 				<div className="stats">
 					{this.state.loading ? <div>Loading</div> : userCards}
 				</div>
+				<TableContainer>
+					<Table>
+						<TableHead>
+							<TableRow>
+								<TableCell>Name</TableCell>
+								<TableCell>P(X)</TableCell>
+								<TableCell>P({this.state.username}, X)</TableCell>
+								<TableCell>P({this.state.username} | X)</TableCell>
+								<TableCell>P(X | {this.state.username})</TableCell>
+							</TableRow>
+						</TableHead>
+						<TableBody>
+							{rows}
+						</TableBody>
+					</Table>
+				</TableContainer>
 			</>
 		);
 	}

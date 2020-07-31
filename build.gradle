@@ -55,7 +55,7 @@ compileJava.dependsOn copyReact
 
 node {
 	version = '14.5.0'
-	npmVersion = '6.14.5'
+	npmVersion = '6.14.7'
 	download = false
 	nodeModulesDir = file("${project.projectDir}/react")
 }

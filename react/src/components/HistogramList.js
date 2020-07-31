@@ -19,13 +19,13 @@ class HistogramList extends React.Component {
 	}
 
 
-	getHistograms = async (numDays = 30, minActiveDays = 5) => {
+	getHistograms = (numDays = 30, minActiveDays = 5) => async () => {
 		console.log('Getting histograms');
 		let histograms = null;
 		try {
 			let histoReq = await tracker.getHistograms(numDays, minActiveDays);
 			histograms = histoReq.data;
-			console.log(histoReq);
+			console.log("Got histograms");
 
 			this.setState({
 				histograms: histograms,
@@ -46,7 +46,7 @@ class HistogramList extends React.Component {
 
 
 	componentDidMount() {
-		this.getHistograms(this.state.numDays, this.state.minActiveDays);
+		this.getHistograms(this.state.numDays, this.state.minActiveDays)();
 	}
 
 
@@ -57,19 +57,16 @@ class HistogramList extends React.Component {
 
 
 		this.state.histograms.sort((a, b) => a.name.localeCompare(b.name));
-		const entries = this.state.histograms.map((histogram) => {
-
-			return (
-				<div key={histogram.name}>
-					<Histogram name={histogram.name} numDays={this.state.numDays} data={histogram.data}/>
-				</div>
-			);
-		});
+		const entries = this.state.histograms.map((histogram) => (
+			<React.Fragment key={histogram.name}>
+				<Histogram name={histogram.name} numDays={this.state.numDays} data={histogram.data}/>
+			</React.Fragment>
+		));
 
 		return (
 			<div className="HistogramList">
-				<Button className="filterButton" variant="contained" color="primary" onClick={() => this.getHistograms(7, 2)}>7</Button>
-				<Button className="filterButton" variant="contained" color="primary" onClick={() => this.getHistograms(30, 5)}>30</Button>
+				<Button className="filterButton" variant="contained" color="primary" onClick={this.getHistograms(7, 2)}>7</Button>
+				<Button className="filterButton" variant="contained" color="primary" onClick={this.getHistograms(30, 5)}>30</Button>
 				{entries}
 			</div>
 		);

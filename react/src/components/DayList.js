@@ -1,7 +1,7 @@
 import '../css/DayList.css';
 import React from 'react';
-import Day from './Day';
 import tracker from '../api/Tracker';
+import Day from './Day';
 import LoadingPage from './LoadingPage';
 
 class DayList extends React.Component {
@@ -22,7 +22,11 @@ class DayList extends React.Component {
 		try {
 			let daysReq = await tracker.getDays(newestDay, oldestDay);
 			days = daysReq.data;
-			console.log(days);
+			console.log("Got days");
+
+			this.setState({
+				days: days
+			});
 		} catch (error) {
 			if (error.response !== undefined) {
 				console.log(error.response);
@@ -32,14 +36,7 @@ class DayList extends React.Component {
 
 			console.log("An unknown error has occurred");
 			this.props.setErrMsg("Something went wrong when getting the data");
-			return;
 		}
-
-		this.setState((state, props) => {
-			return {
-				days: days
-			};
-		});
 	};
 
 
@@ -53,17 +50,14 @@ class DayList extends React.Component {
 			return <LoadingPage/>;
 		}
 
-
-		const entries = this.state.days.map((day) => {
-			return (
-				<div key={day.date}>
-					<Day date={day.date} users={day.users} />
-				</div>
-			);
-		});
+		const entries = this.state.days.map((day) => (
+			<React.Fragment key={day.date}>
+				<Day date={day.date} users={day.users} />
+			</React.Fragment>
+		));
 
 		return (
-			<div className="DayList">
+			<div className="days-list">
 				{entries}
 			</div>
 		);
