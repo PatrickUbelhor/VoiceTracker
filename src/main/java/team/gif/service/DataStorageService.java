@@ -130,11 +130,11 @@ public class DataStorageService {
 			double probJoint = ((double) jointTime.get(key)) / ((double) totalTime);
 			double probOriginGivenTarget = probJoint / probTarget;
 			double probTargetGivenOrigin = probJoint / probOrigin;
-			String data = String.format("P(%s) = %f\n", username, probOrigin)
-					+ String.format("P(%s) = %f\n", key, probTarget)
-					+ String.format("P(%s, %s) = %f\n", username, key, probJoint)
-					+ String.format("P(%s | %s) = %f\n", username, key, probOriginGivenTarget)
-					+ String.format("P(%s | %s) = %f\n", key, username, probTargetGivenOrigin)
+			String data = String.format("%.4f\n", probOrigin)
+					+ String.format("%.4f\n", probTarget)
+					+ String.format("%.4f\n", probJoint)
+					+ String.format("%.4f\n", probOriginGivenTarget)
+					+ String.format("%.4f\n", probTargetGivenOrigin)
 			;
 			
 			stats.push(new Stats(username, key, data));
