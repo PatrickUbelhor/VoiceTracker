@@ -6,3 +6,8 @@
 	background-color: var(--elements) !important;
 	transition: var(--background-transition), var(--color-transition) !important;
 }
+
+.stats-table-cell {
+	color: var(--text) !important;
+	transition: var(--color-transition) !important;
+}

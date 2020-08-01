@@ -31,7 +31,7 @@ body {
 	transition: var(--background-transition), var(--color-transition);
 
 	--background-transition: background 500ms ease-in-out;
-	--color-transition: color 1000ms ease-in-out;
+	--color-transition: color 500ms ease-in-out;
 }
 
 .light {

@@ -25,11 +25,11 @@ function StatsTable(props) {
 
 		rows.push(
 			<TableRow key={user.target}>
-				<TableCell align="left">{user.target}</TableCell>
-				<TableCell align="left">{data[1]}</TableCell>
-				<TableCell align="left">{data[2]}</TableCell>
-				<TableCell align="left">{data[3]}</TableCell>
-				<TableCell align="left">{data[4]}</TableCell>
+				<TableCell className="stats-table-cell" align="left">{user.target}</TableCell>
+				<TableCell className="stats-table-cell" align="left">{data[1]}</TableCell>
+				<TableCell className="stats-table-cell" align="left">{data[2]}</TableCell>
+				<TableCell className="stats-table-cell" align="left">{data[3]}</TableCell>
+				<TableCell className="stats-table-cell" align="left">{data[4]}</TableCell>
 			</TableRow>
 		);
 	}
@@ -40,11 +40,11 @@ function StatsTable(props) {
 				<Table>
 					<TableHead>
 						<TableRow>
-							<TableCell>Name</TableCell>
-							<TableCell>P(X)</TableCell>
-							<TableCell>P({username}, X)</TableCell>
-							<TableCell>P({username} | X)</TableCell>
-							<TableCell>P(X | {username})</TableCell>
+							<TableCell className="stats-table-cell">Name</TableCell>
+							<TableCell className="stats-table-cell">P(X)</TableCell>
+							<TableCell className="stats-table-cell">P({username}, X)</TableCell>
+							<TableCell className="stats-table-cell">P({username} | X)</TableCell>
+							<TableCell className="stats-table-cell">P(X | {username})</TableCell>
 						</TableRow>
 					</TableHead>
 					<TableBody>
