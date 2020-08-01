@@ -17,7 +17,8 @@ class App extends React.Component {
 		super(props);
 
 		this.state = {
-			message: null // Used to show error messages
+			message: null, // Used to show error messages
+			theme: 'dark'
 		};
 	}
 
@@ -30,12 +31,35 @@ class App extends React.Component {
 	};
 
 
+	invertTheme = () => {
+		const from = this.state.theme;
+		const to = this.state.theme === 'light' ? 'dark' : 'light';
+
+		this.setState({
+			theme: to
+		});
+		document.body.classList.replace(from, to);
+		localStorage.setItem('theme', to);
+	}
+
+
+	componentDidMount() {
+		const theme = localStorage.getItem('theme');
+
+		if (theme) {
+			this.setState({
+				theme: theme
+			});
+		}
+	}
+
+
 	render() {
 		return (
 			<>
-				<div className="wrapper">
+				<div className={'wrapper ' + this.state.theme}>
 					<Router>
-						<Header />
+						<Header invertTheme={this.invertTheme} />
 
 						<Switch>
 							<Route path="/analytics">

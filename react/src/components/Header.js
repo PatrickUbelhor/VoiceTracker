@@ -15,33 +15,23 @@ import {
 } from '@material-ui/core';
 
 
-function invertTheme() {
-	const body = document.body;
-
-	if (body.classList.replace('light', 'dark')) {
-		return;
-	}
-
-	body.classList.replace('dark', 'light');
-}
-
-
 const title = <Typography id="home" variant="h5" color="inherit">Voice Tracker</Typography>;
-const themeButton = (
-	<Tooltip title="Toggle light/dark mode">
-		<IconButton className="lightModeButton" onClick={invertTheme}>
-			<Icon color="inherit">cloud</Icon>
-		</IconButton>
-	</Tooltip>
-);
-
 
 function Header(props) {
 
 	const [open, setOpen] = React.useState();
-	const toggleDrawer = (isOpen) => () => {
-		setOpen(isOpen);
-	}
+	const { invertTheme } = props;
+	const toggleDrawer = (isOpen) => () => setOpen(isOpen);
+
+
+	const themeButton = (
+		<Tooltip title="Toggle light/dark mode">
+			<IconButton className="lightModeButton" onClick={invertTheme}>
+				<Icon color="inherit">cloud</Icon>
+			</IconButton>
+		</Tooltip>
+	);
+
 
 	const desktop = (
 		<>
