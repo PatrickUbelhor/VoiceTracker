@@ -2,17 +2,17 @@ import '../css/Markers.css';
 import React from 'react';
 
 const timeLabels = [
-	{ label: '0:00', offset: -0.9 },
-	{ label: '2:00', offset: -0.75 },
-	{ label: '4:00', offset: -0.75 },
-	{ label: '6:00', offset: -0.75 },
-	{ label: '8:00', offset: -0.75 },
+	{ label: '0:00', offset: -0.75 },
+	{ label: '2:00', offset: -0.65 },
+	{ label: '4:00', offset: -0.68 },
+	{ label: '6:00', offset: -0.65 },
+	{ label: '8:00', offset: -0.68 },
 	{ label: '10:00', offset: -1.25 },
-	{ label: '12:00', offset: -1.25 },
+	{ label: '12:00', offset: -1.20 },
 	{ label: '14:00', offset: -1.25 },
-	{ label: '16:00', offset: -1.25 },
+	{ label: '16:00', offset: -1.20 },
 	{ label: '18:00', offset: -1.25 },
-	{ label: '20:00', offset: -1.25 },
+	{ label: '20:00', offset: -1.20 },
 	{ label: '22:00', offset: -1.25 },
 	{ label: '24:00', offset: -1.25 }
 ];

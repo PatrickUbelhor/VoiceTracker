@@ -57,26 +57,24 @@ class App extends React.Component {
 	render() {
 		return (
 			<>
-				<div className={'wrapper ' + this.state.theme}>
-					<Router>
-						<Header invertTheme={this.invertTheme} />
+				<Router>
+					<Header invertTheme={this.invertTheme} />
 
-						<Switch>
-							<Route path="/analytics">
-								<AnalyticsPage setErrMsg={this.setSnackbar} />
-							</Route>
-							<Route path="/histograms">
-								<HistogramList setErrMsg={this.setSnackbar} />
-							</Route>
-							<Route path="/">
-								<DayList setErrMsg={this.setSnackbar} />
-							</Route>
-						</Switch>
+					<Switch>
+						<Route path="/analytics">
+							<AnalyticsPage setErrMsg={this.setSnackbar} />
+						</Route>
+						<Route path="/histograms">
+							<HistogramList setErrMsg={this.setSnackbar} />
+						</Route>
+						<Route path="/">
+							<DayList setErrMsg={this.setSnackbar} />
+						</Route>
+					</Switch>
 
-						<ErrorSnackbar message={this.state.message} resetMessage={this.setSnackbar} />
+					<ErrorSnackbar message={this.state.message} resetMessage={this.setSnackbar} />
 
-					</Router>
-				</div>
+				</Router>
 				<div className="footer">
 					<div className="copyright">© Patrick Ubelhor 2020</div>
 					<div className="version">v{process.env.REACT_APP_VERSION}</div>
