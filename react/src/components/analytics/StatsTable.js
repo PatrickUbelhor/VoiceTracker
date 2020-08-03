@@ -85,16 +85,15 @@ function EnhancedTableHead({ username, orderDirection, orderProperty, handleSort
 function EnhancedTableBody({ stats }) {
 	let rows = [];
 	for (let i = 0; i < stats.length; i++) {
-		let user = stats[i];
-		let data = user.data.split('\n').map((line, j) => <div key={j}>{line}</div>);
+		let { target, probTarget, probJoint, probOriginGivenTarget, probTargetGivenOrigin } = stats[i];
 
 		rows.push(
-			<TableRow key={user.target}>
-				<TableCell className="stats-table-cell" align="left">{user.target}</TableCell>
-				<TableCell className="stats-table-cell" align="right">{data[1]}</TableCell>
-				<TableCell className="stats-table-cell" align="right">{data[2]}</TableCell>
-				<TableCell className="stats-table-cell" align="right">{data[3]}</TableCell>
-				<TableCell className="stats-table-cell" align="right">{data[4]}</TableCell>
+			<TableRow key={target}>
+				<TableCell className="stats-table-cell" align="left">{target}</TableCell>
+				<TableCell className="stats-table-cell" align="right">{probTarget}</TableCell>
+				<TableCell className="stats-table-cell" align="right">{probJoint}</TableCell>
+				<TableCell className="stats-table-cell" align="right">{probOriginGivenTarget}</TableCell>
+				<TableCell className="stats-table-cell" align="right">{probTargetGivenOrigin}</TableCell>
 			</TableRow>
 		);
 	}
