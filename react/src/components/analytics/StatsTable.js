@@ -22,6 +22,11 @@ export default function StatsTable(props) {
 		return null;
 	}
 
+	const sortedStats = stats.slice().sort((a, b) => {
+		const comp = a[orderProperty] - b[orderProperty] // TODO: make localeCompare() work?
+		return (orderDirection === 'asc') ? comp : -comp;
+	});
+
 	const handleSort = (event, property) => {
 		const isAsc = (orderProperty === property) && (orderDirection === 'asc');
 		setOrderDirection(isAsc ? 'desc' : 'asc');
@@ -37,7 +42,7 @@ export default function StatsTable(props) {
 					                   orderDirection={orderDirection}
 					                   handleSort={handleSort}
 					/>
-					<EnhancedTableBody stats={stats}/>
+					<EnhancedTableBody stats={sortedStats}/>
 				</Table>
 			</TableContainer>
 		</Paper>
