@@ -16,15 +16,15 @@ export default function StatsTable(props) {
 
 	let { username, stats } = props;
 	let [orderDirection, setOrderDirection] = React.useState('asc'); // asc or desc
-	let [orderProperty, setOrderProperty] = React.useState('name');
+	let [orderProperty, setOrderProperty] = React.useState('target');
 
 	if (!stats?.length) {
 		return null;
 	}
 
 	const sortedStats = stats.slice().sort((a, b) => {
-		const comp = a[orderProperty] - b[orderProperty] // TODO: make localeCompare() work?
-		return (orderDirection === 'asc') ? comp : -comp;
+		const comparison = a[orderProperty].localeCompare(b[orderProperty]);
+		return (orderDirection === 'asc') ? comparison : -comparison;
 	});
 
 	const handleSort = (event, property) => {
@@ -52,7 +52,7 @@ export default function StatsTable(props) {
 
 function EnhancedTableHead({ username, orderDirection, orderProperty, handleSort }) {
 	const headCells = [
-		{ id: 'name', label: 'Name', numeric: false },
+		{ id: 'target', label: 'Name', numeric: false },
 		{ id: 'probTarget', label: 'P(X)', numeric: true },
 		{ id: 'probJoint', label: `P(${username}, X)`, numeric: true},
 		{ id: 'probOriginGivenTarget', label: `P(${username} | X)`, numeric: true},
