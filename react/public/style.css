@@ -28,10 +28,13 @@ body {
 	padding: 0;
 	background: var(--wallpaper);
 	color: var(--text);
-	transition: var(--background-transition), var(--color-transition);
 
 	--background-transition: background 500ms ease-in-out;
 	--color-transition: color 500ms ease-in-out;
+}
+
+.body-transition {
+	transition: var(--background-transition), var(--color-transition);
 }
 
 .light {
