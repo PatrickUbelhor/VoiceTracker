@@ -1,7 +1,5 @@
 
 :root {
-	font-family: Roboto, sans-serif;
-
 	--white: #FFFFFF;
 	--blue: #3F51B5;
 	--grey_dark: #23272A;
@@ -13,6 +11,10 @@
 	--content-margin-large: 24px;
 	--content-margin-small: 16px;
 	--content-margin: var(--content-margin-small);
+
+	--font: Roboto, Helvetica, Arial, sans-serif;
+
+	font-family: var(--font);
 }
 
 /* Adjust settings for large devices */

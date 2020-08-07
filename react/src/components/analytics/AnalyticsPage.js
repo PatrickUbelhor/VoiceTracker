@@ -12,6 +12,7 @@ import {
 	TextField
 } from '@material-ui/core';
 import StatsComponentSelector from './StatsComponentSelector';
+import MyButton from '../reusable/MyButton';
 
 
 class AnalyticsPage extends React.Component {
@@ -133,6 +134,7 @@ class AnalyticsPage extends React.Component {
 								        variant="contained"
 								>Submit
 								</Button>
+								<MyButton>Submit</MyButton>
 							</form>
 						</div>
 					</CardContent>
