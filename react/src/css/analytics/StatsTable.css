@@ -7,6 +7,5 @@
 }
 
 .stats-table-cell {
-	color: var(--text) !important;
 	transition: var(--color-transition) !important;
 }
