@@ -1,7 +1,7 @@
 #appBar {
 	margin-bottom: 1.4em;
-	color: var(--header_text);
-	background: var(--header);
+	/*color: var(--header_text);*/
+	/*background: var(--header);*/
 	transition: var(--background-transition) !important;
 }
 
@@ -42,7 +42,7 @@
 }
 
 .header-nav-link-active {
-	border-bottom: 2px solid pink;
+	border-bottom: 2px solid var(--secondary);
 }
 
 .header-nav-link:hover {
@@ -77,8 +77,6 @@
 	height: 0;
 	width: 100%;
 	border-bottom: 1px solid var(--border-color-bold);
-	/*margin-top: 0.5em;*/
-	/*margin-bottom: 0.5em;*/
 }
 
 .drawer-nav {

@@ -12,7 +12,6 @@ import {
 	TextField
 } from '@material-ui/core';
 import StatsComponentSelector from './StatsComponentSelector';
-import MyButton from '../reusable/MyButton';
 
 
 class AnalyticsPage extends React.Component {
@@ -109,8 +108,7 @@ class AnalyticsPage extends React.Component {
 							<form className="analytics-form" onSubmit={this.handleSubmit}>
 								<FormControl variant="outlined" margin="normal">
 									<InputLabel id="analytics-username-label">Username</InputLabel>
-									<Select className="analytics-user-select"
-									        name="username"
+									<Select name="username"
 									        value={this.state.username}
 									        labelId="analytics-username-label"
 									        label="Username"
@@ -118,8 +116,7 @@ class AnalyticsPage extends React.Component {
 									>{users}
 									</Select>
 								</FormControl>
-								<TextField className="analytics-input"
-								           name="numDays"
+								<TextField name="numDays"
 								           value={this.state.numDays}
 								           placeholder="Number of Days"
 								           label="Number of Days"
@@ -134,7 +131,6 @@ class AnalyticsPage extends React.Component {
 								        variant="contained"
 								>Submit
 								</Button>
-								<MyButton>Submit</MyButton>
 							</form>
 						</div>
 					</CardContent>

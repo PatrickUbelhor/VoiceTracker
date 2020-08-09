@@ -1,8 +1,6 @@
 
 .day {
 	margin-bottom: 1em;
-	background: var(--elements) !important;
-	color: var(--text) !important;
 	transition: var(--background-transition), var(--color-transition) !important;
 }
 

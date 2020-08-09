@@ -7,8 +7,6 @@
 }
 
 .stats-card {
-	background: var(--elements) !important;
-	color: var(--text) !important;
 	transition: var(--background-transition), var(--color-transition) !important;
 	min-width: 18em;
 }

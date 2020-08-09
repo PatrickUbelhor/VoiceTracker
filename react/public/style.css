@@ -1,11 +1,15 @@
 
 :root {
 	--white: #FFFFFF;
+	--off_white: #FAFAFA;
 	--blue: #3F51B5;
+	--blue_dark: #303F9F;
 	--grey_dark: #23272A;
 	--grey: #2C2F33;
 	--grey_light: #393D41;
 	--black: #000000;
+	--pink: #F06292;
+	--pink_light: pink;
 
 	--header-height: 64px;
 	--content-margin-large: 24px;
@@ -41,11 +45,12 @@ body {
 
 .light {
 	--header: var(--blue);
-	--wallpaper: var(--white);
+	--wallpaper: var(--off_white);
 	--elements: var(--white);
 	--text: var(--black);
 	--header_text: var(--white);
 	--primary: var(--blue);
+	--secondary: var(--pink_light);
 	--border-color: rgba(0, 0, 0, 0.12);
 	--border-color-bold: rgba(0, 0, 0, 0.24);
 	--border-color-bolder: rgba(0, 0, 0, 0.72);
@@ -58,6 +63,7 @@ body {
 	--text: var(--white);
 	--header_text: var(--white);
 	--primary: var(--blue);
+	--secondary: var(--pink);
 	--border-color: rgba(255, 255, 255, 0.12);
 	--border-color-bold: rgba(255, 255, 255, 0.24);
 	--border-color-bolder: rgba(255, 255, 255, 0.72);

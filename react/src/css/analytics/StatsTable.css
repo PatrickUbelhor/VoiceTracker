@@ -3,7 +3,6 @@
 	margin-left: var(--content-margin);
 	margin-right: var(--content-margin);
 	margin-bottom: 1em;
-	background-color: var(--elements) !important;
 	transition: var(--background-transition), var(--color-transition) !important;
 }
 

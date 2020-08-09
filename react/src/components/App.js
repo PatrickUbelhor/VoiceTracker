@@ -10,6 +10,46 @@ import {
 	Route,
 	Switch
 } from 'react-router-dom';
+import { createMuiTheme } from '@material-ui/core';
+import { indigo, pink } from '@material-ui/core/colors';
+import { ThemeProvider } from '@material-ui/core/styles';
+
+
+const lightTheme = createMuiTheme({
+	palette: {
+		primary: {
+			main: indigo['500'],
+			dark: '#303F9F'
+		},
+		secondary: {
+			main: pink['300']
+		}
+	}
+});
+
+const googleDarkTheme = createMuiTheme({
+	palette: {
+		type: 'dark'
+	}
+});
+
+const discordTheme = createMuiTheme({
+	palette: {
+		type: 'dark',
+		background: {
+			default: '#2C2F33',
+			paper: '#393D41'
+		}
+	},
+	overrides: {
+		MuiToolbar: {
+			root: {
+				backgroundColor: '#23272A'
+			}
+		}
+	}
+});
+
 
 class App extends React.Component {
 
@@ -18,7 +58,8 @@ class App extends React.Component {
 
 		this.state = {
 			message: null, // Used to show error messages
-			theme: 'dark'
+			theme: 'dark',
+			muiTheme: discordTheme
 		};
 	}
 
@@ -34,9 +75,11 @@ class App extends React.Component {
 	invertTheme = () => {
 		const from = this.state.theme;
 		const to = this.state.theme === 'light' ? 'dark' : 'light';
+		const toTheme = (this.state.theme === 'light') ? discordTheme : lightTheme;
 
 		this.setState({
-			theme: to
+			theme: to,
+			muiTheme: toTheme
 		});
 		document.body.classList.replace(from, to);
 		localStorage.setItem('theme', to);
@@ -48,15 +91,17 @@ class App extends React.Component {
 
 		if (theme) {
 			this.setState({
-				theme: theme
+				theme: theme,
+				muiTheme: (theme === 'light') ? lightTheme : discordTheme
 			});
 		}
 	}
 
 
 	render() {
+		console.log("Rerender");
 		return (
-			<>
+			<ThemeProvider theme={this.state.muiTheme}>
 				<div className="wrapper">
 					<Router>
 						<Header invertTheme={this.invertTheme} />
@@ -80,7 +125,7 @@ class App extends React.Component {
 					<div className="copyright">© Patrick Ubelhor 2020</div>
 					<div className="version">v{process.env.REACT_APP_VERSION}</div>
 				</div>
-			</>
+			</ThemeProvider>
 		);
 	}
 }
