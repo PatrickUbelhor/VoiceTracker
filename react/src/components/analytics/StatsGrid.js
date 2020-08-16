@@ -17,13 +17,12 @@ function StatsGrid(props) {
 	let userCards = [];
 	for (let i = 0; i < stats.length; i++) {
 		let user = stats[i];
-		let lines = user.data.split('\n');
 		let data = [
-			<div>P({user.origin}) = {lines[0]}</div>,
-			<div>P({user.target}) = {lines[1]}</div>,
-			<div>P({user.origin}, {user.target}) = {lines[2]}</div>,
-			<div>P({user.origin} | {user.target}) = {lines[3]}</div>,
-			<div>P({user.target} | {user.origin}) = {lines[4]}</div>
+			<div>P({user.origin}) = {user.probOrigin}</div>,
+			<div>P({user.target}) = {user.probTarget}</div>,
+			<div>P({user.origin}, {user.target}) = {user.probJoint}</div>,
+			<div>P({user.origin} | {user.target}) = {user.probOriginGivenTarget}</div>,
+			<div>P({user.target} | {user.origin}) = {user.probTargetGivenOrigin}</div>
 		];
 
 		userCards.push(
