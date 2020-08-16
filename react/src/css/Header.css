@@ -46,7 +46,7 @@
 }
 
 .header-nav-link:hover {
-	background-color: var(--grey);
+	background-color: var(--header_hover);
 }
 
 .header-nav-link-text {

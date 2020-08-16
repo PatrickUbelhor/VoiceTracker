@@ -45,6 +45,7 @@ body {
 
 .light {
 	--header: var(--blue);
+	--header_hover: var(--blue_dark);
 	--wallpaper: var(--off_white);
 	--elements: var(--white);
 	--text: var(--black);
@@ -58,6 +59,7 @@ body {
 
 .dark {
 	--header: var(--grey_dark);
+	--header_hover: var(--grey);
 	--wallpaper: var(--grey);
 	--elements: var(--grey_light);
 	--text: var(--white);
