@@ -56,8 +56,8 @@ class AnalyticsPage extends React.Component {
 
 		try {
 			this.setState({ loading: true });
-			let analyticsResponse = await tracker.getAnalytics(numDays, username);
-			let results = analyticsResponse.data.sort((a, b) => a.target.localeCompare(b.target));
+			const analyticsResponse = await tracker.getAnalytics(numDays, username);
+			const results = this.calculateEntourage(analyticsResponse.data);
 			this.setState({
 				results: results,
 				loading: false
@@ -74,6 +74,36 @@ class AnalyticsPage extends React.Component {
 			this.props.setErrMsg('Something went wrong getting the data');
 		}
 	};
+
+
+	calculateEntourage = (data) => {
+		// Calculate average
+		let avgGivenTarget = 0;
+		let avgGivenOrigin = 0;
+		for (let user of data) {
+			avgGivenTarget += +user.probOriginGivenTarget;
+			avgGivenOrigin += +user.probTargetGivenOrigin;
+		}
+		avgGivenTarget /= data.length;
+		avgGivenOrigin /= data.length;
+
+		// Calculate standard deviation
+		let stdDevGivenTarget = 0;
+		let stdDevGivenOrigin = 0;
+		for (let user of data) {
+			stdDevGivenTarget += (+user.probOriginGivenTarget - avgGivenTarget) ** 2;
+			stdDevGivenOrigin += (+user.probTargetGivenOrigin - avgGivenOrigin) ** 2;
+		}
+		stdDevGivenTarget = Math.sqrt(stdDevGivenTarget / data.length);
+		stdDevGivenOrigin = Math.sqrt(stdDevGivenOrigin / data.length);
+
+		// Modify and return user data
+		return data.map(user => ({
+			...user,
+			numStdDevGivenTarget: (+user.probOriginGivenTarget - avgGivenTarget) / stdDevGivenTarget,
+			numStdDevGivenOrigin: (+user.probTargetGivenOrigin - avgGivenOrigin) / stdDevGivenOrigin
+		}));
+	}
 
 
 	handleSubmit = (event) => {

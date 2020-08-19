@@ -90,15 +90,25 @@ function EnhancedTableHead({ username, orderDirection, orderProperty, handleSort
 function EnhancedTableBody({ stats }) {
 	let rows = [];
 	for (let i = 0; i < stats.length; i++) {
-		let { target, probTarget, probJoint, probOriginGivenTarget, probTargetGivenOrigin } = stats[i];
+		let { target, probTarget, probJoint, probOriginGivenTarget, probTargetGivenOrigin, numStdDevGivenTarget, numStdDevGivenOrigin } = stats[i];
+
+		let givenTargetClass = "stats-table-cell";
+		if (numStdDevGivenTarget >= 1) {
+			givenTargetClass += "-bold";
+		}
+
+		let givenOriginClass = "stats-table-cell";
+		if (numStdDevGivenOrigin >= 1) {
+			givenOriginClass += "-bold";
+		}
 
 		rows.push(
 			<TableRow key={target}>
 				<TableCell className="stats-table-cell" align="left">{target}</TableCell>
 				<TableCell className="stats-table-cell" align="right">{probTarget}</TableCell>
 				<TableCell className="stats-table-cell" align="right">{probJoint}</TableCell>
-				<TableCell className="stats-table-cell" align="right">{probOriginGivenTarget}</TableCell>
-				<TableCell className="stats-table-cell" align="right">{probTargetGivenOrigin}</TableCell>
+				<TableCell className={givenTargetClass} align="right">{probOriginGivenTarget}</TableCell>
+				<TableCell className={givenOriginClass} align="right">{probTargetGivenOrigin}</TableCell>
 			</TableRow>
 		);
 	}

@@ -9,3 +9,8 @@
 .stats-table-cell {
 	transition: var(--color-transition) !important;
 }
+
+.stats-table-cell-bold {
+	transition: var(--color-transition) !important;
+	font-weight: bold !important;
+}

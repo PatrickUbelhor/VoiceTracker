@@ -17,7 +17,7 @@ apply plugin: 'io.spring.dependency-management'
 apply plugin: 'com.github.node-gradle.node'
 
 group 'team.gif'
-version '1.13.2'
+version '1.14.0'
 
 sourceCompatibility = 1.11
 targetCompatibility = 1.11
@@ -51,7 +51,7 @@ task appNpmInstall(type: NpmTask) {
 
 appNpmBuild.dependsOn appNpmInstall
 copyReact.dependsOn appNpmBuild
-compileJava.dependsOn copyReact
+//compileJava.dependsOn copyReact
 
 node {
 	version = '14.5.0'

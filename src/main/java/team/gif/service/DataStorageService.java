@@ -135,11 +135,11 @@ public class DataStorageService {
 				new Stats(
 					username,
 					key,
-					String.format("%.4f\n", probOrigin),
-					String.format("%.4f\n", probTarget),
-					String.format("%.4f\n", probJoint),
-					String.format("%.4f\n", probOriginGivenTarget),
-					String.format("%.4f\n", probTargetGivenOrigin)
+					String.format("%.4f", probOrigin),
+					String.format("%.4f", probTarget),
+					String.format("%.4f", probJoint),
+					String.format("%.4f", probOriginGivenTarget),
+					String.format("%.4f", probTargetGivenOrigin)
 				)
 			);
 		}
