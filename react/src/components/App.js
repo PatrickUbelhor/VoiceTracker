@@ -13,10 +13,7 @@ import {
 import { ThemeProvider } from '@material-ui/core/styles';
 import { getMuiTheme } from '../model/Themes';
 import { connect } from 'react-redux';
-import {
-	initApp,
-	setTheme
-} from '../state/Effects';
+import { initApp } from '../state/Effects';
 import { setError } from '../state/Actions';
 
 
@@ -27,18 +24,11 @@ const select = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
 	initApp: () => dispatch(initApp()),
-	setTheme: (theme) => dispatch(setTheme(theme)),
 	setErrorMessage: (message) => dispatch(setError(message))
 });
 
 
 class ConnectedApp extends React.Component {
-
-	invertTheme = () => {
-		const to = this.props.theme === 'light' ? 'dark' : 'light';
-		this.props.setTheme(to);
-	}
-
 
 	componentDidMount() {
 		this.props.initApp();
@@ -50,11 +40,11 @@ class ConnectedApp extends React.Component {
 			<ThemeProvider theme={getMuiTheme(this.props.theme)}>
 				<div className="wrapper">
 					<Router>
-						<Header invertTheme={this.invertTheme} />
+						<Header/>
 
 						<Switch>
 							<Route path="/analytics">
-								<AnalyticsPage setErrMsg={this.props.setErrorMessage} />
+								<AnalyticsPage/>
 							</Route>
 							<Route path="/histograms">
 								<HistogramList setErrMsg={this.props.setErrorMessage} />

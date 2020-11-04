@@ -13,14 +13,26 @@ import {
 	Typography,
 	useMediaQuery
 } from '@material-ui/core';
+import { setTheme } from '../state/Effects';
+import { connect } from 'react-redux';
+
+
+const select = (state) => ({
+	theme: state.theme
+});
+
+
+const mapDispatchToProps = (dispatch) => ({
+	setTheme: (theme) => dispatch(setTheme(theme))
+});
 
 
 const title = <Typography id="home" variant="h5" color="inherit">Voice Tracker</Typography>;
 
-function Header(props) {
+function ConnectedHeader(props) {
 
 	const [open, setOpen] = React.useState();
-	const { invertTheme } = props;
+	const invertTheme = () => props.setTheme(props.theme === 'light' ? 'dark' : 'light');
 	const toggleDrawer = (isOpen) => () => setOpen(isOpen);
 
 
@@ -105,4 +117,5 @@ function Header(props) {
 	);
 }
 
+const Header = connect(select, mapDispatchToProps)(ConnectedHeader);
 export default Header;
