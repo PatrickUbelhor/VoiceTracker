@@ -10,115 +10,61 @@ import {
 	Route,
 	Switch
 } from 'react-router-dom';
-import { createMuiTheme } from '@material-ui/core';
-import { indigo, pink } from '@material-ui/core/colors';
 import { ThemeProvider } from '@material-ui/core/styles';
+import { getMuiTheme } from '../model/Themes';
+import { connect } from 'react-redux';
+import {
+	initApp,
+	setTheme
+} from '../state/Effects';
+import { setError } from '../state/Actions';
 
 
-const lightTheme = createMuiTheme({
-	palette: {
-		primary: {
-			main: indigo['500'],
-			dark: '#303F9F'
-		},
-		secondary: {
-			main: pink['300']
-		}
-	}
-});
-
-const googleDarkTheme = createMuiTheme({
-	palette: {
-		type: 'dark'
-	}
-});
-
-const discordTheme = createMuiTheme({
-	palette: {
-		type: 'dark',
-		background: {
-			default: '#2C2F33',
-			paper: '#393D41'
-		}
-	},
-	overrides: {
-		MuiToolbar: {
-			root: {
-				backgroundColor: '#23272A'
-			}
-		}
-	}
+const select = (state) => ({
+	theme: state.theme
 });
 
 
-class App extends React.Component {
-
-	constructor(props) {
-		super(props);
-
-		this.state = {
-			message: null, // Used to show error messages
-			theme: 'dark',
-			muiTheme: discordTheme
-		};
-	}
+const mapDispatchToProps = (dispatch) => ({
+	initApp: () => dispatch(initApp()),
+	setTheme: (theme) => dispatch(setTheme(theme)),
+	setErrorMessage: (message) => dispatch(setError(message))
+});
 
 
-	// Used to set the message displayed on the snackbar
-	setSnackbar = (value) => {
-		this.setState({
-			message: value
-		});
-	};
-
+class ConnectedApp extends React.Component {
 
 	invertTheme = () => {
-		const from = this.state.theme;
-		const to = this.state.theme === 'light' ? 'dark' : 'light';
-		const toTheme = (this.state.theme === 'light') ? discordTheme : lightTheme;
-
-		this.setState({
-			theme: to,
-			muiTheme: toTheme
-		});
-		document.body.classList.replace(from, to);
-		localStorage.setItem('theme', to);
+		const to = this.props.theme === 'light' ? 'dark' : 'light';
+		this.props.setTheme(to);
 	}
 
 
 	componentDidMount() {
-		const theme = localStorage.getItem('theme');
-
-		if (theme) {
-			this.setState({
-				theme: theme,
-				muiTheme: (theme === 'light') ? lightTheme : discordTheme
-			});
-		}
+		this.props.initApp();
 	}
 
 
 	render() {
-		console.log("Rerender");
 		return (
-			<ThemeProvider theme={this.state.muiTheme}>
+			<ThemeProvider theme={getMuiTheme(this.props.theme)}>
 				<div className="wrapper">
 					<Router>
 						<Header invertTheme={this.invertTheme} />
 
 						<Switch>
 							<Route path="/analytics">
-								<AnalyticsPage setErrMsg={this.setSnackbar} />
+								<AnalyticsPage setErrMsg={this.props.setErrorMessage} />
 							</Route>
 							<Route path="/histograms">
-								<HistogramList setErrMsg={this.setSnackbar} />
+								<HistogramList setErrMsg={this.props.setErrorMessage} />
 							</Route>
 							<Route path="/">
-								<DayList setErrMsg={this.setSnackbar} />
+								<DayList setErrMsg={this.props.setErrorMessage} />
 							</Route>
 						</Switch>
 
-						<ErrorSnackbar message={this.state.message} resetMessage={this.setSnackbar} />
+						<ErrorSnackbar/>
 					</Router>
 				</div>
 				<div className="footer">
@@ -130,4 +76,5 @@ class App extends React.Component {
 	}
 }
 
+const App = connect(select, mapDispatchToProps)(ConnectedApp);
 export default App;

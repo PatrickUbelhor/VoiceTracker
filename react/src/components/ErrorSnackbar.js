@@ -4,15 +4,28 @@ import IconButton from '@material-ui/core/IconButton';
 import SnackbarContent from '@material-ui/core/Snackbar';
 import CloseIcon from '@material-ui/icons/Close';
 import ErrorIcon from '@material-ui/icons/Error';
+import { connect } from 'react-redux';
+import { clearError } from '../state/Actions';
 
-class ErrorSnackbar extends React.Component {
+
+const select = (state) => ({
+	message: state.errorMessage
+});
+
+
+const mapDispatchToProps = (dispatch) => ({
+	resetMessage: () => dispatch(clearError())
+});
+
+
+class ConnectedErrorSnackbar extends React.Component {
 
 	handleClose = (event, reason) => {
 		if (reason === 'clickaway') {
 			return;
 		}
 
-		this.props.resetMessage(null);
+		this.props.resetMessage();
 	};
 
 	render() {
@@ -49,7 +62,7 @@ class ErrorSnackbar extends React.Component {
 			</div>
 		);
 	}
-
 }
 
+const ErrorSnackbar = connect(select, mapDispatchToProps)(ConnectedErrorSnackbar);
 export default ErrorSnackbar;

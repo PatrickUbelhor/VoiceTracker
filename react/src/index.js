@@ -1,7 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { store } from './state/Store';
 import App from './components/App';
 
+// Initialize theme
 const theme = localStorage.getItem('theme');
 document.body.classList.add(theme ? theme : 'dark');
 
@@ -12,6 +15,8 @@ setTimeout(() => {
 
 // Render the component
 ReactDOM.render(
-	<App/>,
+	<Provider store={store}>
+		<App/>
+	</Provider>,
 	document.querySelector('#root')
 );
