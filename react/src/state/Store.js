@@ -9,6 +9,7 @@ const INITIAL_STATE = {
 	theme: 'dark',
 	errorMessage: null,
 	filters: {},
+	users: [],
 	days: [],
 	histograms: []
 };
@@ -30,6 +31,11 @@ const reducer = function (state = INITIAL_STATE, action) {
 				...state,
 				errorMessage: null
 			};
+		case Actions.GET_USERS_SUCCESS:
+			return {
+				...state,
+				users: action.payload
+			}
 		default:
 			return state;
 	}

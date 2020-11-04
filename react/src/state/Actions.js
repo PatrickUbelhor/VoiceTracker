@@ -2,7 +2,9 @@
 export const Actions = {
 	SET_ERROR: '[ERROR] Set error msg',
 	CLEAR_ERROR: '[ERROR] Clear error msg',
-	SET_THEME_SUCCESS: '[THEME] Set theme'
+	SET_THEME_SUCCESS: '[THEME] Set theme',
+
+	GET_USERS_SUCCESS: '[USERS] Successfully get users'
 };
 
 
@@ -18,4 +20,9 @@ export const clearError = () => ({
 export const setThemeSuccess = (theme) => ({
 	type: Actions.SET_THEME_SUCCESS,
 	payload: theme
+});
+
+export const getUsersSuccess = (users) => ({
+	type: Actions.GET_USERS_SUCCESS,
+	payload: users
 });

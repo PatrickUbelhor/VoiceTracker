@@ -1,4 +1,7 @@
+import tracker from '../api/Tracker';
 import {
+	getUsersSuccess,
+	setError,
 	setThemeSuccess
 } from './Actions';
 
@@ -16,4 +19,28 @@ export const setTheme = (theme) => async (dispatch, getState) => {
 	document.body.classList.replace(from, to);
 	localStorage.setItem('theme', to);
 	dispatch(setThemeSuccess(to));
+};
+
+
+const handleError = (error, message, dispatch) => {
+	if (error.response === undefined) {
+		console.log('An unknown error has occurred');
+		dispatch(setError(message));
+		return;
+	}
+
+	console.log(error.response);
+	dispatch(setError(message));
+};
+
+
+export const getUsers = () => async (dispatch) => {
+	console.log('Getting users');
+
+	try {
+		let response = await tracker.getUsers();
+		dispatch(getUsersSuccess(response.data));
+	} catch (error) {
+		handleError(error, 'Something went wrong getting the list of users', dispatch);
+	}
 };

@@ -12,43 +12,32 @@ import {
 	TextField
 } from '@material-ui/core';
 import StatsComponentSelector from './StatsComponentSelector';
+import { getUsers } from '../../state/Effects';
+import { connect } from 'react-redux';
 
 
-class AnalyticsPage extends React.Component {
+const select = (state) => ({
+	users: state.users
+});
+
+
+const mapDispatchToProps = (dispatch) => ({
+	getUsers: () => dispatch(getUsers())
+});
+
+
+class ConnectedAnalyticsPage extends React.Component {
 
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			users: [],
 			username: '',
 			numDays: 30,
 			results: [],
 			loading: false
 		};
 	}
-
-
-	getUsers = async () => {
-		console.log('Getting users');
-
-		try {
-			let usersResponse = await tracker.getUsers();
-			const users = usersResponse.data;
-			this.setState({
-				users: users
-			});
-		} catch (error) {
-			if (error.response !== undefined) {
-				console.log(error.response);
-				this.props.setErrMsg('Something went wrong getting the list of users');
-				return;
-			}
-
-			console.log('An unknown error has occurred');
-			this.props.setErrMsg('Something went wrong getting the list of users');
-		}
-	};
 
 
 	getAnalytics = async (numDays, username) => {
@@ -123,12 +112,12 @@ class AnalyticsPage extends React.Component {
 
 
 	componentDidMount() {
-		this.getUsers();
+		this.props.getUsers();
 	}
 
 
 	render() {
-		const users = this.state.users.map(username => <MenuItem key={username} value={username}>{username}</MenuItem>);
+		const users = this.props.users.map(username => <MenuItem key={username} value={username}>{username}</MenuItem>);
 
 		return (
 			<React.Fragment>
@@ -172,4 +161,5 @@ class AnalyticsPage extends React.Component {
 	}
 }
 
+const AnalyticsPage = connect(select, mapDispatchToProps)(ConnectedAnalyticsPage);
 export default AnalyticsPage;
