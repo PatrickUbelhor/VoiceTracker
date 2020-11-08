@@ -5,18 +5,6 @@ import {
 } from '@material-ui/core/colors';
 
 
-const THEME_MAP = {
-	light: lightTheme,
-	dark: discordTheme,
-	google_dark: googleDarkTheme
-};
-
-
-export function getMuiTheme(theme) {
-	return THEME_MAP[theme];
-}
-
-
 export const lightTheme = createMuiTheme({
 	palette: {
 		primary: {
@@ -40,6 +28,9 @@ export const googleDarkTheme = createMuiTheme({
 export const discordTheme = createMuiTheme({
 	palette: {
 		type: 'dark',
+		// primary: {
+		// 	main: indigo['200']
+		// },
 		background: {
 			default: '#2C2F33',
 			paper: '#393D41'
@@ -53,3 +44,15 @@ export const discordTheme = createMuiTheme({
 		}
 	}
 });
+
+
+const THEME_MAP = {
+	light: lightTheme,
+	dark: discordTheme,
+	google_dark: googleDarkTheme
+};
+
+
+export function getMuiTheme(theme) {
+	return THEME_MAP[theme];
+}

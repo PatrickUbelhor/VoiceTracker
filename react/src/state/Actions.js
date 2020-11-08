@@ -4,6 +4,8 @@ export const Actions = {
 	CLEAR_ERROR: '[ERROR] Clear error msg',
 	SET_THEME_SUCCESS: '[THEME] Set theme',
 
+	SET_FILTERS: '[FILTER] Set filters',
+
 	GET_USERS_SUCCESS: '[USERS] Successfully get users'
 };
 
@@ -20,6 +22,11 @@ export const clearError = () => ({
 export const setThemeSuccess = (theme) => ({
 	type: Actions.SET_THEME_SUCCESS,
 	payload: theme
+});
+
+export const setFilters = (excluded) => ({
+	type: Actions.SET_FILTERS,
+	payload: excluded
 });
 
 export const getUsersSuccess = (users) => ({

@@ -8,7 +8,7 @@ import { Actions } from './Actions';
 const INITIAL_STATE = {
 	theme: 'dark',
 	errorMessage: null,
-	filters: {},
+	filters: new Set(),
 	users: [],
 	days: [],
 	histograms: []
@@ -31,11 +31,16 @@ const reducer = function (state = INITIAL_STATE, action) {
 				...state,
 				errorMessage: null
 			};
+		case Actions.SET_FILTERS:
+			return {
+				...state,
+				filters: new Set(action.payload)
+			};
 		case Actions.GET_USERS_SUCCESS:
 			return {
 				...state,
 				users: action.payload
-			}
+			};
 		default:
 			return state;
 	}

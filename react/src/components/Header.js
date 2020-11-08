@@ -15,6 +15,7 @@ import {
 } from '@material-ui/core';
 import { setTheme } from '../state/Effects';
 import { connect } from 'react-redux';
+import FiltersModal from './FiltersModal';
 
 
 const select = (state) => ({
@@ -32,6 +33,7 @@ const title = <Typography id="home" variant="h5" color="inherit">Voice Tracker</
 function ConnectedHeader(props) {
 
 	const [open, setOpen] = React.useState();
+	const [filtersOpen, setFiltersOpen] = React.useState(false);
 	const invertTheme = () => props.setTheme(props.theme === 'light' ? 'dark' : 'light');
 	const toggleDrawer = (isOpen) => () => setOpen(isOpen);
 
@@ -40,6 +42,15 @@ function ConnectedHeader(props) {
 		<Tooltip title="Toggle light/dark mode">
 			<IconButton className="lightModeButton" onClick={invertTheme}>
 				<Icon color="inherit">cloud</Icon>
+			</IconButton>
+		</Tooltip>
+	);
+
+
+	const filterButton = (
+		<Tooltip title="Filters">
+			<IconButton className="filterButton" onClick={() => setFiltersOpen(true)}>
+				<Icon color="inherit">filter_list</Icon>
 			</IconButton>
 		</Tooltip>
 	);
@@ -65,6 +76,7 @@ function ConnectedHeader(props) {
 					</NavLink>
 				</li>
 			</ul>
+			{filterButton}
 			{themeButton}
 		</>
 	);
@@ -75,6 +87,7 @@ function ConnectedHeader(props) {
 				<Icon color="inherit">menu</Icon>
 			</IconButton>
 			{title}
+			{filterButton}
 			{themeButton}
 		</>
 	);
@@ -112,6 +125,7 @@ function ConnectedHeader(props) {
 					{isDesktop ? desktop : mobile}
 				</Toolbar>
 			</AppBar>
+			<FiltersModal open={filtersOpen}/>
 			{isDesktop ? null : drawer}
 		</>
 	);
