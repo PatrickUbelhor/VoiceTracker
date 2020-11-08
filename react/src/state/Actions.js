@@ -6,6 +6,7 @@ export const Actions = {
 
 	SET_FILTERS_SUCCESS: '[FILTER] Successfully set filters',
 
+	GET_DAYS_SUCCESS: '[DAYS] Successfully got days',
 	GET_USERS_SUCCESS: '[USERS] Successfully got users',
 	GET_HISTOGRAMS_SUCCESS: '[HISTOGRAM] Successfully got histograms'
 };
@@ -29,6 +30,11 @@ export const setFiltersSuccess = (excluded) => ({
 	type: Actions.SET_FILTERS_SUCCESS,
 	payload: excluded
 });
+
+export const getDaysSuccess = (days) => ({
+	type: Actions.GET_DAYS_SUCCESS,
+	payload: days
+})
 
 export const getUsersSuccess = (users) => ({
 	type: Actions.GET_USERS_SUCCESS,

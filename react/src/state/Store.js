@@ -10,7 +10,7 @@ const INITIAL_STATE = {
 	errorMessage: null,
 	filters: new Set(),
 	users: [],
-	days: [],
+	days: null,
 	histograms: {
 		items: [],
 		numDays: 30,
@@ -39,6 +39,11 @@ const reducer = function (state = INITIAL_STATE, action) {
 			return {
 				...state,
 				filters: new Set(action.payload)
+			};
+		case Actions.GET_DAYS_SUCCESS:
+			return {
+				...state,
+				days: action.payload
 			};
 		case Actions.GET_USERS_SUCCESS:
 			return {

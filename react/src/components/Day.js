@@ -11,7 +11,9 @@ import {
 function Day(props) {
 
 	// Sort users alphabetically
-	let users = props.users.slice().sort((a, b) => a.id.localeCompare(b.id));
+	let users = props.users
+		.slice()
+		.sort((a, b) => a.id.localeCompare(b.id));
 
 	let names = [];
 	let intervals = [];

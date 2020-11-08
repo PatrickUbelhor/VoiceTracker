@@ -1,5 +1,6 @@
 import tracker from '../api/Tracker';
 import {
+	getDaysSuccess,
 	getHistogramsSuccess,
 	getUsersSuccess,
 	setError,
@@ -17,7 +18,7 @@ export const initApp = () => async (dispatch) => {
 	if (filters) {
 		dispatch(setFiltersSuccess(JSON.parse(filters)));
 	}
-}
+};
 
 export const setTheme = (theme) => async (dispatch, getState) => {
 	const from = getState().theme;
@@ -31,7 +32,7 @@ export const setTheme = (theme) => async (dispatch, getState) => {
 export const setFilters = (filters) => async (dispatch) => {
 	localStorage.setItem('filters', JSON.stringify(filters));
 	dispatch(setFiltersSuccess(filters));
-}
+};
 
 
 const handleError = (error, message, dispatch) => {
@@ -45,6 +46,17 @@ const handleError = (error, message, dispatch) => {
 	dispatch(setError(message));
 };
 
+
+export const getDays = (newestDay, oldestDay) => async (dispatch) => {
+	console.log('Getting days');
+
+	try {
+		let response = await tracker.getDays(newestDay, oldestDay);
+		dispatch(getDaysSuccess(response.data));
+	} catch (error) {
+		handleError(error, 'Something went wrong getting the days/timelines');
+	}
+};
 
 export const getUsers = () => async (dispatch) => {
 	console.log('Getting users');
