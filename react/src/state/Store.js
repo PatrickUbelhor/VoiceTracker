@@ -35,7 +35,7 @@ const reducer = function (state = INITIAL_STATE, action) {
 				...state,
 				errorMessage: null
 			};
-		case Actions.SET_FILTERS:
+		case Actions.SET_FILTERS_SUCCESS:
 			return {
 				...state,
 				filters: new Set(action.payload)

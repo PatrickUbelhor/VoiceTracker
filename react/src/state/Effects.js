@@ -3,6 +3,7 @@ import {
 	getHistogramsSuccess,
 	getUsersSuccess,
 	setError,
+	setFiltersSuccess,
 	setThemeSuccess
 } from './Actions';
 
@@ -10,6 +11,11 @@ export const initApp = () => async (dispatch) => {
 	const theme = localStorage.getItem('theme');
 	if (theme) {
 		dispatch(setThemeSuccess(theme));
+	}
+
+	const filters = localStorage.getItem('filters');
+	if (filters) {
+		dispatch(setFiltersSuccess(JSON.parse(filters)));
 	}
 }
 
@@ -21,6 +27,11 @@ export const setTheme = (theme) => async (dispatch, getState) => {
 	localStorage.setItem('theme', to);
 	dispatch(setThemeSuccess(to));
 };
+
+export const setFilters = (filters) => async (dispatch) => {
+	localStorage.setItem('filters', JSON.stringify(filters));
+	dispatch(setFiltersSuccess(filters));
+}
 
 
 const handleError = (error, message, dispatch) => {

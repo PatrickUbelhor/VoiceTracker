@@ -4,7 +4,7 @@ export const Actions = {
 	CLEAR_ERROR: '[ERROR] Clear error msg',
 	SET_THEME_SUCCESS: '[THEME] Set theme',
 
-	SET_FILTERS: '[FILTER] Set filters',
+	SET_FILTERS_SUCCESS: '[FILTER] Successfully set filters',
 
 	GET_USERS_SUCCESS: '[USERS] Successfully got users',
 	GET_HISTOGRAMS_SUCCESS: '[HISTOGRAM] Successfully got histograms'
@@ -25,8 +25,8 @@ export const setThemeSuccess = (theme) => ({
 	payload: theme
 });
 
-export const setFilters = (excluded) => ({
-	type: Actions.SET_FILTERS,
+export const setFiltersSuccess = (excluded) => ({
+	type: Actions.SET_FILTERS_SUCCESS,
 	payload: excluded
 });
 

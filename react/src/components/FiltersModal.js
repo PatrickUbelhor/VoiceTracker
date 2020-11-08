@@ -10,7 +10,10 @@ import {
 	DialogTitle,
 	FormControlLabel
 } from '@material-ui/core';
-import { setFilters } from '../state/Actions';
+import {
+	getUsers,
+	setFilters
+} from '../state/Effects';
 
 
 const select = (state) => ({
@@ -20,13 +23,14 @@ const select = (state) => ({
 
 
 const mapDispatchToProps = (dispatch) => ({
+	getUsers: () => dispatch(getUsers()),
 	setFilters: (unchecked) => dispatch(setFilters([...unchecked]))
 });
 
 
-function ConnectedFiltersModal({ open, onClose, users, filters, setFilters }) {
+function ConnectedFiltersModal({ open, onClose, users, getUsers, filters, setFilters }) {
 
-	const [unchecked, setUnchecked] = React.useState(new Set(filters));
+	const [unchecked, setUnchecked] = React.useState(new Set());
 
 	const onCancel = () => {
 		setUnchecked(new Set(filters));
@@ -36,6 +40,11 @@ function ConnectedFiltersModal({ open, onClose, users, filters, setFilters }) {
 	const onSubmit = () => {
 		setFilters(unchecked);
 		onClose();
+	}
+
+	const onEnter = () => {
+		getUsers();
+		setUnchecked(new Set(filters));
 	}
 
 	const handleCheckboxChange = (username) => (event) => {
@@ -64,7 +73,7 @@ function ConnectedFiltersModal({ open, onClose, users, filters, setFilters }) {
 	));
 
 	return (
-		<Dialog open={open} onEnter={() => null} onClose={onClose}>
+		<Dialog open={open} onEnter={onEnter} onClose={onClose}>
 			<DialogTitle>Filters</DialogTitle>
 			<DialogContent>
 				<div className="filters-usernames-div">
