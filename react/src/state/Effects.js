@@ -1,5 +1,6 @@
 import tracker from '../api/Tracker';
 import {
+	getHistogramsSuccess,
 	getUsersSuccess,
 	setError,
 	setThemeSuccess
@@ -42,5 +43,21 @@ export const getUsers = () => async (dispatch) => {
 		dispatch(getUsersSuccess(response.data));
 	} catch (error) {
 		handleError(error, 'Something went wrong getting the list of users', dispatch);
+	}
+};
+
+export const getHistograms = (numDays, minActiveDays) => async (dispatch) => {
+	console.log('Getting histograms');
+
+	try {
+		let response = await tracker.getHistograms(numDays, minActiveDays);
+		const histograms = {
+			items: response.data,
+			numDays: numDays,
+			minActiveDays: minActiveDays
+		};
+		dispatch(getHistogramsSuccess(histograms));
+	} catch (error) {
+		handleError(error, 'Something went wrong getting histograms', dispatch);
 	}
 };

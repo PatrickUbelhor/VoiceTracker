@@ -1,76 +1,64 @@
 import '../css/HistogramList.css';
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import tracker from '../api/Tracker';
 import Histogram from './Histogram';
 import LoadingPage from './LoadingPage';
+import { getHistograms } from '../state/Effects';
+import { connect } from 'react-redux';
+
+
+const select = (state) => ({
+	histograms: state.histograms.items
+		.filter(histogram => !state.filters.has(histogram.name))
+		.sort((a, b) => a.name.localeCompare(b.name)),
+	numDays: state.histograms.numDays,
+	minActiveDays: state.histograms.minActiveDays
+});
+
+
+const mapDispatchToProps = (dispatch) => ({
+	getHistograms: (numDays, minActiveDays) => () => dispatch(getHistograms(numDays, minActiveDays))
+});
+
 
 // TODO: put getHistograms() params in URL. Use value of params from router instead of state.
-class HistogramList extends React.Component {
-
-	constructor(props) {
-		super(props);
-
-		this.state = {
-			histograms: null,
-			numDays: 30,
-			minActiveDays: 5
-		};
-	}
-
-
-	getHistograms = (numDays = 30, minActiveDays = 5) => async () => {
-		console.log('Getting histograms');
-		let histograms = null;
-		try {
-			let histoReq = await tracker.getHistograms(numDays, minActiveDays);
-			histograms = histoReq.data;
-			console.log("Got histograms");
-
-			this.setState({
-				histograms: histograms,
-				numDays: numDays,
-				minActiveDays: minActiveDays
-			});
-		} catch (error) {
-			if (error.response !== undefined) {
-				console.log(error.response);
-				this.props.setErrMsg('Something went wrong when getting the data');
-				return;
-			}
-
-			console.log('An unknown error has occurred');
-			this.props.setErrMsg('Something went wrong when getting the data');
-		}
-	};
-
+class ConnectedHistogramList extends React.Component {
 
 	componentDidMount() {
-		this.getHistograms(this.state.numDays, this.state.minActiveDays)();
+		this.props.getHistograms(this.props.numDays, this.props.minActiveDays)();
 	}
 
 
 	render() {
-		if (this.state.histograms == null) {
+		if (this.props.histograms == null) {
 			return <LoadingPage/>;
 		}
 
-
-		this.state.histograms.sort((a, b) => a.name.localeCompare(b.name));
-		const entries = this.state.histograms.map((histogram) => (
+		const entries = this.props.histograms.map((histogram) => (
 			<React.Fragment key={histogram.name}>
-				<Histogram name={histogram.name} numDays={this.state.numDays} data={histogram.data}/>
+				<Histogram name={histogram.name} numDays={this.props.numDays} data={histogram.data}/>
 			</React.Fragment>
 		));
 
 		return (
 			<div className="HistogramList">
-				<Button className="filterButton" variant="contained" color="primary" onClick={this.getHistograms(7, 2)}>7</Button>
-				<Button className="filterButton" variant="contained" color="primary" onClick={this.getHistograms(30, 5)}>30</Button>
+				<Button
+					className="filterButton"
+					variant="contained"
+					color="primary"
+					onClick={this.props.getHistograms(7, 2)}
+				>7</Button>
+				<Button
+					className="filterButton"
+					variant="contained"
+					color="primary"
+					onClick={this.props.getHistograms(30, 5)}
+				>30</Button>
 				{entries}
 			</div>
 		);
 	}
 }
 
+const HistogramList = connect(select, mapDispatchToProps)(ConnectedHistogramList);
 export default HistogramList;

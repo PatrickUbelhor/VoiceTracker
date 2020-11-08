@@ -11,7 +11,11 @@ const INITIAL_STATE = {
 	filters: new Set(),
 	users: [],
 	days: [],
-	histograms: []
+	histograms: {
+		items: [],
+		numDays: 30,
+		minActiveDays: 5
+	}
 };
 
 const reducer = function (state = INITIAL_STATE, action) {
@@ -40,6 +44,11 @@ const reducer = function (state = INITIAL_STATE, action) {
 			return {
 				...state,
 				users: action.payload
+			};
+		case Actions.GET_HISTOGRAMS_SUCCESS:
+			return {
+				...state,
+				histograms: action.payload
 			};
 		default:
 			return state;
