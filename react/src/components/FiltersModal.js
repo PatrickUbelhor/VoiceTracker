@@ -1,3 +1,4 @@
+import '../css/FiltersModal.css';
 import React from 'react';
 import { connect } from 'react-redux';
 import {
@@ -66,7 +67,9 @@ function ConnectedFiltersModal({ open, onClose, users, filters, setFilters }) {
 		<Dialog open={open} onEnter={() => null} onClose={onClose}>
 			<DialogTitle>Filters</DialogTitle>
 			<DialogContent>
-				{checkBoxes}
+				<div className="filters-usernames-div">
+					{checkBoxes}
+				</div>
 			</DialogContent>
 			<DialogActions>
 				<Button autoFocus color="primary" onClick={onCancel}>Cancel</Button>
