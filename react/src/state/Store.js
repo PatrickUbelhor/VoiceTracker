@@ -15,7 +15,8 @@ const INITIAL_STATE = {
 		items: [],
 		numDays: 30,
 		minActiveDays: 5
-	}
+	},
+	analytics: []
 };
 
 const reducer = function (state = INITIAL_STATE, action) {
@@ -54,6 +55,11 @@ const reducer = function (state = INITIAL_STATE, action) {
 			return {
 				...state,
 				histograms: action.payload
+			};
+		case Actions.GET_ANALYTICS_SUCCESS:
+			return {
+				...state,
+				analytics: action.payload
 			};
 		default:
 			return state;

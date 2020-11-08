@@ -1,5 +1,6 @@
 import tracker from '../api/Tracker';
 import {
+	getAnalyticsSuccess,
 	getDaysSuccess,
 	getHistogramsSuccess,
 	getUsersSuccess,
@@ -7,6 +8,7 @@ import {
 	setFiltersSuccess,
 	setThemeSuccess
 } from './Actions';
+import { calculateEntourage } from '../service/AnalyticsService';
 
 export const initApp = () => async (dispatch) => {
 	const theme = localStorage.getItem('theme');
@@ -84,3 +86,15 @@ export const getHistograms = (numDays, minActiveDays) => async (dispatch) => {
 		handleError(error, 'Something went wrong getting histograms', dispatch);
 	}
 };
+
+export const getAnalytics = (numDays, username) => async (dispatch) => {
+	console.log('Getting analytics');
+
+	try {
+		const response = await tracker.getAnalytics(numDays, username);
+		const modified = calculateEntourage(response.data);
+		dispatch(getAnalyticsSuccess(modified));
+	} catch (error) {
+		handleError(error, 'Something went wrong getting the analytics', dispatch);
+	}
+}

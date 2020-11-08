@@ -1,6 +1,5 @@
 import '../../css/analytics/AnalyticsPage.css';
 import React from 'react';
-import tracker from '../../api/Tracker';
 import {
 	Button,
 	Card,
@@ -12,17 +11,22 @@ import {
 	TextField
 } from '@material-ui/core';
 import StatsComponentSelector from './StatsComponentSelector';
-import { getUsers } from '../../state/Effects';
+import {
+	getAnalytics,
+	getUsers
+} from '../../state/Effects';
 import { connect } from 'react-redux';
 
 
 const select = (state) => ({
-	users: state.users
+	users: state.users.filter(username => !state.filters.has(username)),
+	analytics: state.analytics
 });
 
 
 const mapDispatchToProps = (dispatch) => ({
-	getUsers: () => dispatch(getUsers())
+	getUsers: () => dispatch(getUsers()),
+	getAnalytics: (numDays, username) => dispatch(getAnalytics(numDays, username))
 });
 
 
@@ -34,70 +38,16 @@ class ConnectedAnalyticsPage extends React.Component {
 		this.state = {
 			username: '',
 			numDays: 30,
-			results: [],
 			loading: false
 		};
 	}
 
 
-	getAnalytics = async (numDays, username) => {
-		console.log('Getting analytics');
-
-		try {
-			this.setState({ loading: true });
-			const analyticsResponse = await tracker.getAnalytics(numDays, username);
-			const results = this.calculateEntourage(analyticsResponse.data);
-			this.setState({
-				results: results,
-				loading: false
-			});
-		} catch (error) {
-			this.setState({ loading: false });
-			if (error.response !== undefined) {
-				console.log(error.response);
-				this.props.setErrMsg('Something went wrong getting the data');
-				return;
-			}
-
-			console.log('An unknown error has occurred');
-			this.props.setErrMsg('Something went wrong getting the data');
-		}
-	};
-
-
-	calculateEntourage = (data) => {
-		// Calculate average
-		let avgGivenTarget = 0;
-		let avgGivenOrigin = 0;
-		for (let user of data) {
-			avgGivenTarget += +user.probOriginGivenTarget;
-			avgGivenOrigin += +user.probTargetGivenOrigin;
-		}
-		avgGivenTarget /= data.length;
-		avgGivenOrigin /= data.length;
-
-		// Calculate standard deviation
-		let stdDevGivenTarget = 0;
-		let stdDevGivenOrigin = 0;
-		for (let user of data) {
-			stdDevGivenTarget += (+user.probOriginGivenTarget - avgGivenTarget) ** 2;
-			stdDevGivenOrigin += (+user.probTargetGivenOrigin - avgGivenOrigin) ** 2;
-		}
-		stdDevGivenTarget = Math.sqrt(stdDevGivenTarget / data.length);
-		stdDevGivenOrigin = Math.sqrt(stdDevGivenOrigin / data.length);
-
-		// Modify and return user data
-		return data.map(user => ({
-			...user,
-			numStdDevGivenTarget: (+user.probOriginGivenTarget - avgGivenTarget) / stdDevGivenTarget,
-			numStdDevGivenOrigin: (+user.probTargetGivenOrigin - avgGivenOrigin) / stdDevGivenOrigin
-		}));
-	}
-
-
 	handleSubmit = (event) => {
 		event.preventDefault();
-		this.getAnalytics(this.state.numDays, this.state.username);
+		this.setState({ loading: true });
+		this.props.getAnalytics(this.state.numDays, this.state.username)
+			.then(() => this.setState({ loading: false }));
 	};
 
 
@@ -155,7 +105,7 @@ class ConnectedAnalyticsPage extends React.Component {
 					</CardContent>
 				</Card>
 				{this.state.loading ? <div>Loading</div> : null}
-				<StatsComponentSelector username={this.state.username} stats={this.state.results}/>
+				<StatsComponentSelector username={this.state.username} stats={this.props.analytics}/>
 			</React.Fragment>
 		);
 	}

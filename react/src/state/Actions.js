@@ -8,7 +8,8 @@ export const Actions = {
 
 	GET_DAYS_SUCCESS: '[DAYS] Successfully got days',
 	GET_USERS_SUCCESS: '[USERS] Successfully got users',
-	GET_HISTOGRAMS_SUCCESS: '[HISTOGRAM] Successfully got histograms'
+	GET_HISTOGRAMS_SUCCESS: '[HISTOGRAM] Successfully got histograms',
+	GET_ANALYTICS_SUCCESS: '[ANALYTICS] Successfully got analytics'
 };
 
 
@@ -44,4 +45,9 @@ export const getUsersSuccess = (users) => ({
 export const getHistogramsSuccess = (histograms) => ({
 	type: Actions.GET_HISTOGRAMS_SUCCESS,
 	payload: histograms
+});
+
+export const getAnalyticsSuccess = (analytics) => ({
+	type: Actions.GET_ANALYTICS_SUCCESS,
+	payload: analytics
 });
