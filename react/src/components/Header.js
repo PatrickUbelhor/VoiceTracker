@@ -49,7 +49,7 @@ function ConnectedHeader(props) {
 
 	const filterButton = (
 		<Tooltip title="Filters">
-			<IconButton className="filterButton" onClick={() => setFiltersOpen(true)}>
+			<IconButton className="header-filter-button" onClick={() => setFiltersOpen(true)}>
 				<Icon color="inherit">filter_list</Icon>
 			</IconButton>
 		</Tooltip>

@@ -58,7 +58,7 @@ function ConnectedFiltersModal({ open, onClose, users, filters, setFilters }) {
 				/>
 			}
 			label={username}
-			labelPlacement="start"
+			labelPlacement="end"
 		/>
 	));
 

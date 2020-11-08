@@ -54,8 +54,12 @@
 	margin-right: auto;
 }
 
-.lightModeButton {
+.header-filter-button {
 	margin-left: auto !important;
+}
+
+.lightModeButton {
+	margin-left: 8px !important;
 	color: var(--header_text) !important;
 }
 
