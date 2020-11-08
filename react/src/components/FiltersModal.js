@@ -9,6 +9,7 @@ import {
 	DialogTitle,
 	FormControlLabel
 } from '@material-ui/core';
+import { setFilters } from '../state/Actions';
 
 
 const select = (state) => ({
@@ -17,18 +18,43 @@ const select = (state) => ({
 });
 
 
-function ConnectedFiltersModal({ open, onClose, users, filters }) {
+const mapDispatchToProps = (dispatch) => ({
+	setFilters: (unchecked) => dispatch(setFilters([...unchecked]))
+});
 
+
+function ConnectedFiltersModal({ open, onClose, users, filters, setFilters }) {
+
+	const [unchecked, setUnchecked] = React.useState(new Set(filters));
+
+	const onCancel = () => {
+		setUnchecked(new Set(filters));
+		onClose();
+	}
+
+	const onSubmit = () => {
+		setFilters(unchecked);
+		onClose();
+	}
+
+	const handleCheckboxChange = (username) => (event) => {
+		event.target.checked
+			? unchecked.delete(username)
+			: unchecked.add(username)
+		;
+		setUnchecked(new Set(unchecked));
+	}
 
 	const checkBoxes = users.map(username => (
 		<FormControlLabel
+			key={username}
 			name={username}
 			control={
 				<Checkbox
-					checked={!filters.has(username)}
+					checked={!unchecked.has(username)}
 					size="small"
 					color="primary"
-					onChange={() => null}
+					onChange={handleCheckboxChange(username)}
 				/>
 			}
 			label={username}
@@ -43,12 +69,12 @@ function ConnectedFiltersModal({ open, onClose, users, filters }) {
 				{checkBoxes}
 			</DialogContent>
 			<DialogActions>
-				<Button autoFocus color="primary" onClick={onClose}>Cancel</Button>
-				<Button color="primary" onClick={() => null}>Save</Button>
+				<Button autoFocus color="primary" onClick={onCancel}>Cancel</Button>
+				<Button color="primary" onClick={onSubmit}>Save</Button>
 			</DialogActions>
 		</Dialog>
 	);
 }
 
-const FiltersModal = connect(select)(ConnectedFiltersModal);
+const FiltersModal = connect(select, mapDispatchToProps)(ConnectedFiltersModal);
 export default FiltersModal;

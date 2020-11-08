@@ -125,7 +125,7 @@ function ConnectedHeader(props) {
 					{isDesktop ? desktop : mobile}
 				</Toolbar>
 			</AppBar>
-			<FiltersModal open={filtersOpen}/>
+			<FiltersModal open={filtersOpen} onClose={() => setFiltersOpen(false)}/>
 			{isDesktop ? null : drawer}
 		</>
 	);
