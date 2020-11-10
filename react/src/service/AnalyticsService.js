@@ -1,5 +1,6 @@
 
 export const calculateEntourage = (data) => {
+	console.log('Calculating Entourage');
 	// Calculate average
 	let avgGivenTarget = 0;
 	let avgGivenOrigin = 0;

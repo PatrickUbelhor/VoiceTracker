@@ -92,8 +92,9 @@ export const getAnalytics = (numDays, username) => async (dispatch) => {
 
 	try {
 		const response = await tracker.getAnalytics(numDays, username);
-		const modified = calculateEntourage(response.data);
-		dispatch(getAnalyticsSuccess(modified));
+		// const modified = calculateEntourage(response.data);
+		// dispatch(getAnalyticsSuccess(modified));
+		dispatch(getAnalyticsSuccess(response.data))
 	} catch (error) {
 		handleError(error, 'Something went wrong getting the analytics', dispatch);
 	}

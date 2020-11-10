@@ -16,11 +16,12 @@ import {
 	getUsers
 } from '../../state/Effects';
 import { connect } from 'react-redux';
+import { calculateEntourage } from '../../service/AnalyticsService';
 
 
 const select = (state) => ({
 	users: state.users.filter(username => !state.filters.has(username)),
-	analytics: state.analytics
+	analytics: calculateEntourage(state.analytics.filter(data => !state.filters.has(data.target)))
 });
 
 
