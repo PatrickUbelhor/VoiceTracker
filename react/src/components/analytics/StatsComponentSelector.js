@@ -5,9 +5,9 @@ import StatsTable from './StatsTable';
 
 function StatsComponentSelector(props) {
 	const isDesktop = useMediaQuery('(min-width: 720px)');
-	const { username, stats } = props;
+	const { stats } = props;
 
-	return isDesktop ? <StatsTable username={username} stats={stats}/> : <StatsGrid stats={stats}/>;
+	return isDesktop ? <StatsTable stats={stats}/> : <StatsGrid stats={stats}/>;
 }
 
 export default StatsComponentSelector;

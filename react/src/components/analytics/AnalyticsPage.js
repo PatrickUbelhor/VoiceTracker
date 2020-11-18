@@ -106,7 +106,7 @@ class ConnectedAnalyticsPage extends React.Component {
 					</CardContent>
 				</Card>
 				{this.state.loading ? <div>Loading</div> : null}
-				<StatsComponentSelector username={this.state.username} stats={this.props.analytics}/>
+				<StatsComponentSelector stats={this.props.analytics}/>
 			</React.Fragment>
 		);
 	}

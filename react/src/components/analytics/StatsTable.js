@@ -14,7 +14,7 @@ import {
 
 export default function StatsTable(props) {
 
-	let { username, stats } = props;
+	let { stats } = props;
 	let [orderDirection, setOrderDirection] = React.useState('asc'); // asc or desc
 	let [orderProperty, setOrderProperty] = React.useState('target');
 
@@ -37,7 +37,7 @@ export default function StatsTable(props) {
 		<Paper className="stats-table-paper" elevation={4}>
 			<TableContainer>
 				<Table aria-label="stats table">
-					<EnhancedTableHead username={username}
+					<EnhancedTableHead username={stats.origin}
 					                   orderProperty={orderProperty}
 					                   orderDirection={orderDirection}
 					                   handleSort={handleSort}
