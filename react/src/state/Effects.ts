@@ -1,4 +1,5 @@
 import tracker from '../api/Tracker';
+import { HistogramState } from '../model/States';
 import {
 	getAnalyticsSuccess,
 	getDaysSuccess,
@@ -8,7 +9,7 @@ import {
 	setFiltersSuccess,
 	setThemeSuccess
 } from './Actions';
-import { calculateEntourage } from '../service/AnalyticsService';
+
 
 export const initApp = () => async (dispatch) => {
 	const theme = localStorage.getItem('theme');
@@ -22,7 +23,7 @@ export const initApp = () => async (dispatch) => {
 	}
 };
 
-export const setTheme = (theme) => async (dispatch, getState) => {
+export const setTheme = (theme: string) => async (dispatch, getState) => {
 	const from = getState().theme;
 	const to = theme;
 
@@ -37,7 +38,7 @@ export const setFilters = (filters) => async (dispatch) => {
 };
 
 
-const handleError = (error, message, dispatch) => {
+const handleError = (error: any, message: string, dispatch) => {
 	if (error.response === undefined) {
 		console.log('An unknown error has occurred');
 		dispatch(setError(message));
@@ -49,14 +50,14 @@ const handleError = (error, message, dispatch) => {
 };
 
 
-export const getDays = (newestDay, oldestDay) => async (dispatch) => {
+export const getDays = (newestDay: number, oldestDay: number) => async (dispatch) => {
 	console.log('Getting days');
 
 	try {
 		let response = await tracker.getDays(newestDay, oldestDay);
 		dispatch(getDaysSuccess(response.data));
 	} catch (error) {
-		handleError(error, 'Something went wrong getting the days/timelines');
+		handleError(error, 'Something went wrong getting the days/timelines', dispatch);
 	}
 };
 
@@ -71,12 +72,12 @@ export const getUsers = () => async (dispatch) => {
 	}
 };
 
-export const getHistograms = (numDays, minActiveDays) => async (dispatch) => {
+export const getHistograms = (numDays: number, minActiveDays: number) => async (dispatch) => {
 	console.log('Getting histograms');
 
 	try {
 		let response = await tracker.getHistograms(numDays, minActiveDays);
-		const histograms = {
+		const histograms: HistogramState = {
 			items: response.data,
 			numDays: numDays,
 			minActiveDays: minActiveDays
@@ -87,13 +88,11 @@ export const getHistograms = (numDays, minActiveDays) => async (dispatch) => {
 	}
 };
 
-export const getAnalytics = (numDays, username) => async (dispatch) => {
+export const getAnalytics = (numDays: number, username: string) => async (dispatch) => {
 	console.log('Getting analytics');
 
 	try {
 		const response = await tracker.getAnalytics(numDays, username);
-		// const modified = calculateEntourage(response.data);
-		// dispatch(getAnalyticsSuccess(modified));
 		dispatch(getAnalyticsSuccess(response.data))
 	} catch (error) {
 		handleError(error, 'Something went wrong getting the analytics', dispatch);

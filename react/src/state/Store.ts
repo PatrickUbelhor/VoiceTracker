@@ -3,9 +3,10 @@ import {
 	createStore
 } from 'redux';
 import thunk from 'redux-thunk';
-import { Actions } from './Actions';
+import { AppState } from '../model/States';
+import { Action, Actions } from './Actions';
 
-const INITIAL_STATE = {
+const INITIAL_STATE: AppState = {
 	theme: 'dark',
 	errorMessage: null,
 	filters: new Set(),
@@ -19,7 +20,7 @@ const INITIAL_STATE = {
 	analytics: []
 };
 
-const reducer = function (state = INITIAL_STATE, action) {
+const reducer = function (state: AppState = INITIAL_STATE, action: Action) {
 	switch (action.type) {
 		case Actions.SET_THEME_SUCCESS:
 			return {
