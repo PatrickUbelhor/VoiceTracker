@@ -1,7 +1,7 @@
 
 export interface DayResponse {
 	date: string;
-	[key: number]: any;
+	users: UserResponse[];
 }
 
 
@@ -19,4 +19,18 @@ export interface StatsResponse {
 	probJoint: string;
 	probOriginGivenTarget: string;
 	probTargetGivenOrigin: string;
+}
+
+
+export interface UserResponse {
+	id: string;
+	color: string;
+	intervals: IntervalResponse[];
+}
+
+
+export interface IntervalResponse {
+	start: number;
+	end: number;
+	finished: boolean;
 }

@@ -1,4 +1,4 @@
-import { DayResponse, HistogramResponse, StatsResponse } from '../model/Responses';
+import { DayResponse, StatsResponse } from '../model/Responses';
 import { HistogramState } from '../model/States';
 
 export interface Action {

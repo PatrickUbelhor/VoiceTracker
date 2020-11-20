@@ -1,4 +1,4 @@
-import { DayResponse, HistogramResponse } from './Responses';
+import { DayResponse, HistogramResponse, StatsResponse } from './Responses';
 
 export interface AppState {
 	theme: string;
@@ -7,7 +7,7 @@ export interface AppState {
 	users: string[];
 	days: DayResponse[];
 	histograms: HistogramState;
-	analytics: any;
+	analytics: StatsResponse[];
 }
 
 
