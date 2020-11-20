@@ -4,11 +4,13 @@ class Tracker {
 
 	tracker = axios.create({
 		// baseURL: '/api'
-		baseURL: 'https://voicetracker.patrickubelhor.com/api'
+		// baseURL: 'https://voicetracker.patrickubelhor.com/api'
+		baseURL: process.env.REACT_APP_SERVER_URL
 	});
 
 
 	getUsers = () => {
+		console.log(process.env.REACT_APP_SERVER_URL);
 		return this.tracker.get('/users');
 	}
 
