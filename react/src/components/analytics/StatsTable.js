@@ -37,7 +37,7 @@ export default function StatsTable(props) {
 		<Paper className="stats-table-paper" elevation={4}>
 			<TableContainer>
 				<Table aria-label="stats table">
-					<EnhancedTableHead username={stats.origin}
+					<EnhancedTableHead username={stats[0].origin}
 					                   orderProperty={orderProperty}
 					                   orderDirection={orderDirection}
 					                   handleSort={handleSort}

@@ -1,5 +1,12 @@
+import { StatsResponse } from '../model/Responses';
 
-export const calculateEntourage = (data) => {
+export interface RefinedStats extends StatsResponse {
+	numStdDevGivenTarget: number;
+	numStdDevGivenOrigin: number;
+}
+
+
+export const calculateEntourage = (data: StatsResponse[]): RefinedStats[] => {
 	console.log('Calculating Entourage');
 	// Calculate average
 	let avgGivenTarget = 0;
