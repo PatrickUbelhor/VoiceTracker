@@ -6,18 +6,16 @@ buildscript {
 		}
 	}
 	dependencies {
-		classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.3.2.RELEASE'
-		classpath 'com.github.node-gradle:gradle-node-plugin:2.2.4'
+		classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.4.1'
 	}
 }
 
 apply plugin: 'java'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
-apply plugin: 'com.github.node-gradle.node'
 
 group 'team.gif'
-version '1.14.0'
+version '1.14.1'
 
 sourceCompatibility = 1.11
 targetCompatibility = 1.11
@@ -31,31 +29,5 @@ dependencies {
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-cache'
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
-	implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.13.3'
-}
-
-task copyReact(type: Copy) {
-	from 'react/build'
-	into 'build/resources/main/static/.'
-}
-
-task appNpmBuild(type: NpmTask) {
-	description = 'Builds production version of the webapp'
-	args = ['run', 'build']
-}
-
-task appNpmInstall(type: NpmTask) {
-	description = 'Installs all dependencies from package.json'
-	args = ['install']
-}
-
-appNpmBuild.dependsOn appNpmInstall
-copyReact.dependsOn appNpmBuild
-//compileJava.dependsOn copyReact
-
-node {
-	version = '14.5.0'
-	npmVersion = '6.14.7'
-	download = false
-	nodeModulesDir = file("${project.projectDir}/react")
+	implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.14.0'
 }

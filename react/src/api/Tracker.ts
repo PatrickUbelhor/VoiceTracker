@@ -29,7 +29,7 @@ class Tracker {
 
 
 	getAnalytics = (numDays: number, username: string): TrackerResponse<StatsResponse[]> => {
-		return this.tracker.get(`analytics?numDays=${numDays}&username=${username}`)
+		return this.tracker.get(`/analysis/${username}?numDays=${numDays}`);
 	}
 
 }

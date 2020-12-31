@@ -61,9 +61,10 @@ public class Controller {
 	
 	
 	@GetMapping()
-	public List<Day> getDays(@RequestParam(defaultValue = "0") Integer newestDay,
-	                         @RequestParam(defaultValue = "1000") Integer oldestDay) {
-		
+	public List<Day> getDays(
+			@RequestParam(defaultValue = "0") Integer newestDay,
+			@RequestParam(defaultValue = "1000") Integer oldestDay
+	) {
 		LocalDateTime now = LocalDateTime.now();
 		List<Day> days = storage.getDays(60 * now.getHour() + now.getMinute());
 		
@@ -73,9 +74,10 @@ public class Controller {
 	
 	
 	@GetMapping("/histogram")
-	public List<Histogram> getHistograms(@RequestParam(defaultValue = "30") Integer numDays,
-	                                     @RequestParam(defaultValue = "1") Integer minActiveDays) {
-		
+	public List<Histogram> getHistograms(
+			@RequestParam(defaultValue = "30") Integer numDays,
+			@RequestParam(defaultValue = "1") Integer minActiveDays
+	) {
 		// Get precomputed histogram list if applicable
 		// TODO: Will have to recompute if minActiveDays is anything other than default for cached histograms
 		if (numDays == 7) return storage.get7DayHistogram();
@@ -85,10 +87,10 @@ public class Controller {
 	}
 	
 	
-	@GetMapping("/analytics")
-	public List<Stats> getAnalytics(
-			@RequestParam(defaultValue = "30") Integer numDays,
-			@RequestParam() String username
+	@GetMapping("/analysis/{username}")
+	public List<Stats> getAnalysis(
+			@PathVariable String username,
+			@RequestParam(defaultValue = "30") Integer numDays
 	) {
 		return storage.getAnalysis(numDays, username);
 	}
