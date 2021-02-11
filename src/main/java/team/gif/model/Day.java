@@ -13,16 +13,16 @@ import java.util.stream.Collectors;
 public class Day {
 	
 	private final String date;
-	private final HashMap<Long, User> users;
+	private final HashMap<Long, Channel> channels;
 	
 	public Day() {
 		this.date = LocalDate.now().format(DateTimeFormatter.ofPattern("eeee LLLL dd, yyyy"));
-		this.users = new HashMap<>();
+		this.channels = new HashMap<>();
 	}
 	
 	public Day(ZonedDateTime time) {
 		this.date = time.format(DateTimeFormatter.ofPattern("eeee LLLL dd, yyyy"));
-		this.users = new HashMap<>();
+		this.channels = new HashMap<>();
 	}
 	
 	
@@ -30,8 +30,8 @@ public class Day {
 		return date;
 	}
 	
-	public List<User> getUsers() {
-		return new LinkedList<>(users.values());
+	public List<Channel> getChannels() {
+		return new LinkedList<>(channels.values());
 	}
 	
 	@JsonIgnore
@@ -42,19 +42,19 @@ public class Day {
 				.collect(Collectors.toList());
 	}
 	
-	public void addJoin(Long snowflake, int minute) {
-		users.putIfAbsent(snowflake, new User(snowflake));
-		users.get(snowflake).addJoin(minute);
+	public void addJoin(Long channelSnowflake, Long userSnowflake, int minute) {
+		channels.putIfAbsent(channelSnowflake, new Channel(channelSnowflake));
+		channels.get(channelSnowflake).addJoin(userSnowflake, minute);
 	}
 	
-	public void addLeave(Long snowflake, int minute) {
-		users.putIfAbsent(snowflake, new User(snowflake));
-		users.get(snowflake).addLeave(minute);
+	public void addLeave(Long channelSnowflake, Long userSnowflake, int minute) {
+		channels.putIfAbsent(channelSnowflake, new Channel(channelSnowflake));
+		channels.get(channelSnowflake).addLeave(userSnowflake, minute);
 	}
 	
 	public void truncateCurrentIntervals(int minute) {
-		for (User user : users.values()) {
-			user.truncateCurrentInterval(minute);
+		for (Channel channel : channels.values()) {
+			channel.truncateCurrentIntervals(minute);
 		}
 	}
 	

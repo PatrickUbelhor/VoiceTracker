@@ -25,21 +25,25 @@ public class DataLoaderService {
 			while ((line = br.readLine()) != null) {
 				String[] columns = line.split(",");
 				String event = columns[0];
-				Long snowflake = Long.parseLong(columns[1]);
+				Long userSnowflake = Long.parseLong(columns[1]);
 				ZonedDateTime time = Instant.ofEpochMilli(Long.parseLong(columns[2])).atZone(ZoneId.of("GMT-6"));
+				Long channelSnowflake = (columns.length > 3) ? Long.parseLong(columns[3]) : 0;
 				
-				// If we've crossed over into a new day, add a new day to the list
-				if (dayId != 366 * time.getYear() + time.getDayOfYear()) {
-					dayId = 366 * time.getYear() + time.getDayOfYear();
+				/* If we've crossed over into a new day, add a new day to the list.
+				 * We don't care about getting exact days since 0 AD here. We just want
+				 * to detect if two days are different. We use 366 because of leap years.
+				 */
+				if (dayId != 366L * time.getYear() + time.getDayOfYear()) {
+					dayId = 366L * time.getYear() + time.getDayOfYear();
 					days.addFirst(new Day(time));
 				}
 				
 				// Add event to latest day
 				Day day = days.getFirst();
 				if (event.equals("J")) {
-					day.addJoin(snowflake, 60 * time.getHour() + time.getMinute());
+					day.addJoin(channelSnowflake, userSnowflake, 60 * time.getHour() + time.getMinute());
 				} else {
-					day.addLeave(snowflake, 60 * time.getHour() + time.getMinute());
+					day.addLeave(channelSnowflake, userSnowflake, 60 * time.getHour() + time.getMinute());
 				}
 			}
 			
