@@ -18,14 +18,24 @@
 .day .names, .day .bar-graphs {
 	display: flex;
 	flex-direction: column;
-	justify-content: space-between;
+}
+
+.day .names {
+	padding-right: 0.5em;
+	width: 5em;
+}
+
+.day .channel {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	border-bottom: 1px dashed var(--secondary);
 	padding-top: 0.5em;
 	padding-bottom: 0.5em;
 }
 
-.day .names {
-	margin-right: 0.5em;
-	width: 5em;
+.channel:last-child {
+	border-bottom: none;
 }
 
 .day .name-listing {

@@ -1,6 +1,12 @@
 
 export interface DayResponse {
 	date: string;
+	channels: ChannelResponse[]
+}
+
+
+export interface ChannelResponse {
+	id: string;
 	users: UserResponse[];
 }
 

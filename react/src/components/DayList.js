@@ -30,7 +30,7 @@ class ConnectedDayList extends React.Component {
 
 		const entries = this.props.days.map((day) => (
 			<React.Fragment key={day.date}>
-				<Day date={day.date} users={day.users}/>
+				<Day date={day.date} channels={day.channels}/>
 			</React.Fragment>
 		));
 
