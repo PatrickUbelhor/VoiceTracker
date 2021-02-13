@@ -157,7 +157,7 @@ public class DataStorageService {
 	
 	
 	public List<Stats> newGetAnalysis(int numDays, String username) {
-		HashMap<String, Integer> totalTime = new HashMap<>(); // Time each individual user is in call
+		HashMap<String, Integer> time = new HashMap<>(); // Time each individual user is in call
 		HashMap<String, Integer> jointTime = new HashMap<>(); // Time users have spent with origin user
 		
 		numDays = Math.min(numDays, this.days.size());
@@ -190,9 +190,8 @@ public class DataStorageService {
 			}
 			
 			// Calculate aggregate daily time for self
-			Integer[] zeros = new Integer[1440];
-			Arrays.fill(zeros, 0);
-			Integer[] aggregateOriginSchedule = zeros;
+			Integer[] aggregateOriginSchedule = new Integer[1440];
+			Arrays.fill(aggregateOriginSchedule, 0);
 			for (String channelId : originSchedulesByChannel.keySet()) {
 				Integer[] schedule = originSchedulesByChannel.get(channelId);
 				
@@ -203,7 +202,7 @@ public class DataStorageService {
 					aggregateOriginSchedule[min] = aggregateOriginSchedule[min] | schedule[min];
 				}
 			}
-			totalTime.put(username, Arrays.stream(aggregateOriginSchedule).reduce(Integer::sum).get());
+			time.put(username, Arrays.stream(aggregateOriginSchedule).reduce(Integer::sum).get());
 			
 			// Calculate aggregate joint time
 			HashMap<String, Integer[]> jointSchedules = new HashMap<>();
@@ -230,29 +229,13 @@ public class DataStorageService {
 				}
 			}
 			
-			// TODO: continue from here
-			// TODO: put all joint times into sums map
-			
-			// Compute daily time and joint time
-			for (String key : schedules.keySet()) {
-				Integer[] schedule = schedules.get(key);
-				int subTime = 0;
-				int subJointTime = 0;
-				time.putIfAbsent(key, 0);
-				jointTime.putIfAbsent(key, 0);
-				
-				for (int i = 0; i < 1440; i++) {
-					subTime += schedule[i];
-					subJointTime += (schedule[i] + originSchedule[i]) / 2;
-				}
-				
-				time.put(key, time.get(key) + subTime);
-				jointTime.put(key, jointTime.get(key) + subJointTime);
+			// Sum minutes in all joint schedules
+			for (String userId : jointSchedules.keySet()) {
+				jointTime.put(userId, Arrays.stream(jointSchedules.get(userId)).reduce(Integer::sum).get());
 			}
 		}
 		
 		// Compute dependent statistics for origin user
-		// NOTE: this is the only part that needs to be altered to efficiently get stats for evey user to every other user
 		int totalTime = 1440 * numDays;
 		double probOrigin = ((double) time.get(username)) / ((double) totalTime);
 		LinkedList<Stats> stats = new LinkedList<>();

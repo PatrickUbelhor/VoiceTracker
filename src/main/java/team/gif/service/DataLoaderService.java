@@ -42,6 +42,8 @@ public class DataLoaderService {
 				Day day = days.getFirst();
 				if (event.equals("J")) {
 					day.addJoin(channelSnowflake, userSnowflake, 60 * time.getHour() + time.getMinute());
+				} else if (event.equals("M")) {
+					day.addMove();
 				} else {
 					day.addLeave(channelSnowflake, userSnowflake, 60 * time.getHour() + time.getMinute());
 				}
