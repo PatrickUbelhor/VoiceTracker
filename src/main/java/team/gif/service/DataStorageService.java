@@ -266,6 +266,39 @@ public class DataStorageService {
 	}
 	
 	
+//	public LinkedList<Histogram> computeHistograms(int numDays, int minActiveDays) {
+//		HashMap<String, Histogram> histograms = new HashMap<>();
+//		HashMap<String, Integer> numActiveDays = new HashMap<>(); // Number of days each user was in call
+//		List<Day> days = this.days.subList(1, numDays + 1); // Only get data for last 30 finished days (excludes today)
+//
+//		// Add each interval to the respective user's histogram
+//		for (Day day : days) {
+//			for (User user : day.getUsers()) {
+//				histograms.putIfAbsent(user.getId(), new Histogram(user.getId()));
+//
+//				// Add intervals to user's histogram
+//				Histogram histogram = histograms.get(user.getId());
+//				for (Interval interval : user.getIntervals()) {
+//					histogram.addInterval(interval);
+//				}
+//
+//				// Increment number of active days for user
+//				numActiveDays.putIfAbsent(user.getId(), 0);
+//				numActiveDays.put(user.getId(), numActiveDays.get(user.getId()) + 1);
+//			}
+//		}
+//
+//		// Remove users that weren't on for enough days
+//		for (String user : numActiveDays.keySet()) {
+//			if (numActiveDays.get(user) < minActiveDays) {
+//				histograms.remove(user);
+//			}
+//		}
+//
+//		return new LinkedList<>(histograms.values());
+//	}
+	
+	
 	public LinkedList<Histogram> computeHistograms(int numDays, int minActiveDays) {
 		HashMap<String, Histogram> histograms = new HashMap<>();
 		HashMap<String, Integer> numActiveDays = new HashMap<>(); // Number of days each user was in call
@@ -273,56 +306,22 @@ public class DataStorageService {
 		
 		// Add each interval to the respective user's histogram
 		for (Day day : days) {
-			for (User user : day.getUsers()) {
-				histograms.putIfAbsent(user.getId(), new Histogram(user.getId()));
-				
-				// Add intervals to user's histogram
-				Histogram histogram = histograms.get(user.getId());
-				for (Interval interval : user.getIntervals()) {
-					histogram.addInterval(interval);
-				}
-				
-				// Increment number of active days for user
-				numActiveDays.putIfAbsent(user.getId(), 0);
-				numActiveDays.put(user.getId(), numActiveDays.get(user.getId()) + 1);
-			}
-		}
-		
-		// Remove users that weren't on for enough days
-		for (String user : numActiveDays.keySet()) {
-			if (numActiveDays.get(user) < minActiveDays) {
-				histograms.remove(user);
-			}
-		}
-		
-		return new LinkedList<>(histograms.values());
-	}
-	
-	
-	public LinkedList<Histogram> newComputeHistograms(int numDays, int minActiveDays) {
-		HashMap<String, Histogram> histograms = new HashMap<>();
-		HashMap<String, Integer> numActiveDays = new HashMap<>(); // Number of days each user was in call
-		List<Day> days = this.days.subList(1, numDays + 1); // Only get data for last 30 finished days (excludes today)
-		
-		// Add each interval to the respective user's histogram
-		for (Day day : days) {
 			
+			// TODO: account for users being in two channels simultaneously
 			for (Channel channel : day.getChannels()) {
-			
-			}
-			
-			for (User user : day.getUsers()) {
-				histograms.putIfAbsent(user.getId(), new Histogram(user.getId()));
-				
-				// Add intervals to user's histogram
-				Histogram histogram = histograms.get(user.getId());
-				for (Interval interval : user.getIntervals()) {
-					histogram.addInterval(interval);
+				for (User user : channel.getUsers()) {
+					histograms.putIfAbsent(user.getId(), new Histogram(user.getId()));
+					
+					// Add intervals to user's histogram
+					Histogram histogram = histograms.get(user.getId());
+					for (Interval interval : user.getIntervals()) {
+						histogram.addInterval(interval);
+					}
+					
+					// Increment number of active days for user
+					numActiveDays.putIfAbsent(user.getId(), 0);
+					numActiveDays.put(user.getId(), numActiveDays.get(user.getId()) + 1);
 				}
-				
-				// Increment number of active days for user
-				numActiveDays.putIfAbsent(user.getId(), 0);
-				numActiveDays.put(user.getId(), numActiveDays.get(user.getId()) + 1);
 			}
 		}
 		
