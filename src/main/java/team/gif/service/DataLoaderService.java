@@ -1,5 +1,7 @@
 package team.gif.service;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 import team.gif.exception.DataLoadException;
 import team.gif.model.Day;
@@ -15,6 +17,8 @@ import java.util.LinkedList;
 @Service
 public class DataLoaderService {
 	
+	private static final Logger logger = LogManager.getLogger(DataStorageService.class);
+	
 	public LinkedList<Day> load(String filename) {
 		try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
 			
@@ -27,7 +31,8 @@ public class DataLoaderService {
 				String event = columns[0];
 				Long userSnowflake = Long.parseLong(columns[1]);
 				ZonedDateTime time = Instant.ofEpochMilli(Long.parseLong(columns[2])).atZone(ZoneId.of("GMT-6"));
-				Long channelSnowflake = (columns.length > 3) ? Long.parseLong(columns[3]) : 0;
+				Long primaryChannelSnowflake = (columns.length > 3) ? Long.parseLong(columns[3]) : 0; // For LEAVE, JOIN, and MOVE
+				Long secondaryChannelSnowflake = (columns.length > 4) ? Long.parseLong(columns[4]) : 0; // For MOVE
 				
 				/* If we've crossed over into a new day, add a new day to the list.
 				 * We don't care about getting exact days since 0 AD here. We just want
@@ -40,12 +45,20 @@ public class DataLoaderService {
 				
 				// Add event to latest day
 				Day day = days.getFirst();
-				if (event.equals("J")) {
-					day.addJoin(channelSnowflake, userSnowflake, 60 * time.getHour() + time.getMinute());
-				} else if (event.equals("M")) {
-					day.addMove();
-				} else {
-					day.addLeave(channelSnowflake, userSnowflake, 60 * time.getHour() + time.getMinute());
+				int minute = 60 * time.getHour() + time.getMinute();
+				switch (event) {
+					case "J":
+						day.addJoin(primaryChannelSnowflake, userSnowflake, minute);
+						break;
+					case "M":
+						day.addMove(primaryChannelSnowflake, secondaryChannelSnowflake, userSnowflake, minute);
+						break;
+					case "L":
+						day.addLeave(primaryChannelSnowflake, userSnowflake, minute);
+						break;
+					default:
+						logger.error("Encountered invalid event type: '{}'", event);
+						break;
 				}
 			}
 			

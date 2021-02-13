@@ -65,8 +65,10 @@ public class DataStorageService {
 			// For each user still on at end of day, make sure they appear at start of new day
 			// Not necessary, but is useful for live reporting on front end (don't have to wait
 			// until they leave to create an interval for that session)
-			for (User user : yesterday.getOnlineUsers()) {
-				today.addJoin(user.getSnowflake(), 0);
+			for (Channel channel : yesterday.getChannels()) {
+				for (User user : channel.getOnlineUsers()) {
+					today.addJoin(channel.getSnowflake(), user.getSnowflake(), 0);
+				}
 			}
 			
 			yesterday.truncateCurrentIntervals(Interval.MAX_TIME);
@@ -77,76 +79,76 @@ public class DataStorageService {
 	}
 	
 	
-	public List<Stats> getAnalysis(int numDays, String username) {
-		HashMap<String, Integer> time = new HashMap<>(); // Time each individual user is in call
-		HashMap<String, Integer> jointTime = new HashMap<>(); // Time users have spent with origin user
-		
-		numDays = Math.min(numDays, this.days.size());
-		List<Day> days = this.days.subList(1, numDays + 1);
-		for (Day day : days) {
-			HashMap<String, Integer[]> schedules = new HashMap<>();
-			
-			// Get all users' schedules as arrays
-			for (User user : day.getUsers()) {
-				Integer[] schedule = new Integer[1440];
-				Arrays.fill(schedule, 0);
-				
-				for (Interval interval : user.getIntervals()) {
-					Arrays.fill(schedule, interval.getStart(), interval.getEnd(), 1);
-				}
-				
-				schedules.put(user.getId(), schedule);
-			}
-			
-			// Compute daily time and joint time
-			Integer[] zeros = new Integer[1440];
-			Arrays.fill(zeros, 0);
-			Integer[] originSchedule = schedules.getOrDefault(username, zeros);
-			for (String key : schedules.keySet()) {
-				Integer[] schedule = schedules.get(key);
-				int subTime = 0;
-				int subJointTime = 0;
-				time.putIfAbsent(key, 0);
-				jointTime.putIfAbsent(key, 0);
-				
-				for (int i = 0; i < 1440; i++) {
-					subTime += schedule[i];
-					subJointTime += (schedule[i] + originSchedule[i]) / 2;
-				}
-				
-				time.put(key, time.get(key) + subTime);
-				jointTime.put(key, jointTime.get(key) + subJointTime);
-			}
-		}
-		
-		// Compute dependent statistics for origin user
-		// NOTE: this is the only part that needs to be altered to efficiently get stats for evey user to every other user
-		int totalTime = 1440 * numDays;
-		double probOrigin = ((double) time.get(username)) / ((double) totalTime);
-		LinkedList<Stats> stats = new LinkedList<>();
-		for (String key : time.keySet()) {
-			if (username.equals(key)) continue; // Skip origin user
-			
-			double probTarget = ((double) time.get(key)) / ((double) totalTime);
-			double probJoint = ((double) jointTime.get(key)) / ((double) totalTime);
-			double probOriginGivenTarget = probJoint / probTarget;
-			double probTargetGivenOrigin = probJoint / probOrigin;
-			
-			stats.push(
-				new Stats(
-					username,
-					key,
-					String.format("%.4f", probOrigin),
-					String.format("%.4f", probTarget),
-					String.format("%.4f", probJoint),
-					String.format("%.4f", probOriginGivenTarget),
-					String.format("%.4f", probTargetGivenOrigin)
-				)
-			);
-		}
-		
-		return stats;
-	}
+//	public List<Stats> getAnalysis(int numDays, String username) {
+//		HashMap<String, Integer> time = new HashMap<>(); // Time each individual user is in call
+//		HashMap<String, Integer> jointTime = new HashMap<>(); // Time users have spent with origin user
+//
+//		numDays = Math.min(numDays, this.days.size());
+//		List<Day> days = this.days.subList(1, numDays + 1);
+//		for (Day day : days) {
+//			HashMap<String, Integer[]> schedules = new HashMap<>();
+//
+//			// Get all users' schedules as arrays
+//			for (User user : day.getUsers()) {
+//				Integer[] schedule = new Integer[1440];
+//				Arrays.fill(schedule, 0);
+//
+//				for (Interval interval : user.getIntervals()) {
+//					Arrays.fill(schedule, interval.getStart(), interval.getEnd(), 1);
+//				}
+//
+//				schedules.put(user.getId(), schedule);
+//			}
+//
+//			// Compute daily time and joint time
+//			Integer[] zeros = new Integer[1440];
+//			Arrays.fill(zeros, 0);
+//			Integer[] originSchedule = schedules.getOrDefault(username, zeros);
+//			for (String key : schedules.keySet()) {
+//				Integer[] schedule = schedules.get(key);
+//				int subTime = 0;
+//				int subJointTime = 0;
+//				time.putIfAbsent(key, 0);
+//				jointTime.putIfAbsent(key, 0);
+//
+//				for (int i = 0; i < 1440; i++) {
+//					subTime += schedule[i];
+//					subJointTime += (schedule[i] + originSchedule[i]) / 2;
+//				}
+//
+//				time.put(key, time.get(key) + subTime);
+//				jointTime.put(key, jointTime.get(key) + subJointTime);
+//			}
+//		}
+//
+//		// Compute dependent statistics for origin user
+//		// NOTE: this is the only part that needs to be altered to efficiently get stats for evey user to every other user
+//		int totalTime = 1440 * numDays;
+//		double probOrigin = ((double) time.get(username)) / ((double) totalTime);
+//		LinkedList<Stats> stats = new LinkedList<>();
+//		for (String key : time.keySet()) {
+//			if (username.equals(key)) continue; // Skip origin user
+//
+//			double probTarget = ((double) time.get(key)) / ((double) totalTime);
+//			double probJoint = ((double) jointTime.get(key)) / ((double) totalTime);
+//			double probOriginGivenTarget = probJoint / probTarget;
+//			double probTargetGivenOrigin = probJoint / probOrigin;
+//
+//			stats.push(
+//				new Stats(
+//					username,
+//					key,
+//					String.format("%.4f", probOrigin),
+//					String.format("%.4f", probTarget),
+//					String.format("%.4f", probJoint),
+//					String.format("%.4f", probOriginGivenTarget),
+//					String.format("%.4f", probTargetGivenOrigin)
+//				)
+//			);
+//		}
+//
+//		return stats;
+//	}
 	
 	
 	public void updateHistogramCache() {
@@ -156,7 +158,7 @@ public class DataStorageService {
 	}
 	
 	
-	public List<Stats> newGetAnalysis(int numDays, String username) {
+	public List<Stats> getAnalysis(int numDays, String username) {
 		HashMap<String, Integer> time = new HashMap<>(); // Time each individual user is in call
 		HashMap<String, Integer> jointTime = new HashMap<>(); // Time users have spent with origin user
 		
@@ -297,16 +299,61 @@ public class DataStorageService {
 	}
 	
 	
-	public void addJoinEvent(Long snowflake, int minute) {
+	public LinkedList<Histogram> newComputeHistograms(int numDays, int minActiveDays) {
+		HashMap<String, Histogram> histograms = new HashMap<>();
+		HashMap<String, Integer> numActiveDays = new HashMap<>(); // Number of days each user was in call
+		List<Day> days = this.days.subList(1, numDays + 1); // Only get data for last 30 finished days (excludes today)
+		
+		// Add each interval to the respective user's histogram
+		for (Day day : days) {
+			
+			for (Channel channel : day.getChannels()) {
+			
+			}
+			
+			for (User user : day.getUsers()) {
+				histograms.putIfAbsent(user.getId(), new Histogram(user.getId()));
+				
+				// Add intervals to user's histogram
+				Histogram histogram = histograms.get(user.getId());
+				for (Interval interval : user.getIntervals()) {
+					histogram.addInterval(interval);
+				}
+				
+				// Increment number of active days for user
+				numActiveDays.putIfAbsent(user.getId(), 0);
+				numActiveDays.put(user.getId(), numActiveDays.get(user.getId()) + 1);
+			}
+		}
+		
+		// Remove users that weren't on for enough days
+		for (String user : numActiveDays.keySet()) {
+			if (numActiveDays.get(user) < minActiveDays) {
+				histograms.remove(user);
+			}
+		}
+		
+		return new LinkedList<>(histograms.values());
+	}
+	
+	
+	public void addJoinEvent(Long channelSnowflake, Long userSnowflake, int minute) {
 		synchronized (this) {
-			days.getFirst().addJoin(snowflake, minute);
+			days.getFirst().addJoin(channelSnowflake, userSnowflake, minute);
 		}
 	}
 	
 	
-	public void addLeaveEvent(Long snowflake, int minute) {
+	public void addMoveEvent(Long leaveChannelSnowflake, Long joinChannelSnowflake, Long userSnowflake, int minute) {
 		synchronized (this) {
-			days.getFirst().addLeave(snowflake, minute);
+			days.getFirst().addMove(leaveChannelSnowflake, joinChannelSnowflake, userSnowflake, minute);
+		}
+	}
+	
+	
+	public void addLeaveEvent(Long channelSnowflake, Long userSnowflake, int minute) {
+		synchronized (this) {
+			days.getFirst().addLeave(channelSnowflake, userSnowflake, minute);
 		}
 	}
 	

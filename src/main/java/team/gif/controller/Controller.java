@@ -3,15 +3,19 @@ package team.gif.controller;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import team.gif.model.Day;
 import team.gif.model.Histogram;
+import team.gif.model.Request;
 import team.gif.model.Stats;
 import team.gif.service.DataLoaderService;
 import team.gif.service.DataStorageService;
@@ -37,19 +41,32 @@ public class Controller {
 	}
 	
 	
-	@PostMapping("/join/{snowflake}")
-	public void join(@PathVariable Long snowflake) {
-		logger.info("JOIN " + snowflake);
+	@PostMapping("/join/{userSnowflake}")
+	public void join(@PathVariable Long userSnowflake, @RequestBody Request request) {
+		logger.info("JOIN " + userSnowflake);
 		LocalDateTime now = LocalDateTime.now();
-		storage.addJoinEvent(snowflake, 60 * now.getHour() + now.getMinute());
+		storage.addJoinEvent(request.getJoiningChannelId(), userSnowflake, 60 * now.getHour() + now.getMinute());
 	}
 	
 	
-	@PostMapping("/leave/{snowflake}")
-	public void leave(@PathVariable Long snowflake) {
-		logger.info("LEAVE " + snowflake);
+	@PostMapping("/move/{userSnowflake}")
+	public void move(@PathVariable Long userSnowflake, @RequestBody Request request) {
+		logger.info("MOVE " + userSnowflake);
 		LocalDateTime now = LocalDateTime.now();
-		storage.addLeaveEvent(snowflake, 60 * now.getHour() + now.getMinute());
+		storage.addMoveEvent(
+				request.getLeavingChannelId(),
+				request.getJoiningChannelId(),
+				userSnowflake,
+				60 * now.getHour() + now.getMinute()
+		);
+	}
+	
+	
+	@PostMapping("/leave/{userSnowflake}")
+	public void leave(@PathVariable Long userSnowflake, @RequestBody Request request) {
+		logger.info("LEAVE " + userSnowflake);
+		LocalDateTime now = LocalDateTime.now();
+		storage.addLeaveEvent(request.getLeavingChannelId(), userSnowflake, 60 * now.getHour() + now.getMinute());
 	}
 	
 	
@@ -97,7 +114,7 @@ public class Controller {
 	
 	
 	@GetMapping("/start")
-	public void reloadAllData() {
+	public ResponseEntity<Void> reloadAllData() {
 		logger.info("Loading data...");
 		storage.replaceDays(loaderService.load("vclog.csv"));
 		logger.info("Finished loading data");
@@ -108,6 +125,8 @@ public class Controller {
 		
 		// Recompute histograms, since names and data were updated
 		storage.updateHistogramCache();
+		
+		return ResponseEntity.status(HttpStatus.FOUND).header("Location", "/").build();
 	}
 	
 }
