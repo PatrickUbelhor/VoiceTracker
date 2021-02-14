@@ -55,7 +55,6 @@ export const getDays = (newestDay: number, oldestDay: number) => async (dispatch
 
 	try {
 		let response = await tracker.getDays(newestDay, oldestDay);
-		console.log(response.data);
 		dispatch(getDaysSuccess(response.data));
 	} catch (error) {
 		handleError(error, 'Something went wrong getting the days/timelines', dispatch);
@@ -94,7 +93,8 @@ export const getAnalytics = (numDays: number, username: string) => async (dispat
 
 	try {
 		const response = await tracker.getAnalytics(numDays, username);
-		dispatch(getAnalyticsSuccess(response.data))
+		console.log(response.data);
+		dispatch(getAnalyticsSuccess(response.data));
 	} catch (error) {
 		handleError(error, 'Something went wrong getting the analytics', dispatch);
 	}

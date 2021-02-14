@@ -13,7 +13,6 @@ class Tracker {
 
 
 	getUsers = (): TrackerResponse<string[]> => {
-		console.log(process.env.REACT_APP_SERVER_URL);
 		return this.tracker.get('/users');
 	}
 

@@ -79,78 +79,6 @@ public class DataStorageService {
 	}
 	
 	
-//	public List<Stats> getAnalysis(int numDays, String username) {
-//		HashMap<String, Integer> time = new HashMap<>(); // Time each individual user is in call
-//		HashMap<String, Integer> jointTime = new HashMap<>(); // Time users have spent with origin user
-//
-//		numDays = Math.min(numDays, this.days.size());
-//		List<Day> days = this.days.subList(1, numDays + 1);
-//		for (Day day : days) {
-//			HashMap<String, Integer[]> schedules = new HashMap<>();
-//
-//			// Get all users' schedules as arrays
-//			for (User user : day.getUsers()) {
-//				Integer[] schedule = new Integer[1440];
-//				Arrays.fill(schedule, 0);
-//
-//				for (Interval interval : user.getIntervals()) {
-//					Arrays.fill(schedule, interval.getStart(), interval.getEnd(), 1);
-//				}
-//
-//				schedules.put(user.getId(), schedule);
-//			}
-//
-//			// Compute daily time and joint time
-//			Integer[] zeros = new Integer[1440];
-//			Arrays.fill(zeros, 0);
-//			Integer[] originSchedule = schedules.getOrDefault(username, zeros);
-//			for (String key : schedules.keySet()) {
-//				Integer[] schedule = schedules.get(key);
-//				int subTime = 0;
-//				int subJointTime = 0;
-//				time.putIfAbsent(key, 0);
-//				jointTime.putIfAbsent(key, 0);
-//
-//				for (int i = 0; i < 1440; i++) {
-//					subTime += schedule[i];
-//					subJointTime += (schedule[i] + originSchedule[i]) / 2;
-//				}
-//
-//				time.put(key, time.get(key) + subTime);
-//				jointTime.put(key, jointTime.get(key) + subJointTime);
-//			}
-//		}
-//
-//		// Compute dependent statistics for origin user
-//		// NOTE: this is the only part that needs to be altered to efficiently get stats for evey user to every other user
-//		int totalTime = 1440 * numDays;
-//		double probOrigin = ((double) time.get(username)) / ((double) totalTime);
-//		LinkedList<Stats> stats = new LinkedList<>();
-//		for (String key : time.keySet()) {
-//			if (username.equals(key)) continue; // Skip origin user
-//
-//			double probTarget = ((double) time.get(key)) / ((double) totalTime);
-//			double probJoint = ((double) jointTime.get(key)) / ((double) totalTime);
-//			double probOriginGivenTarget = probJoint / probTarget;
-//			double probTargetGivenOrigin = probJoint / probOrigin;
-//
-//			stats.push(
-//				new Stats(
-//					username,
-//					key,
-//					String.format("%.4f", probOrigin),
-//					String.format("%.4f", probTarget),
-//					String.format("%.4f", probJoint),
-//					String.format("%.4f", probOriginGivenTarget),
-//					String.format("%.4f", probTargetGivenOrigin)
-//				)
-//			);
-//		}
-//
-//		return stats;
-//	}
-	
-	
 	public void updateHistogramCache() {
 		this.histograms7 = computeHistograms(7, 2);
 		this.histograms30 = computeHistograms(30, 5);
@@ -166,45 +94,37 @@ public class DataStorageService {
 		List<Day> days = this.days.subList(1, numDays + 1);
 		for (Day day : days) {
 			HashMap<String, HashMap<String, Integer[]>> schedulesByChannel = new HashMap<>();
-			HashMap<String, Integer[]> originSchedulesByChannel = new HashMap<>();
 			
 			// Get all users' schedules as arrays
 			for (Channel channel : day.getChannels()) {
 				schedulesByChannel.putIfAbsent(channel.getId(), new HashMap<>());
 				HashMap<String, Integer[]> schedules = schedulesByChannel.get(channel.getId());
 				
-				// TODO: this can be extracted as a function convertUserScheduleToArray()
 				for (User user : channel.getUsers()) {
-					Integer[] schedule = new Integer[1440];
-					Arrays.fill(schedule, 0);
-					
-					for (Interval interval : user.getIntervals()) {
-						Arrays.fill(schedule, interval.getStart(), interval.getEnd(), 1);
-					}
-					
-					if (user.getId().equals(username)) {
-						originSchedulesByChannel.put(channel.getId(), schedule);
-						continue;
-					}
-					
+					Integer[] schedule = convertScheduleToArray(user.getIntervals());
 					schedules.put(user.getId(), schedule);
 				}
 			}
 			
-			// Calculate aggregate daily time for self
-			Integer[] aggregateOriginSchedule = new Integer[1440];
-			Arrays.fill(aggregateOriginSchedule, 0);
-			for (String channelId : originSchedulesByChannel.keySet()) {
-				Integer[] schedule = originSchedulesByChannel.get(channelId);
-				
-				for (int min = 0; min < 1440; min++) {
-					// Bitwise OR. This forces aggregate value to be either 0 or 1.
-					// Otherwise if we just added, a user could log into two channels in different guilds simultaneously,
-					// leading to an aggregate sum greater than 1440. This would mess up the stats calculation.
-					aggregateOriginSchedule[min] = aggregateOriginSchedule[min] | schedule[min];
+			// Calculate aggregate daily time for users
+			HashMap<String, Integer[]> aggregateSchedules = new HashMap<>();
+			for (String channelId : schedulesByChannel.keySet()) {
+				for (String userId : schedulesByChannel.get(channelId).keySet()) {
+					aggregateSchedules.putIfAbsent(userId, createEmptySchedule());
+					
+					Integer[] aggregateSchedule = aggregateSchedules.get(userId);
+					for (int min = 0; min < 1440; min++) {
+						// Bitwise OR. This forces aggregate value to be either 0 or 1.
+						// Otherwise if we just added, a user could log into two channels in different guilds simultaneously,
+						// leading to an aggregate sum greater than 1440. This would mess up the stats calculation.
+						aggregateSchedule[min] = aggregateSchedule[min] | schedulesByChannel.get(channelId).get(userId)[min];
+					}
 				}
 			}
-			time.put(username, Arrays.stream(aggregateOriginSchedule).reduce(Integer::sum).get());
+			
+			for (String userId : aggregateSchedules.keySet()) {
+				time.put(userId, sumSchedule(aggregateSchedules.get(userId)));
+			}
 			
 			// Calculate aggregate joint time
 			HashMap<String, Integer[]> jointSchedules = new HashMap<>();
@@ -212,20 +132,15 @@ public class DataStorageService {
 				
 				HashMap<String, Integer[]> schedulesByUser = schedulesByChannel.get(channelId);
 				for (String userId : schedulesByUser.keySet()) {
-					if (!jointSchedules.containsKey(userId)) {
-						// TODO: create function that returns blank schedules
-						Integer[] freshSchedule = new Integer[1440];
-						Arrays.fill(freshSchedule, 0);
-						jointSchedules.put(userId, freshSchedule);
-					}
+					jointSchedules.putIfAbsent(userId, createEmptySchedule());
 					
-					if (!originSchedulesByChannel.containsKey(channelId)) {
+					if (!schedulesByUser.containsKey(username)) {
 						continue;
 					}
 					
 					Integer[] targetSchedule = schedulesByUser.get(userId);
 					Integer[] jointSchedule = jointSchedules.get(userId);
-					Integer[] originSchedule = originSchedulesByChannel.get(channelId);
+					Integer[] originSchedule = schedulesByUser.get(username);
 					for (int min = 0; min < 1440; min++) {
 						// Bitwise logic same as above for aggregateOriginSchedule.
 						// Two users could theoretically each be in two different channels together in two guilds.
@@ -236,12 +151,12 @@ public class DataStorageService {
 			
 			// Sum minutes in all joint schedules
 			for (String userId : jointSchedules.keySet()) {
-				jointTime.put(userId, Arrays.stream(jointSchedules.get(userId)).reduce(Integer::sum).get());
+				jointTime.put(userId, sumSchedule(jointSchedules.get(userId)));
 			}
 		}
 		
 		// Compute dependent statistics for origin user
-		int totalTime = 1440 * numDays;
+		final int totalTime = 1440 * numDays;
 		double probOrigin = ((double) time.get(username)) / ((double) totalTime);
 		LinkedList<Stats> stats = new LinkedList<>();
 		for (String key : time.keySet()) {
@@ -269,37 +184,29 @@ public class DataStorageService {
 	}
 	
 	
-//	public LinkedList<Histogram> computeHistograms(int numDays, int minActiveDays) {
-//		HashMap<String, Histogram> histograms = new HashMap<>();
-//		HashMap<String, Integer> numActiveDays = new HashMap<>(); // Number of days each user was in call
-//		List<Day> days = this.days.subList(1, numDays + 1); // Only get data for last 30 finished days (excludes today)
-//
-//		// Add each interval to the respective user's histogram
-//		for (Day day : days) {
-//			for (User user : day.getUsers()) {
-//				histograms.putIfAbsent(user.getId(), new Histogram(user.getId()));
-//
-//				// Add intervals to user's histogram
-//				Histogram histogram = histograms.get(user.getId());
-//				for (Interval interval : user.getIntervals()) {
-//					histogram.addInterval(interval);
-//				}
-//
-//				// Increment number of active days for user
-//				numActiveDays.putIfAbsent(user.getId(), 0);
-//				numActiveDays.put(user.getId(), numActiveDays.get(user.getId()) + 1);
-//			}
-//		}
-//
-//		// Remove users that weren't on for enough days
-//		for (String user : numActiveDays.keySet()) {
-//			if (numActiveDays.get(user) < minActiveDays) {
-//				histograms.remove(user);
-//			}
-//		}
-//
-//		return new LinkedList<>(histograms.values());
-//	}
+	private Integer[] convertScheduleToArray(List<Interval> schedule) {
+		Integer[] result = createEmptySchedule();
+		
+		for (Interval interval : schedule) {
+			Arrays.fill(result, interval.getStart(), interval.getEnd(), 1);
+		}
+		
+		return result;
+	}
+	
+	
+	private Integer[] createEmptySchedule() {
+		Integer[] schedule = new Integer[1440];
+		Arrays.fill(schedule, 0);
+		return schedule;
+	}
+	
+	
+	private int sumSchedule(Integer[] schedule) {
+		return Arrays.stream(schedule)
+				.reduce(Integer::sum)
+				.get();
+	}
 	
 	
 	public LinkedList<Histogram> computeHistograms(int numDays, int minActiveDays) {
