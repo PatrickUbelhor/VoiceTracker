@@ -219,10 +219,13 @@ public class DataStorageService {
 						jointSchedules.put(userId, freshSchedule);
 					}
 					
+					if (!originSchedulesByChannel.containsKey(channelId)) {
+						continue;
+					}
+					
 					Integer[] targetSchedule = schedulesByUser.get(userId);
 					Integer[] jointSchedule = jointSchedules.get(userId);
 					Integer[] originSchedule = originSchedulesByChannel.get(channelId);
-					
 					for (int min = 0; min < 1440; min++) {
 						// Bitwise logic same as above for aggregateOriginSchedule.
 						// Two users could theoretically each be in two different channels together in two guilds.
