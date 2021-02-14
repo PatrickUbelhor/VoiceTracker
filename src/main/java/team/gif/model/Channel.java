@@ -26,6 +26,7 @@ public class Channel {
 		return new LinkedList<>(users.values());
 	}
 	
+	@JsonIgnore
 	public Long getSnowflake() {
 		return id;
 	}
@@ -46,6 +47,11 @@ public class Channel {
 	public void addLeave(Long snowflake, int minute) {
 		users.putIfAbsent(snowflake, new User(snowflake));
 		users.get(snowflake).addLeave(minute);
+		
+		// If this leave event resulted in the only interval being removed, remove the user
+		if (users.get(snowflake).getIntervals().size() == 0) {
+			users.remove(snowflake);
+		}
 	}
 	
 	public void truncateCurrentIntervals(int minute) {

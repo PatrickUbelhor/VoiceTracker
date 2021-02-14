@@ -44,6 +44,11 @@ public class Day {
 	public void addLeave(Long channelSnowflake, Long userSnowflake, int minute) {
 		channels.putIfAbsent(channelSnowflake, new Channel(channelSnowflake));
 		channels.get(channelSnowflake).addLeave(userSnowflake, minute);
+		
+		// If this resulted in all users being removed (for intervals that were too short), remove the channel
+		if (channels.get(channelSnowflake).getUsers().size() == 0) {
+			channels.remove(channelSnowflake);
+		}
 	}
 	
 	public void truncateCurrentIntervals(int minute) {
