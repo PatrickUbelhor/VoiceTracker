@@ -10,3 +10,15 @@
 	z-index: 5;
 	height: 100%;
 }
+
+/*.intervals .bar:hover + .sight-helper {*/
+/*	display: unset;*/
+/*}*/
+
+.intervals .sight-helper {
+	position: relative;
+	top: 50%;
+	width: 100%;
+	height: fit-content;
+	border-top: 1px dashed yellow;
+}

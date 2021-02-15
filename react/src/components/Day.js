@@ -15,7 +15,10 @@ function Day(props) {
 	let channelIntervals = [];
 	let totalNameCount = 0;
 	for (let i = 0; i < channels.length; i++) {
-		const users = channels[i].users;
+		const users = channels[i].users
+			.slice()
+			.sort((a, b) => a.id.localeCompare(b.id));
+
 		let names = [];
 		let intervals = [];
 		let others = [];
@@ -23,7 +26,7 @@ function Day(props) {
 		for (let i = 0; i < users.length; i++) {
 			if (users[i].intervals.length > 0) {
 				totalNameCount++;
-				let intervalDiv = <Intervals key={i} color={users[i].color} intervals={users[i].intervals}/>;
+				let intervalDiv = <Intervals key={i} color={users[i].color} intervals={users[i].intervals} owner={users[i].id}/>;
 				let nameDiv = <div className="name-listing" key={i} style={{ borderLeftColor: users[i].color }}>{users[i].id}</div>;
 
 				// We want to put "others" at bottom of list
