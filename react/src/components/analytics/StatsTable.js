@@ -1,6 +1,7 @@
 import '../../css/analytics/StatsTable.css';
 import React from 'react';
 import {
+	Icon,
 	Paper,
 	Table,
 	TableBody,
@@ -8,7 +9,8 @@ import {
 	TableContainer,
 	TableHead,
 	TableRow,
-	TableSortLabel
+	TableSortLabel,
+	Tooltip
 } from '@material-ui/core';
 
 
@@ -52,30 +54,66 @@ export default function StatsTable(props) {
 
 function EnhancedTableHead({ username, orderDirection, orderProperty, handleSort }) {
 	const headCells = [
-		{ id: 'target', label: 'Name', numeric: false },
-		{ id: 'probTarget', label: 'P(X)', numeric: true },
-		{ id: 'probJoint', label: `P(${username}, X)`, numeric: true},
-		{ id: 'probOriginGivenTarget', label: `P(${username} | X)`, numeric: true},
-		{ id: 'probTargetGivenOrigin', label: `P(X | ${username})`, numeric: true},
+		{
+			id: 'target',
+			label: 'Name',
+			numeric: false,
+			tooltip: null
+		},
+		{
+			id: 'probTarget',
+			label: 'P(X)',
+			numeric: true,
+			tooltip: 'The proportion of all time that X is online.'
+		},
+		{
+			id: 'probJoint',
+			label: `P(${username}, X)`,
+			numeric: true,
+			tooltip: `The proportion of all time that X and ${username} are in the call together.`
+		},
+		{
+			id: 'probOriginGivenTarget',
+			label: `P(${username} | X)`,
+			numeric: true,
+			tooltip: `The proportion of X's time that ${username} is also in the call. It tends to be descriptive of X's behavior, but not ${username}'s.`
+		},
+		{
+			id: 'probTargetGivenOrigin',
+			label: `P(X | ${username})`,
+			numeric: true,
+			tooltip: `The proportion of ${username}'s time that X is in the call. It tends to be descriptive of ${username}'s behavior, but not X's.`
+		},
 	];
 
 	const createSortHandler = (property) => (event) => {
 		handleSort(event, property);
 	};
 
-	const headEls = headCells.map(cell => (
-		<TableCell className="state-table-cell"
-		           key={cell.id}
-		           align={cell.numeric ? 'right' : 'left'}
-		           sortDirection={orderProperty === cell.id ? orderDirection : false}
-		>
-			<TableSortLabel className="stats-table-cell"
-			                active={orderProperty === cell.id}
-			                direction={orderProperty === cell.id ? orderDirection : 'asc'}
-			                onClick={createSortHandler(cell.id)}
-			>{cell.label}</TableSortLabel>
-		</TableCell>
-	));
+	const headEls = headCells.map(cell => {
+		const tooltip = cell.tooltip
+			? (
+				<Tooltip title={cell.tooltip}>
+					<Icon>?</Icon>
+				</Tooltip>
+			)
+			: null;
+
+		return (
+			<TableCell className="state-table-cell"
+			           key={cell.id}
+			           align={cell.numeric ? 'right' : 'left'}
+			           sortDirection={orderProperty === cell.id ? orderDirection : false}
+			>
+				<TableSortLabel className="stats-table-cell"
+				                active={orderProperty === cell.id}
+				                direction={orderProperty === cell.id ? orderDirection : 'asc'}
+				                onClick={createSortHandler(cell.id)}
+				>{cell.label}</TableSortLabel>
+				{tooltip}
+			</TableCell>
+		);
+	});
 
 	return (
 		<TableHead>
