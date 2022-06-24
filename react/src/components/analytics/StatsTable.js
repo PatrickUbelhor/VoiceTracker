@@ -1,7 +1,6 @@
 import '../../css/analytics/StatsTable.css';
 import React from 'react';
 import {
-	Icon,
 	Paper,
 	Table,
 	TableBody,
@@ -76,13 +75,13 @@ function EnhancedTableHead({ username, orderDirection, orderProperty, handleSort
 			id: 'probOriginGivenTarget',
 			label: `P(${username} | X)`,
 			numeric: true,
-			tooltip: `The proportion of X's time that ${username} is also in the call. It tends to be descriptive of X's behavior, but not ${username}'s.`
+			tooltip: `The proportion of X's time spent with ${username}. It tends to be descriptive of X's behavior, but not ${username}'s.`
 		},
 		{
 			id: 'probTargetGivenOrigin',
 			label: `P(X | ${username})`,
 			numeric: true,
-			tooltip: `The proportion of ${username}'s time that X is in the call. It tends to be descriptive of ${username}'s behavior, but not X's.`
+			tooltip: `The proportion of ${username}'s time spent with X. It tends to be descriptive of ${username}'s behavior, but not X's.`
 		},
 	];
 
@@ -91,13 +90,19 @@ function EnhancedTableHead({ username, orderDirection, orderProperty, handleSort
 	};
 
 	const headEls = headCells.map(cell => {
-		const tooltip = cell.tooltip
-			? (
-				<Tooltip title={cell.tooltip}>
-					<Icon>?</Icon>
-				</Tooltip>
-			)
-			: null;
+		const label = (
+			<TableSortLabel className="stats-table-cell"
+			                active={orderProperty === cell.id}
+			                direction={orderProperty === cell.id ? orderDirection : 'asc'}
+			                onClick={createSortHandler(cell.id)}
+			>{cell.label}</TableSortLabel>
+		);
+
+		const tooltip = (
+			<Tooltip title={cell.tooltip} placement="top">
+				{label}
+			</Tooltip>
+		);
 
 		return (
 			<TableCell className="state-table-cell"
@@ -105,12 +110,7 @@ function EnhancedTableHead({ username, orderDirection, orderProperty, handleSort
 			           align={cell.numeric ? 'right' : 'left'}
 			           sortDirection={orderProperty === cell.id ? orderDirection : false}
 			>
-				<TableSortLabel className="stats-table-cell"
-				                active={orderProperty === cell.id}
-				                direction={orderProperty === cell.id ? orderDirection : 'asc'}
-				                onClick={createSortHandler(cell.id)}
-				>{cell.label}</TableSortLabel>
-				{tooltip}
+				{ cell.tooltip ? tooltip : label }
 			</TableCell>
 		);
 	});
