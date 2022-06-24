@@ -29,21 +29,22 @@ const mapDispatchToProps = (dispatch) => ({
 function ConnectedFiltersModal({ open, onClose, users, getUsers, filters, setFilters }) {
 
 	const [unchecked, setUnchecked] = React.useState(new Set());
+	React.useEffect(() => {
+		if (open) {
+			getUsers();
+			setUnchecked(new Set(filters));
+		}
+	}, [ open, getUsers, filters ]);
 
 	const onCancel = () => {
 		setUnchecked(new Set(filters));
 		onClose();
-	}
+	};
 
 	const onSubmit = () => {
 		setFilters(unchecked);
 		onClose();
-	}
-
-	const onEnter = () => {
-		getUsers();
-		setUnchecked(new Set(filters));
-	}
+	};
 
 	const handleCheckboxChange = (username) => (event) => {
 		event.target.checked
@@ -51,7 +52,7 @@ function ConnectedFiltersModal({ open, onClose, users, getUsers, filters, setFil
 			: unchecked.add(username)
 		;
 		setUnchecked(new Set(unchecked));
-	}
+	};
 
 	const checkBoxes = users.map(username => (
 		<FormControlLabel
@@ -71,7 +72,7 @@ function ConnectedFiltersModal({ open, onClose, users, getUsers, filters, setFil
 	));
 
 	return (
-		<Dialog open={open} onEnter={onEnter} onClose={onClose}>
+		<Dialog open={open} onClose={onClose}>
 			<DialogTitle>Filters</DialogTitle>
 			<DialogContent>
 				<div className="filters-usernames-div">
