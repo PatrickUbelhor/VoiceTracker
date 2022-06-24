@@ -5,7 +5,7 @@ import { clearError } from '../state/Actions';
 import CloseIcon from '@mui/icons-material/Close';
 import ErrorIcon from '@mui/icons-material/Error';
 import IconButton from '@mui/material/IconButton';
-import SnackbarContent from '@mui/material/SnackbarContent';
+import Snackbar from '@mui/material/Snackbar';
 
 
 const select = (state) => ({
@@ -31,7 +31,7 @@ class ConnectedErrorSnackbar extends React.Component {
 	render() {
 		return (
 			<div>
-				<SnackbarContent
+				<Snackbar
 					anchorOrigin={{
 						vertical: 'top',
 						horizontal: 'center',
