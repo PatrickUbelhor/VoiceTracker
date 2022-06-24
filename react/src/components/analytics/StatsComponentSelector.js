@@ -1,5 +1,5 @@
 import React from 'react';
-import { useMediaQuery } from '@material-ui/core';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import StatsGrid from './StatsGrid';
 import StatsTable from './StatsTable';
 

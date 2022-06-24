@@ -1,6 +1,6 @@
 import '../css/HistogramList.css';
 import React from 'react';
-import Button from '@material-ui/core/Button';
+import Button from '@mui/material/Button';
 import Histogram from './Histogram';
 import LoadingPage from './LoadingPage';
 import { getHistograms } from '../state/Effects';

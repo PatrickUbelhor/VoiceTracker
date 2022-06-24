@@ -1,5 +1,7 @@
 import '../css/App.css';
 import React from 'react';
+import { connect } from 'react-redux';
+import ThemeProvider from '@mui/styles/ThemeProvider';
 import AnalyticsPage from './analytics/AnalyticsPage';
 import DayList from './DayList';
 import ErrorSnackbar from './ErrorSnackbar';
@@ -10,9 +12,7 @@ import {
 	Route,
 	Switch
 } from 'react-router-dom';
-import { ThemeProvider } from '@material-ui/core/styles';
 import { getMuiTheme } from '../model/Themes';
-import { connect } from 'react-redux';
 import { initApp } from '../state/Effects';
 import { setError } from '../state/Actions';
 

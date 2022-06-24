@@ -1,11 +1,11 @@
 import '../css/ErrorSnackbar.css';
 import React from 'react';
-import IconButton from '@material-ui/core/IconButton';
-import SnackbarContent from '@material-ui/core/Snackbar';
-import CloseIcon from '@material-ui/icons/Close';
-import ErrorIcon from '@material-ui/icons/Error';
 import { connect } from 'react-redux';
 import { clearError } from '../state/Actions';
+import CloseIcon from '@mui/icons-material/Close';
+import ErrorIcon from '@mui/icons-material/Error';
+import IconButton from '@mui/material/IconButton';
+import SnackbarContent from '@mui/material/SnackbarContent';
 
 
 const select = (state) => ({

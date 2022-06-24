@@ -1,15 +1,13 @@
 import '../../css/analytics/AnalyticsPage.css';
 import React from 'react';
-import {
-	Button,
-	Card,
-	CardContent,
-	FormControl,
-	InputLabel,
-	MenuItem,
-	Select,
-	TextField
-} from '@material-ui/core';
+import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+import TextField from '@mui/material/TextField';
 import StatsComponentSelector from './StatsComponentSelector';
 import {
 	getAnalytics,

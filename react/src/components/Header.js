@@ -3,16 +3,14 @@ import React from 'react';
 import {
 	NavLink
 } from 'react-router-dom';
-import {
-	AppBar,
-	Drawer,
-	Icon,
-	IconButton,
-	Toolbar,
-	Tooltip,
-	Typography,
-	useMediaQuery
-} from '@material-ui/core';
+import AppBar from '@mui/material/AppBar';
+import Drawer from '@mui/material/Drawer';
+import Icon from '@mui/material/Icon';
+import IconButton from '@mui/material/IconButton';
+import Toolbar from '@mui/material/Toolbar';
+import Tooltip from '@mui/material/Tooltip';
+import Typography from '@mui/material/Typography';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { setTheme } from '../state/Effects';
 import { connect } from 'react-redux';
 import FiltersModal from './FiltersModal';
