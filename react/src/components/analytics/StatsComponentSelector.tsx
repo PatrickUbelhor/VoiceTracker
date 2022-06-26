@@ -1,13 +1,17 @@
 import React from 'react';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { RefinedStats } from '../../model/Models';
 import StatsGrid from './StatsGrid';
 import StatsTable from './StatsTable';
 
-function StatsComponentSelector(props) {
-	const isDesktop = useMediaQuery('(min-width: 720px)');
-	const { stats } = props;
+interface IProps {
+	stats: RefinedStats[];
+}
 
-	return isDesktop ? <StatsTable stats={stats}/> : <StatsGrid stats={stats}/>;
+function StatsComponentSelector(props: IProps) {
+	const isDesktop = useMediaQuery('(min-width: 720px)');
+
+	return isDesktop ? <StatsTable stats={props.stats}/> : <StatsGrid stats={props.stats}/>;
 }
 
 export default StatsComponentSelector;

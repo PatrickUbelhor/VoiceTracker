@@ -29,7 +29,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 
-class ConnectedAnalyticsPage extends React.Component {
+class ConnectedAnalyticsPage extends React.Component<any, any> {
 
 	constructor(props) {
 		super(props);

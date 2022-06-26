@@ -9,12 +9,17 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import Tooltip from '@mui/material/Tooltip';
+import { RefinedStats } from '../../model/Models';
 
 
-export default function StatsTable(props) {
+interface IStatsTableProps {
+	stats: RefinedStats[]
+}
+
+export default function StatsTable(props: IStatsTableProps) {
 
 	let { stats } = props;
-	let [orderDirection, setOrderDirection] = React.useState('asc'); // asc or desc
+	let [orderDirection, setOrderDirection] = React.useState<'asc' | 'desc'>('asc'); // asc or desc
 	let [orderProperty, setOrderProperty] = React.useState('target');
 
 	if (!stats?.length) {
@@ -49,7 +54,14 @@ export default function StatsTable(props) {
 }
 
 
-function EnhancedTableHead({ username, orderDirection, orderProperty, handleSort }) {
+interface IEnhancedTableHeadProps {
+	username: string;
+	orderDirection: 'asc' | 'desc';
+	orderProperty: string;
+	handleSort: (event, property) => void;
+}
+
+function EnhancedTableHead({ username, orderDirection, orderProperty, handleSort }: IEnhancedTableHeadProps) {
 	const headCells = [
 		{
 			id: 'target',
@@ -123,15 +135,17 @@ function EnhancedTableHead({ username, orderDirection, orderProperty, handleSort
 }
 
 
-function EnhancedTableBody({ stats }) {
+interface IEnhancedTableBodyProps {
+	stats: RefinedStats[];
+}
+
+function EnhancedTableBody({ stats }: IEnhancedTableBodyProps) {
 	let rows = [];
 	for (let i = 0; i < stats.length; i++) {
 		let {
 			target,
 			targetTime,
 			jointTime,
-			probTarget,
-			probJoint,
 			probOriginGivenTarget,
 			probTargetGivenOrigin,
 			numStdDevGivenTarget,

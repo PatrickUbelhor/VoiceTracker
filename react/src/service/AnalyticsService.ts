@@ -1,10 +1,5 @@
+import { RefinedStats } from '../model/Models';
 import { StatsResponse } from '../model/Responses';
-
-export interface RefinedStats extends StatsResponse {
-	numStdDevGivenTarget: number;
-	numStdDevGivenOrigin: number;
-}
-
 
 export const calculateEntourage = (data: StatsResponse[]): RefinedStats[] => {
 	console.log('Calculating Entourage');
@@ -34,4 +29,4 @@ export const calculateEntourage = (data: StatsResponse[]): RefinedStats[] => {
 		numStdDevGivenTarget: (+user.probOriginGivenTarget - avgGivenTarget) / stdDevGivenTarget,
 		numStdDevGivenOrigin: (+user.probTargetGivenOrigin - avgGivenOrigin) / stdDevGivenOrigin
 	}));
-}
+};
