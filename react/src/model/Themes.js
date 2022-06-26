@@ -1,11 +1,11 @@
-import { createMuiTheme } from '@material-ui/core';
+import { createTheme } from '@mui/material';
 import {
 	indigo,
 	pink
-} from '@material-ui/core/colors';
+} from '@mui/material/colors';
 
 
-export const lightTheme = createMuiTheme({
+export const lightTheme = createTheme({
 	palette: {
 		primary: {
 			main: indigo['500'],
@@ -18,29 +18,19 @@ export const lightTheme = createMuiTheme({
 });
 
 
-export const googleDarkTheme = createMuiTheme({
+export const googleDarkTheme = createTheme({
 	palette: {
-		type: 'dark'
+		mode: 'dark'
 	}
 });
 
 
-export const discordTheme = createMuiTheme({
+export const discordTheme = createTheme({
 	palette: {
-		type: 'dark',
-		// primary: {
-		// 	main: indigo['200']
-		// },
+		mode: 'dark',
 		background: {
 			default: '#2C2F33',
 			paper: '#393D41'
-		}
-	},
-	overrides: {
-		MuiToolbar: {
-			root: {
-				backgroundColor: '#23272A'
-			}
 		}
 	}
 });

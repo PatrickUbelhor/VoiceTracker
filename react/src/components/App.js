@@ -1,7 +1,7 @@
 import '../css/App.css';
 import React from 'react';
 import { connect } from 'react-redux';
-import ThemeProvider from '@mui/styles/ThemeProvider';
+import { ThemeProvider } from '@mui/material/styles';
 import AnalyticsPage from './analytics/AnalyticsPage';
 import DayList from './DayList';
 import ErrorSnackbar from './ErrorSnackbar';
