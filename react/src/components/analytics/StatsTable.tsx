@@ -70,13 +70,13 @@ function EnhancedTableHead({ username, orderDirection, orderProperty, handleSort
 			tooltip: null
 		},
 		{
-			id: 'targetTime',
+			id: 'probTarget',
 			label: 'Time Online',
 			numeric: true,
 			tooltip: 'The total time that X is online.'
 		},
 		{
-			id: 'jointTime',
+			id: 'probJoint',
 			label: `Time Together`,
 			numeric: true,
 			tooltip: `The total time that X and ${username} are in the call together.`
