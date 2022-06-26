@@ -58,16 +58,16 @@ function EnhancedTableHead({ username, orderDirection, orderProperty, handleSort
 			tooltip: null
 		},
 		{
-			id: 'probTarget',
-			label: 'P(X)',
+			id: 'targetTime',
+			label: 'Time Online',
 			numeric: true,
-			tooltip: 'The proportion of all time that X is online.'
+			tooltip: 'The total time that X is online.'
 		},
 		{
-			id: 'probJoint',
-			label: `P(${username}, X)`,
+			id: 'jointTime',
+			label: `Time Together`,
 			numeric: true,
-			tooltip: `The proportion of all time that X and ${username} are in the call together.`
+			tooltip: `The total time that X and ${username} are in the call together.`
 		},
 		{
 			id: 'probOriginGivenTarget',
@@ -126,7 +126,17 @@ function EnhancedTableHead({ username, orderDirection, orderProperty, handleSort
 function EnhancedTableBody({ stats }) {
 	let rows = [];
 	for (let i = 0; i < stats.length; i++) {
-		let { target, probTarget, probJoint, probOriginGivenTarget, probTargetGivenOrigin, numStdDevGivenTarget, numStdDevGivenOrigin } = stats[i];
+		let {
+			target,
+			targetTime,
+			jointTime,
+			probTarget,
+			probJoint,
+			probOriginGivenTarget,
+			probTargetGivenOrigin,
+			numStdDevGivenTarget,
+			numStdDevGivenOrigin
+		} = stats[i];
 
 		let givenTargetClass = "stats-table-cell";
 		if (numStdDevGivenTarget >= 1) {
@@ -138,13 +148,16 @@ function EnhancedTableBody({ stats }) {
 			givenOriginClass += "-bold";
 		}
 
+		const targetTimeDisplay = `${targetTime / 60}h ${targetTime % 60}m`;
+		const jointTimeDisplay = `${jointTime / 60}h ${jointTime % 60}m`;
+
 		rows.push(
 			<TableRow key={target}>
-				<TableCell className="stats-table-cell" align="left">{target}</TableCell>
-				<TableCell className="stats-table-cell" align="right">{probTarget}</TableCell>
-				<TableCell className="stats-table-cell" align="right">{probJoint}</TableCell>
-				<TableCell className={givenTargetClass} align="right">{probOriginGivenTarget}</TableCell>
-				<TableCell className={givenOriginClass} align="right">{probTargetGivenOrigin}</TableCell>
+				<TableCell className="stats-table-cell" align="left">{ target }</TableCell>
+				<TableCell className="stats-table-cell" align="right">{ targetTimeDisplay }</TableCell>
+				<TableCell className="stats-table-cell" align="right">{ jointTimeDisplay }</TableCell>
+				<TableCell className={givenTargetClass} align="right">{ probOriginGivenTarget }</TableCell>
+				<TableCell className={givenOriginClass} align="right">{ probTargetGivenOrigin }</TableCell>
 			</TableRow>
 		);
 	}

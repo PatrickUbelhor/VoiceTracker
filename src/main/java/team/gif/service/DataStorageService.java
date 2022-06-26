@@ -219,6 +219,8 @@ public class DataStorageService {
 					new Stats(
 							username,
 							key,
+							time.get(key),
+							jointTime.get(key),
 							String.format("%.4f", probOrigin),
 							String.format("%.4f", probTarget),
 							String.format("%.4f", probJoint),

@@ -4,6 +4,8 @@ public class Stats {
 	
 	private final String origin;
 	private final String target;
+	private final Integer targetTime;
+	private final Integer jointTime;
 	private final String probOrigin;
 	private final String probTarget;
 	private final String probJoint;
@@ -13,6 +15,8 @@ public class Stats {
 	public Stats(
 			String origin,
 			String target,
+			Integer targetTime,
+			Integer jointTime,
 			String probOrigin,
 			String probTarget,
 			String probJoint,
@@ -21,6 +25,8 @@ public class Stats {
 	) {
 		this.origin = origin;
 		this.target = target;
+		this.targetTime = targetTime;
+		this.jointTime = jointTime;
 		this.probOrigin = probOrigin;
 		this.probTarget = probTarget;
 		this.probJoint = probJoint;
@@ -36,6 +42,16 @@ public class Stats {
 	
 	public String getTarget() {
 		return target;
+	}
+	
+	
+	public Integer getTargetTime() {
+		return targetTime;
+	}
+	
+	
+	public Integer getJointTime() {
+		return jointTime;
 	}
 	
 	
