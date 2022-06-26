@@ -20,6 +20,8 @@ export interface HistogramResponse {
 export interface StatsResponse {
 	origin: string;
 	target: string;
+	targetTime: number;
+	jointTime: number;
 	probOrigin: string;
 	probTarget: string;
 	probJoint: string;
