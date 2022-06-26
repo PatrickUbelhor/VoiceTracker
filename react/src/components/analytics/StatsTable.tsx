@@ -162,8 +162,8 @@ function EnhancedTableBody({ stats }: IEnhancedTableBodyProps) {
 			givenOriginClass += "-bold";
 		}
 
-		const targetTimeDisplay = `${targetTime / 60}h ${targetTime % 60}m`;
-		const jointTimeDisplay = `${jointTime / 60}h ${jointTime % 60}m`;
+		const targetTimeDisplay = `${Math.floor(targetTime / 60)}h ${targetTime % 60}m`;
+		const jointTimeDisplay = `${Math.floor(jointTime / 60)}h ${jointTime % 60}m`;
 
 		rows.push(
 			<TableRow key={target}>
