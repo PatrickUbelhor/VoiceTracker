@@ -11,7 +11,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { setTheme } from '../state/Effects';
+import { setTheme } from '../../state/Effects';
 import { connect } from 'react-redux';
 import FiltersModal from './FiltersModal';
 

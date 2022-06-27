@@ -1,8 +1,15 @@
 import './Intervals.css';
 import React from 'react';
 import Tooltip from '@mui/material/Tooltip';
+import { IntervalModel } from '../../model/Models';
 
-function Intervals(props) {
+interface IProps {
+	intervals: IntervalModel[];
+	owner: string;
+	color: string;
+}
+
+function Intervals(props: IProps) {
 
 	const LENGTH_OF_DAY = 1440;
 	const [isSightHelperVisible, setSightHelperVisibility] = React.useState(false);

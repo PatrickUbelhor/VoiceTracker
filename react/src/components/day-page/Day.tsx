@@ -1,12 +1,18 @@
 import './Day.css';
 import React from 'react';
+import { ChannelModel } from '../../model/Models';
 import Intervals from './Intervals';
 import Markers from '../Markers';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 
-function Day(props) {
+interface IProps {
+	channels: ChannelModel[];
+	date: string;
+}
+
+function Day(props: IProps) {
 
 	// Sort channels for consistent ordering
 	let channels = props.channels

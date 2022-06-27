@@ -1,10 +1,15 @@
 import './DayList.css';
 import React from 'react';
+import { DayModel } from '../../model/Models';
 import Day from './Day';
 import LoadingPage from '../LoadingPage';
 import { getDays } from '../../state/Effects';
 import { connect } from 'react-redux';
 
+interface IProps {
+	days: DayModel[];
+	getDays: (newestDay: number, oldestDay: number) => void;
+}
 
 const select = (state) => ({
 	days: state.days,
@@ -16,7 +21,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 
-class ConnectedDayList extends React.Component {
+class ConnectedDayList extends React.Component<IProps, any> {
 
 	componentDidMount() {
 		this.props.getDays(0, 30);

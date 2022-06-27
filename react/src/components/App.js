@@ -5,7 +5,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import AnalyticsPage from './analytics-page/AnalyticsPage';
 import DayList from './day-page/DayList';
 import ErrorSnackbar from './ErrorSnackbar';
-import Header from './Header';
+import Header from './header/Header';
 import HistogramList from './histogram-page/HistogramList';
 import {
 	BrowserRouter as Router,

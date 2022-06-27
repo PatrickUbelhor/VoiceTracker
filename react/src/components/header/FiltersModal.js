@@ -11,7 +11,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import {
 	getUsers,
 	setFilters
-} from '../state/Effects';
+} from '../../state/Effects';
 
 
 const select = (state) => ({
