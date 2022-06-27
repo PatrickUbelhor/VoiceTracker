@@ -1,8 +1,8 @@
 import React from 'react';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { RefinedStats } from '../../model/Models';
-import StatsGrid from './StatsGrid';
-import StatsTable from './StatsTable';
+import { RefinedStats } from '../../../model/Models';
+import StatsGrid from '../stats-grid/StatsGrid';
+import StatsTable from '../stats-table/StatsTable';
 
 interface IProps {
 	stats: RefinedStats[];

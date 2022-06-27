@@ -1,4 +1,4 @@
-import '../css/Markers.css';
+import './Markers.css';
 import React from 'react';
 
 const timeLabels = [

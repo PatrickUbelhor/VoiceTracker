@@ -1,4 +1,4 @@
-import '../../css/analytics/AnalyticsPage.css';
+import './AnalyticsPage.css';
 import React from 'react';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
@@ -8,7 +8,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
-import StatsComponentSelector from './StatsComponentSelector';
+import StatsComponentSelector from './stats-component-selector/StatsComponentSelector';
 import {
 	getAnalytics,
 	getUsers

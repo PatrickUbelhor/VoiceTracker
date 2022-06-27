@@ -1,4 +1,4 @@
-import '../css/Intervals.css';
+import './Intervals.css';
 import React from 'react';
 import Tooltip from '@mui/material/Tooltip';
 

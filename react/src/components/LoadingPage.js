@@ -1,4 +1,4 @@
-import '../css/LoadingPage.css';
+import './LoadingPage.css';
 import React from 'react';
 import Typography from '@mui/material/Typography';
 

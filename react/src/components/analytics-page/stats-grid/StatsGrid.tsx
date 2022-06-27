@@ -1,9 +1,9 @@
-import '../../css/analytics/StatsGrid.css';
+import './StatsGrid.css';
 import React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import { RefinedStats } from '../../model/Models';
+import { RefinedStats } from '../../../model/Models';
 
 interface IProps {
 	stats: RefinedStats[]

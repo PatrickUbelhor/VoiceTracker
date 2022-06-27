@@ -1,12 +1,12 @@
-import '../css/App.css';
+import './App.css';
 import React from 'react';
 import { connect } from 'react-redux';
 import { ThemeProvider } from '@mui/material/styles';
-import AnalyticsPage from './analytics/AnalyticsPage';
-import DayList from './DayList';
+import AnalyticsPage from './analytics-page/AnalyticsPage';
+import DayList from './day-page/DayList';
 import ErrorSnackbar from './ErrorSnackbar';
 import Header from './Header';
-import HistogramList from './HistogramList';
+import HistogramList from './histogram-page/HistogramList';
 import {
 	BrowserRouter as Router,
 	Route,
@@ -58,7 +58,7 @@ class ConnectedApp extends React.Component {
 					</Router>
 				</div>
 				<div className="footer">
-					<div className="copyright">© Patrick Ubelhor 2020</div>
+					<div className="copyright">© Patrick Ubelhor 2022</div>
 					<div className="version">v{process.env.REACT_APP_VERSION}</div>
 				</div>
 			</ThemeProvider>

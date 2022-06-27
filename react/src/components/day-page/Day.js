@@ -1,7 +1,7 @@
-import '../css/Day.css';
+import './Day.css';
 import React from 'react';
 import Intervals from './Intervals';
-import Markers from './Markers';
+import Markers from '../Markers';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';

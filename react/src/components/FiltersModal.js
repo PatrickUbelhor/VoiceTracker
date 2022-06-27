@@ -1,4 +1,4 @@
-import '../css/FiltersModal.css';
+import './FiltersModal.css';
 import React from 'react';
 import { connect } from 'react-redux';
 import Button from '@mui/material/Button';

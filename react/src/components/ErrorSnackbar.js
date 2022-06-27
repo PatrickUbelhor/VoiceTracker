@@ -1,4 +1,4 @@
-import '../css/ErrorSnackbar.css';
+import './ErrorSnackbar.css';
 import React from 'react';
 import { connect } from 'react-redux';
 import { clearError } from '../state/Actions';

@@ -1,4 +1,4 @@
-import '../../css/analytics/StatsTable.css';
+import './StatsTable.css';
 import React from 'react';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
@@ -9,7 +9,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import Tooltip from '@mui/material/Tooltip';
-import { RefinedStats } from '../../model/Models';
+import { RefinedStats } from '../../../model/Models';
 
 
 interface IStatsTableProps {

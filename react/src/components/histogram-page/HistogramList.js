@@ -1,9 +1,9 @@
-import '../css/HistogramList.css';
+import './HistogramList.css';
 import React from 'react';
 import Button from '@mui/material/Button';
 import Histogram from './Histogram';
-import LoadingPage from './LoadingPage';
-import { getHistograms } from '../state/Effects';
+import LoadingPage from '../LoadingPage';
+import { getHistograms } from '../../state/Effects';
 import { connect } from 'react-redux';
 
 

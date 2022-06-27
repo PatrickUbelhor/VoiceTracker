@@ -1,8 +1,8 @@
-import '../css/DayList.css';
+import './DayList.css';
 import React from 'react';
 import Day from './Day';
-import LoadingPage from './LoadingPage';
-import { getDays } from '../state/Effects';
+import LoadingPage from '../LoadingPage';
+import { getDays } from '../../state/Effects';
 import { connect } from 'react-redux';
 
 
