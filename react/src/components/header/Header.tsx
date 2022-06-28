@@ -1,5 +1,5 @@
 import './Header.css';
-import React from 'react';
+import React, { useCallback } from 'react';
 import {
 	NavLink
 } from 'react-router-dom';
@@ -13,30 +13,24 @@ import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { AppState } from '../../model/States';
 import { setTheme } from '../../state/Effects';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import FiltersModal from './FiltersModal';
-
-interface IProps {
-	theme: string;
-	setTheme: (theme: string) => void;
-}
-
-const select = (state: AppState) => ({
-	theme: state.theme
-});
-
-const mapDispatchToProps = (dispatch) => ({
-	setTheme: (theme) => dispatch(setTheme(theme))
-});
 
 
 const title = <Typography id="home" variant="h5" color="inherit">Voice Tracker</Typography>;
 
-function ConnectedHeader(props: IProps) {
+function Header() {
+
+	const theme: string = useSelector<AppState, string>(state => state.theme);
+	const dispatch = useDispatch();
+	const updateTheme = useCallback(
+		(theme: string) => dispatch(setTheme(theme) as any),
+		[dispatch]
+	);
 
 	const [open, setOpen] = React.useState(false);
 	const [filtersOpen, setFiltersOpen] = React.useState(false);
-	const invertTheme = () => props.setTheme(props.theme === 'light' ? 'dark' : 'light');
+	const invertTheme = () => updateTheme(theme === 'light' ? 'dark' : 'light');
 	const toggleDrawer = (isOpen: boolean) => () => setOpen(isOpen);
 
 
@@ -133,5 +127,4 @@ function ConnectedHeader(props: IProps) {
 	);
 }
 
-const Header = connect(select, mapDispatchToProps)(ConnectedHeader);
 export default Header;
