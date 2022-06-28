@@ -13,6 +13,14 @@ import {
 	setFilters
 } from '../../state/Effects';
 
+interface IProps {
+	open: boolean;
+	users: string[];
+	filters: string[];
+	onClose: () => void;
+	getUsers: () => void;
+	setFilters: (unchecked: Set<string>) => void;
+}
 
 const select = (state) => ({
 	users: state.users,
@@ -22,13 +30,13 @@ const select = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
 	getUsers: () => dispatch(getUsers()),
-	setFilters: (unchecked) => dispatch(setFilters([...unchecked]))
+	setFilters: (unchecked: Set<string>) => dispatch(setFilters([...unchecked]))
 });
 
 
-function ConnectedFiltersModal({ open, onClose, users, getUsers, filters, setFilters }) {
+function ConnectedFiltersModal({ open, onClose, users, getUsers, filters, setFilters }: IProps) {
 
-	const [unchecked, setUnchecked] = React.useState(new Set());
+	const [unchecked, setUnchecked] = React.useState<Set<string>>(new Set());
 	React.useEffect(() => {
 		if (open) {
 			getUsers();
@@ -46,15 +54,14 @@ function ConnectedFiltersModal({ open, onClose, users, getUsers, filters, setFil
 		onClose();
 	};
 
-	const handleCheckboxChange = (username) => (event) => {
+	const handleCheckboxChange = (username: string) => (event) => {
 		event.target.checked
 			? unchecked.delete(username)
-			: unchecked.add(username)
-		;
+			: unchecked.add(username);
 		setUnchecked(new Set(unchecked));
 	};
 
-	const checkBoxes = users.map(username => (
+	const checkBoxes = users.map((username: string) => (
 		<FormControlLabel
 			key={username}
 			name={username}

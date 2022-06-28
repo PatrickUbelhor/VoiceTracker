@@ -15,6 +15,10 @@ import { setTheme } from '../../state/Effects';
 import { connect } from 'react-redux';
 import FiltersModal from './FiltersModal';
 
+interface IProps {
+	theme: string;
+	setTheme: (theme: string) => void;
+}
 
 const select = (state) => ({
 	theme: state.theme
@@ -28,7 +32,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const title = <Typography id="home" variant="h5" color="inherit">Voice Tracker</Typography>;
 
-function ConnectedHeader(props) {
+function ConnectedHeader(props: IProps) {
 
 	const [open, setOpen] = React.useState();
 	const [filtersOpen, setFiltersOpen] = React.useState(false);

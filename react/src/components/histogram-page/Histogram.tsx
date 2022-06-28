@@ -5,7 +5,13 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 
-function Histogram(props) {
+interface IProps {
+	numDays: number;
+	name: string;
+	data: number[];
+}
+
+function Histogram(props: IProps) {
 
 	const NUM_DAYS_AGGREGATE = props.numDays; // Each bar sums up last N days
 	const BAR_DURATION = 1440 / props.data.length; // The time interval each bar represents

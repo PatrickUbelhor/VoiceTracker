@@ -32,7 +32,7 @@ export const setTheme = (theme: string) => async (dispatch, getState) => {
 	dispatch(setThemeSuccess(to));
 };
 
-export const setFilters = (filters) => async (dispatch) => {
+export const setFilters = (filters: string[]) => async (dispatch) => {
 	localStorage.setItem('filters', JSON.stringify(filters));
 	dispatch(setFiltersSuccess(filters));
 };
