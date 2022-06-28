@@ -52,10 +52,10 @@ class ConnectedApp extends React.Component<IProps, any> {
 								<AnalyticsPage/>
 							</Route>
 							<Route path="/histograms">
-								<HistogramList setErrMsg={this.props.setErrorMessage} />
+								<HistogramList />
 							</Route>
 							<Route path="/">
-								<DayList setErrMsg={this.props.setErrorMessage} />
+								<DayList />
 							</Route>
 						</Switch>
 

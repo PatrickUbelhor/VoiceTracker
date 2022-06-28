@@ -1,6 +1,6 @@
 import './FiltersModal.css';
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
 import Dialog from '@mui/material/Dialog';
@@ -8,6 +8,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import { AppState } from '../../model/States';
 import {
 	getUsers,
 	setFilters
@@ -15,34 +16,29 @@ import {
 
 interface IProps {
 	open: boolean;
-	users: string[];
-	filters: string[];
 	onClose: () => void;
-	getUsers: () => void;
-	setFilters: (unchecked: Set<string>) => void;
 }
 
-const select = (state) => ({
-	users: state.users,
-	filters: state.filters
-});
+function FiltersModal({ open, onClose }: IProps) {
 
+	// Inputs
+	const users: string[] = useSelector<AppState, string[]>(state => state.users);
+	const filters: Set<string> = useSelector<AppState, Set<string>>(state => state.filters);
 
-const mapDispatchToProps = (dispatch) => ({
-	getUsers: () => dispatch(getUsers()),
-	setFilters: (unchecked: Set<string>) => dispatch(setFilters([...unchecked]))
-});
-
-
-function ConnectedFiltersModal({ open, onClose, users, getUsers, filters, setFilters }: IProps) {
+	// Outputs
+	const dispatch = useDispatch();
+	const updateFilters = useCallback(
+		(unchecked: Set<string>) => dispatch(setFilters([...unchecked]) as any),
+		[dispatch]
+	);
 
 	const [unchecked, setUnchecked] = React.useState<Set<string>>(new Set());
 	React.useEffect(() => {
 		if (open) {
-			getUsers();
+			dispatch(getUsers() as any);
 			setUnchecked(new Set(filters));
 		}
-	}, [ open, getUsers, filters ]);
+	}, [ dispatch, open, filters ]);
 
 	const onCancel = () => {
 		setUnchecked(new Set(filters));
@@ -50,7 +46,7 @@ function ConnectedFiltersModal({ open, onClose, users, getUsers, filters, setFil
 	};
 
 	const onSubmit = () => {
-		setFilters(unchecked);
+		updateFilters(unchecked);
 		onClose();
 	};
 
@@ -94,5 +90,4 @@ function ConnectedFiltersModal({ open, onClose, users, getUsers, filters, setFil
 	);
 }
 
-const FiltersModal = connect(select, mapDispatchToProps)(ConnectedFiltersModal);
 export default FiltersModal;

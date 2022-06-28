@@ -21,7 +21,6 @@ function Day(props: IProps) {
 
 	let channelNames = [];
 	let channelIntervals = [];
-	let totalNameCount = 0;
 	for (let i = 0; i < channels.length; i++) {
 		const users = channels[i].users
 			.slice()
@@ -33,7 +32,6 @@ function Day(props: IProps) {
 		let otherIntervals = [];
 		for (let i = 0; i < users.length; i++) {
 			if (users[i].intervals.length > 0) {
-				totalNameCount++;
 				let intervalDiv = <Intervals key={i} color={users[i].color} intervals={users[i].intervals} owner={users[i].id}/>;
 				let nameDiv = <div className="name-listing" key={i} style={{ borderLeftColor: users[i].color }}>{users[i].id}</div>;
 

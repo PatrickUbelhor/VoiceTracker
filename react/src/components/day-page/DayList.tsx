@@ -1,45 +1,39 @@
 import './DayList.css';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { DayModel } from '../../model/Models';
 import { AppState } from '../../model/States';
 import Day from './Day';
 import LoadingPage from '../LoadingPage';
 import { getDays } from '../../state/Effects';
-import { connect } from 'react-redux';
-
-const select = (state: AppState) => ({
-	days: state.days,
-});
+import { useDispatch, useSelector } from 'react-redux';
 
 
-const mapDispatchToProps = (dispatch) => ({
-	getDays: (newestDay, oldestDay) => dispatch(getDays(newestDay, oldestDay))
-});
+function DayList() {
 
+	const dispatch = useDispatch();
+	const days: DayModel[] = useSelector<AppState, DayModel[]>(state => state.days);
 
-class ConnectedDayList extends React.Component<any, any> {
+	// Init - load data
+	useEffect(
+		() => dispatch(getDays(0, 30) as any),
+		[dispatch]
+	);
 
-	componentDidMount() {
-		this.props.getDays(0, 30);
+	if (days == null) {
+		return <LoadingPage/>;
 	}
 
-	render() {
-		if (this.props.days == null) {
-			return <LoadingPage/>;
-		}
+	const entries = days.map((day: DayModel) => (
+		<React.Fragment key={day.date}>
+			<Day date={day.date} channels={day.channels}/>
+		</React.Fragment>
+	));
 
-		const entries = this.props.days.map((day) => (
-			<React.Fragment key={day.date}>
-				<Day date={day.date} channels={day.channels}/>
-			</React.Fragment>
-		));
-
-		return (
-			<div className="days-list">
-				{entries}
-			</div>
-		);
-	}
+	return (
+		<div className="days-list">
+			{entries}
+		</div>
+	);
 }
 
-const DayList = connect(select, mapDispatchToProps)(ConnectedDayList);
 export default DayList;
