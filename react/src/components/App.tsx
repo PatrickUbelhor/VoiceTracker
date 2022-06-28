@@ -2,6 +2,7 @@ import './App.css';
 import React from 'react';
 import { connect } from 'react-redux';
 import { ThemeProvider } from '@mui/material/styles';
+import { AppState } from '../model/States';
 import AnalyticsPage from './analytics-page/AnalyticsPage';
 import DayList from './day-page/DayList';
 import ErrorSnackbar from './ErrorSnackbar';
@@ -16,24 +17,28 @@ import { getMuiTheme } from '../model/Themes';
 import { initApp } from '../state/Effects';
 import { setError } from '../state/Actions';
 
+interface IProps {
+	theme: string;
+	initApp: () => void;
+	setErrorMessage: (message: string) => void;
+}
 
-const select = (state) => ({
+const select = (state: AppState) => ({
 	theme: state.theme
 });
 
 
 const mapDispatchToProps = (dispatch) => ({
 	initApp: () => dispatch(initApp()),
-	setErrorMessage: (message) => dispatch(setError(message))
+	setErrorMessage: (message: string) => dispatch(setError(message))
 });
 
 
-class ConnectedApp extends React.Component {
+class ConnectedApp extends React.Component<IProps, any> {
 
 	componentDidMount() {
 		this.props.initApp();
 	}
-
 
 	render() {
 		return (

@@ -11,6 +11,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { AppState } from '../../model/States';
 import { setTheme } from '../../state/Effects';
 import { connect } from 'react-redux';
 import FiltersModal from './FiltersModal';
@@ -20,10 +21,9 @@ interface IProps {
 	setTheme: (theme: string) => void;
 }
 
-const select = (state) => ({
+const select = (state: AppState) => ({
 	theme: state.theme
 });
-
 
 const mapDispatchToProps = (dispatch) => ({
 	setTheme: (theme) => dispatch(setTheme(theme))
@@ -34,10 +34,10 @@ const title = <Typography id="home" variant="h5" color="inherit">Voice Tracker</
 
 function ConnectedHeader(props: IProps) {
 
-	const [open, setOpen] = React.useState();
+	const [open, setOpen] = React.useState(false);
 	const [filtersOpen, setFiltersOpen] = React.useState(false);
 	const invertTheme = () => props.setTheme(props.theme === 'light' ? 'dark' : 'light');
-	const toggleDrawer = (isOpen) => () => setOpen(isOpen);
+	const toggleDrawer = (isOpen: boolean) => () => setOpen(isOpen);
 
 
 	const themeButton = (

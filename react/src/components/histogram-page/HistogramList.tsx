@@ -2,19 +2,14 @@ import './HistogramList.css';
 import React from 'react';
 import Button from '@mui/material/Button';
 import { HistogramResponse } from '../../model/Responses';
+import { AppState } from '../../model/States';
 import Histogram from './Histogram';
 import LoadingPage from '../LoadingPage';
 import { getHistograms } from '../../state/Effects';
 import { connect } from 'react-redux';
 
-interface IProps {
-	histograms: HistogramResponse[];
-	numDays: number;
-	minActiveDays: number;
-	getHistograms: (numDays: number, minActiveDays: number) => void;
-}
 
-const select = (state) => ({
+const select = (state: AppState) => ({
 	histograms: state.histograms.items
 		.filter(histogram => !state.filters.has(histogram.name))
 		.sort((a, b) => a.name.localeCompare(b.name)),
@@ -29,7 +24,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 
 // TODO: put getHistograms() params in URL. Use value of params from router instead of state.
-class ConnectedHistogramList extends React.Component<IProps, any> {
+class ConnectedHistogramList extends React.Component<any, any> {
 
 	componentDidMount() {
 		this.props.getHistograms(this.props.numDays, this.props.minActiveDays);

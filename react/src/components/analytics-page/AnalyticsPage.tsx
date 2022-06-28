@@ -8,6 +8,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
+import { AppState } from '../../model/States';
 import StatsComponentSelector from './stats-component-selector/StatsComponentSelector';
 import {
 	getAnalytics,
@@ -17,7 +18,7 @@ import { connect } from 'react-redux';
 import { calculateEntourage } from '../../service/AnalyticsService';
 
 
-const select = (state) => ({
+const select = (state: AppState) => ({
 	users: state.users.filter(username => !state.filters.has(username)),
 	analytics: calculateEntourage(state.analytics.filter(data => !state.filters.has(data.target)))
 });

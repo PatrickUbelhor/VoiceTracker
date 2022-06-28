@@ -1,6 +1,11 @@
 import './Markers.css';
 import React from 'react';
 
+interface IProps {
+	direction: 'vertical' | 'horizontal';
+	variant: 'time' | 'percent';
+}
+
 const timeLabels = [
 	{ label: '0:00', offset: -0.75 },
 	{ label: '2:00', offset: -0.65 },
@@ -26,7 +31,7 @@ const percentLabels = [
 	{ label: '100%', offset: -0.80 }
 ];
 
-function Markers(props) {
+function Markers(props: IProps) {
 
 	// Default direction to horizontal
 	let offsetDirection = 'left'

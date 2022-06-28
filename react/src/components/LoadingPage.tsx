@@ -7,7 +7,7 @@ function LoadingPage() {
 		<div id="LoadingDiv">
 			<Typography variant="h4">Loading...</Typography>
 		</div>
-	)
+	);
 }
 
 export default LoadingPage;
