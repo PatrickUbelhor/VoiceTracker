@@ -11,10 +11,9 @@ import Toolbar from '@mui/material/Toolbar';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { AppState } from '../../model/States';
 import { Themes } from '../../model/Themes';
 import { setTheme } from '../../state/Effects';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../state/Hooks';
 import FiltersModal from './FiltersModal';
 
 
@@ -22,10 +21,10 @@ const title = <Typography id="home" variant="h5" color="inherit">Voice Tracker</
 
 function Header() {
 
-	const theme: string = useSelector<AppState, string>(state => state.theme);
-	const dispatch = useDispatch();
+	const theme: string = useAppSelector<string>(state => state.theme);
+	const dispatch = useAppDispatch();
 	const updateTheme = useCallback(
-		(theme: Themes) => dispatch(setTheme(theme) as any),
+		(theme: Themes) => dispatch(setTheme(theme)),
 		[dispatch]
 	);
 

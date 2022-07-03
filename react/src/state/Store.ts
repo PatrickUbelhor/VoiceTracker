@@ -1,8 +1,9 @@
-import {
-	applyMiddleware,
-	createStore
-} from 'redux';
-import thunk from 'redux-thunk';
+import { configureStore } from '@reduxjs/toolkit';
+// import {
+// 	applyMiddleware,
+// 	createStore
+// } from 'redux';
+// import thunk from 'redux-thunk';
 import { AppState } from '../model/States';
 import { Themes } from '../model/Themes';
 import { Action, Actions } from './Actions';
@@ -68,4 +69,12 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action) {
 	}
 };
 
-export const store = createStore(reducer, applyMiddleware(thunk));
+// export const store = createStore(reducer, applyMiddleware(thunk));
+
+export const store = configureStore({
+	reducer: reducer
+});
+
+// Infer the `RootState` and `AppDispatch` types from the store itself
+// export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

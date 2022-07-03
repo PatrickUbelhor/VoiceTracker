@@ -1,6 +1,5 @@
 import './FiltersModal.css';
 import React, { useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
 import Dialog from '@mui/material/Dialog';
@@ -8,11 +7,11 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import { AppState } from '../../model/States';
 import {
 	getUsers,
 	setFilters
 } from '../../state/Effects';
+import { useAppDispatch, useAppSelector } from '../../state/Hooks';
 
 interface IProps {
 	open: boolean;
@@ -22,20 +21,20 @@ interface IProps {
 function FiltersModal({ open, onClose }: IProps) {
 
 	// Inputs
-	const users: string[] = useSelector<AppState, string[]>(state => state.users);
-	const filters: Set<string> = useSelector<AppState, Set<string>>(state => state.filters);
+	const users: string[] = useAppSelector<string[]>(state => state.users);
+	const filters: Set<string> = useAppSelector<Set<string>>(state => state.filters);
 
 	// Outputs
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 	const updateFilters = useCallback(
-		(unchecked: Set<string>) => dispatch(setFilters([...unchecked]) as any),
+		(unchecked: Set<string>) => dispatch(setFilters([...unchecked])),
 		[dispatch]
 	);
 
 	const [unchecked, setUnchecked] = React.useState<Set<string>>(new Set());
 	React.useEffect(() => {
 		if (open) {
-			dispatch(getUsers() as any);
+			dispatch(getUsers());
 			setUnchecked(new Set(filters));
 		}
 	}, [ dispatch, open, filters ]);

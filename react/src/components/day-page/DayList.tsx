@@ -1,17 +1,16 @@
 import './DayList.css';
 import React, { useEffect } from 'react';
 import { DayModel } from '../../model/Models';
-import { AppState } from '../../model/States';
+import { useAppDispatch, useAppSelector } from '../../state/Hooks';
 import Day from './Day';
 import LoadingPage from '../LoadingPage';
 import { getDays } from '../../state/Effects';
-import { useDispatch, useSelector } from 'react-redux';
 
 
 function DayList() {
 
-	const dispatch = useDispatch();
-	const days: DayModel[] = useSelector<AppState, DayModel[]>(state => state.days);
+	const dispatch = useAppDispatch();
+	const days: DayModel[] = useAppSelector<DayModel[]>(state => state.days);
 
 	// Init - load data
 	useEffect(
