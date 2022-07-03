@@ -4,10 +4,11 @@ import {
 } from 'redux';
 import thunk from 'redux-thunk';
 import { AppState } from '../model/States';
+import { Themes } from '../model/Themes';
 import { Action, Actions } from './Actions';
 
 const INITIAL_STATE: AppState = {
-	theme: 'dark',
+	theme: Themes.dark,
 	errorMessage: null,
 	filters: new Set(),
 	users: [],

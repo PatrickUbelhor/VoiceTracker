@@ -4,6 +4,11 @@ import {
 	pink
 } from '@mui/material/colors';
 
+export enum Themes {
+	light = 'light',
+	dark = 'dark',
+	googleDark = 'google_dark'
+}
 
 export const lightTheme = createTheme({
 	palette: {
@@ -17,13 +22,11 @@ export const lightTheme = createTheme({
 	}
 });
 
-
 export const googleDarkTheme = createTheme({
 	palette: {
 		mode: 'dark'
 	}
 });
-
 
 export const discordTheme = createTheme({
 	palette: {
@@ -35,13 +38,11 @@ export const discordTheme = createTheme({
 	}
 });
 
-
 const THEME_MAP = {
-	light: lightTheme,
-	dark: discordTheme,
-	google_dark: googleDarkTheme
+	[Themes.light]: lightTheme,
+	[Themes.dark]: discordTheme,
+	[Themes.googleDark]: googleDarkTheme
 };
-
 
 export function getMuiTheme(theme) {
 	return THEME_MAP[theme];

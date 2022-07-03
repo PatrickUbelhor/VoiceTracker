@@ -1,7 +1,8 @@
 import { DayResponse, HistogramResponse, StatsResponse } from './Responses';
+import { Themes } from './Themes';
 
 export interface AppState {
-	theme: string;
+	theme: Themes;
 	errorMessage: string;
 	filters: Set<string>;
 	users: string[];

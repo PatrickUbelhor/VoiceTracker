@@ -12,6 +12,7 @@ import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { AppState } from '../../model/States';
+import { Themes } from '../../model/Themes';
 import { setTheme } from '../../state/Effects';
 import { useDispatch, useSelector } from 'react-redux';
 import FiltersModal from './FiltersModal';
@@ -24,13 +25,13 @@ function Header() {
 	const theme: string = useSelector<AppState, string>(state => state.theme);
 	const dispatch = useDispatch();
 	const updateTheme = useCallback(
-		(theme: string) => dispatch(setTheme(theme) as any),
+		(theme: Themes) => dispatch(setTheme(theme) as any),
 		[dispatch]
 	);
 
 	const [open, setOpen] = React.useState(false);
 	const [filtersOpen, setFiltersOpen] = React.useState(false);
-	const invertTheme = () => updateTheme(theme === 'light' ? 'dark' : 'light');
+	const invertTheme = () => updateTheme(theme === Themes.light ? Themes.dark : Themes.light);
 	const toggleDrawer = (isOpen: boolean) => () => setOpen(isOpen);
 
 

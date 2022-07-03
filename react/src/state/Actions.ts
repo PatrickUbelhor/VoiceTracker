@@ -1,5 +1,6 @@
 import { DayResponse, StatsResponse } from '../model/Responses';
 import { HistogramState } from '../model/States';
+import { Themes } from '../model/Themes';
 
 export interface Action {
 	type: Actions;
@@ -29,7 +30,7 @@ export const clearError = () => ({
 	type: Actions.CLEAR_ERROR
 });
 
-export const setThemeSuccess = (theme: string): Action => ({
+export const setThemeSuccess = (theme: Themes): Action => ({
 	type: Actions.SET_THEME_SUCCESS,
 	payload: theme
 });

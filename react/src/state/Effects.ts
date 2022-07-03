@@ -1,5 +1,6 @@
 import tracker from '../api/Tracker';
 import { HistogramState } from '../model/States';
+import { Themes } from '../model/Themes';
 import {
 	getAnalyticsSuccess,
 	getDaysSuccess,
@@ -12,7 +13,7 @@ import {
 
 
 export const initApp = () => async (dispatch) => {
-	const theme = localStorage.getItem('theme');
+	const theme: Themes = localStorage.getItem('theme') as Themes;
 	if (theme) {
 		dispatch(setThemeSuccess(theme));
 	}
@@ -23,7 +24,7 @@ export const initApp = () => async (dispatch) => {
 	}
 };
 
-export const setTheme = (theme: string) => async (dispatch, getState) => {
+export const setTheme = (theme: Themes) => async (dispatch, getState) => {
 	const from = getState().theme;
 	const to = theme;
 
