@@ -1,5 +1,5 @@
 import './AnalyticsPage.css';
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -43,7 +43,7 @@ export default function AnalyticsPage() {
 	));
 
 	return (
-		<React.Fragment>
+		<Fragment>
 			<Card className="analytics-card" elevation={4}>
 				<CardContent>
 					<div className="analytics-form-div">
@@ -84,6 +84,6 @@ export default function AnalyticsPage() {
 			</Card>
 			{ loading ? <div>Loading</div> : null }
 			<StatsComponentSelector stats={analytics}/>
-		</React.Fragment>
+		</Fragment>
 	);
 }

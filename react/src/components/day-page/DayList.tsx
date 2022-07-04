@@ -1,5 +1,5 @@
 import './DayList.css';
-import React, { useEffect } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { DayModel } from '../../model/Models';
 import { useAppDispatch, useAppSelector } from '../../state/Hooks';
 import Day from './Day';
@@ -13,8 +13,9 @@ function DayList() {
 	const days: DayModel[] = useAppSelector<DayModel[]>(state => state.days);
 
 	// Init - load data
-	useEffect(
-		() => dispatch(getDays(0, 30) as any),
+	useEffect(() => {
+			dispatch(getDays(0, 30));
+		},
 		[dispatch]
 	);
 
@@ -23,9 +24,9 @@ function DayList() {
 	}
 
 	const entries = days.map((day: DayModel) => (
-		<React.Fragment key={day.date}>
+		<Fragment key={day.date}>
 			<Day date={day.date} channels={day.channels}/>
-		</React.Fragment>
+		</Fragment>
 	));
 
 	return (

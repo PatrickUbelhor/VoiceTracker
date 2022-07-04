@@ -1,5 +1,5 @@
 import './Header.css';
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
 	NavLink
 } from 'react-router-dom';
@@ -28,8 +28,8 @@ function Header() {
 		[dispatch]
 	);
 
-	const [open, setOpen] = React.useState(false);
-	const [filtersOpen, setFiltersOpen] = React.useState(false);
+	const [open, setOpen] = useState(false);
+	const [filtersOpen, setFiltersOpen] = useState(false);
 	const invertTheme = () => updateTheme(theme === Themes.light ? Themes.dark : Themes.light);
 	const toggleDrawer = (isOpen: boolean) => () => setOpen(isOpen);
 

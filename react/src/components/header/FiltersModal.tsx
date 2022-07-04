@@ -1,5 +1,5 @@
 import './FiltersModal.css';
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
 import Dialog from '@mui/material/Dialog';
@@ -32,7 +32,7 @@ function FiltersModal({ open, onClose }: IProps) {
 	);
 
 	const [unchecked, setUnchecked] = React.useState<Set<string>>(new Set());
-	React.useEffect(() => {
+	useEffect(() => {
 		if (open) {
 			dispatch(getUsers());
 			setUnchecked(new Set(filters));
