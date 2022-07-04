@@ -36,7 +36,7 @@ function Header() {
 
 	const themeButton = (
 		<Tooltip title="Toggle light/dark mode">
-			<IconButton className="lightModeButton" onClick={invertTheme}>
+			<IconButton className="light-mode-button" onClick={invertTheme}>
 				<Icon color="inherit">cloud</Icon>
 			</IconButton>
 		</Tooltip>

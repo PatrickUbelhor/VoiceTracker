@@ -56,9 +56,10 @@
 
 .header-filter-button {
 	margin-left: auto !important;
+	color: var(--header_text) !important;
 }
 
-.lightModeButton {
+.light-mode-button {
 	margin-left: 8px !important;
 	color: var(--header_text) !important;
 }
