@@ -1,18 +1,17 @@
 import './ErrorSnackbar.css';
 import React, { useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppState } from '../model/States';
 import { clearError } from '../state/Actions';
 import CloseIcon from '@mui/icons-material/Close';
 import ErrorIcon from '@mui/icons-material/Error';
 import IconButton from '@mui/material/IconButton';
 import Snackbar from '@mui/material/Snackbar';
+import { useAppDispatch, useAppSelector } from '../state/Hooks';
 
 
 function ErrorSnackbar() {
 
-	const message: string = useSelector<AppState, string>(state => state.errorMessage);
-	const dispatch = useDispatch();
+	const message: string = useAppSelector<string>(state => state.errorMessage);
+	const dispatch = useAppDispatch();
 	const resetMessage = useCallback(
 		() => dispatch(clearError()),
 		[dispatch]
