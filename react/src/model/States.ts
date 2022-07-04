@@ -15,5 +15,4 @@ export interface AppState {
 export interface HistogramState {
 	items: HistogramResponse[];
 	numDays: number;
-	minActiveDays: number;
 }

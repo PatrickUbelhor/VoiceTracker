@@ -81,7 +81,6 @@ export const getHistograms = (numDays: number, minActiveDays: number) => async (
 		const histograms: HistogramState = {
 			items: response.data,
 			numDays: numDays,
-			minActiveDays: minActiveDays
 		};
 		dispatch(getHistogramsSuccess(histograms));
 	} catch (error) {

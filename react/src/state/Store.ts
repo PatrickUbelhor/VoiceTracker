@@ -17,7 +17,6 @@ const INITIAL_STATE: AppState = {
 	histograms: {
 		items: [],
 		numDays: 30,
-		minActiveDays: 5
 	},
 	analytics: []
 };
