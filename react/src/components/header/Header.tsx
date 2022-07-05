@@ -4,7 +4,6 @@ import {
 	NavLink
 } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
-import Drawer from '@mui/material/Drawer';
 import Icon from '@mui/material/Icon';
 import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
@@ -12,17 +11,15 @@ import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import FiltersModal from './FiltersModal';
+import NavDrawer from './nav-drawer/NavDrawer';
 import ThemeButton from './theme-button/ThemeButton';
 
 
 const title = <Typography id="home" variant="h5" color="inherit">Voice Tracker</Typography>;
 
-function Header() {
+export default function Header() {
 
-	const [open, setOpen] = useState(false);
 	const [filtersOpen, setFiltersOpen] = useState(false);
-	const toggleDrawer = (isOpen: boolean) => () => setOpen(isOpen);
-
 
 	const filterButton = (
 		<Tooltip title="Filters">
@@ -31,7 +28,6 @@ function Header() {
 			</IconButton>
 		</Tooltip>
 	);
-
 
 	const desktop = (
 		<Fragment>
@@ -60,36 +56,11 @@ function Header() {
 
 	const mobile = (
 		<Fragment>
-			<IconButton className="menu-button" onClick={toggleDrawer(true)}>
-				<Icon color="inherit">menu</Icon>
-			</IconButton>
+			<NavDrawer title={title} />
 			{title}
 			{filterButton}
 			<ThemeButton />
 		</Fragment>
-	);
-
-	const drawer = (
-		<Drawer className="drawer" anchor="left" open={open} onClose={toggleDrawer(false)}>
-			<div className="drawer-content">
-				<div className="drawer-header">
-					{title}
-					<div>v{process.env.REACT_APP_VERSION}</div>
-				</div>
-				<div className="drawer-divider" />
-				<ul className="drawer-nav">
-					<NavLink exact to="/" className="drawer-nav-link" activeClassName="drawer-nav-link-active" onClick={toggleDrawer(false)}>
-						<div className="drawer-nav-link-text">Days</div>
-					</NavLink>
-					<NavLink to="/histograms" className="drawer-nav-link" activeClassName="drawer-nav-link-active" onClick={toggleDrawer(false)}>
-						<div className="drawer-nav-link-text">Histograms</div>
-					</NavLink>
-					<NavLink to="/analytics" className="drawer-nav-link" activeClassName="drawer-nav-link-active" onClick={toggleDrawer(false)}>
-						<div className="drawer-nav-link-text">Analytics</div>
-					</NavLink>
-				</ul>
-			</div>
-		</Drawer>
 	);
 
 	const isDesktop = useMediaQuery('(min-width: 720px)');
@@ -103,9 +74,6 @@ function Header() {
 				</Toolbar>
 			</AppBar>
 			<FiltersModal open={filtersOpen} onClose={() => setFiltersOpen(false)}/>
-			{isDesktop ? null : drawer}
 		</Fragment>
 	);
 }
-
-export default Header;
