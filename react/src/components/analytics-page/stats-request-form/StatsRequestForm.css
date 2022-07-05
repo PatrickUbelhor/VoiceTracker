@@ -1,0 +1,19 @@
+.analytics-card {
+	transition: var(--background-transition), var(--color-transition) !important;
+	width: 50%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 1em;
+}
+
+.analytics-form {
+	width: fit-content;
+	display: flex;
+	flex-direction: column;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.analytics-submit-button {
+	margin-top: 0.5em !important;
+}

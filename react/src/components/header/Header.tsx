@@ -20,6 +20,8 @@ const title = <Typography id="home" variant="h5" color="inherit">Voice Tracker</
 export default function Header() {
 
 	const [filtersOpen, setFiltersOpen] = useState(false);
+	const isDesktop = useMediaQuery('(min-width: 720px)');
+	console.log(`Is large screen: ${isDesktop}`);
 
 	const filterButton = (
 		<Tooltip title="Filters">
@@ -63,8 +65,6 @@ export default function Header() {
 		</Fragment>
 	);
 
-	const isDesktop = useMediaQuery('(min-width: 720px)');
-	console.log(`Is large screen: ${isDesktop}`);
 
 	return (
 		<Fragment>
