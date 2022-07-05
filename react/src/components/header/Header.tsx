@@ -1,5 +1,5 @@
 import './Header.css';
-import React, { useCallback, useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import {
 	NavLink
 } from 'react-router-dom';
@@ -11,36 +11,17 @@ import Toolbar from '@mui/material/Toolbar';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { Themes } from '../../model/Themes';
-import { setTheme } from '../../state/Effects';
-import { useAppDispatch, useAppSelector } from '../../state/Hooks';
 import FiltersModal from './FiltersModal';
+import ThemeButton from './theme-button/ThemeButton';
 
 
 const title = <Typography id="home" variant="h5" color="inherit">Voice Tracker</Typography>;
 
 function Header() {
 
-	const theme: string = useAppSelector<string>(state => state.theme);
-	const dispatch = useAppDispatch();
-	const updateTheme = useCallback(
-		(theme: Themes) => dispatch(setTheme(theme)),
-		[dispatch]
-	);
-
 	const [open, setOpen] = useState(false);
 	const [filtersOpen, setFiltersOpen] = useState(false);
-	const invertTheme = () => updateTheme(theme === Themes.light ? Themes.dark : Themes.light);
 	const toggleDrawer = (isOpen: boolean) => () => setOpen(isOpen);
-
-
-	const themeButton = (
-		<Tooltip title="Toggle light/dark mode">
-			<IconButton className="light-mode-button" onClick={invertTheme}>
-				<Icon color="inherit">cloud</Icon>
-			</IconButton>
-		</Tooltip>
-	);
 
 
 	const filterButton = (
@@ -53,7 +34,7 @@ function Header() {
 
 
 	const desktop = (
-		<>
+		<Fragment>
 			{title}
 			<ul className="header-nav">
 				<li className="header-nav-item">
@@ -73,19 +54,19 @@ function Header() {
 				</li>
 			</ul>
 			{filterButton}
-			{themeButton}
-		</>
+			<ThemeButton />
+		</Fragment>
 	);
 
 	const mobile = (
-		<>
+		<Fragment>
 			<IconButton className="menu-button" onClick={toggleDrawer(true)}>
 				<Icon color="inherit">menu</Icon>
 			</IconButton>
 			{title}
 			{filterButton}
-			{themeButton}
-		</>
+			<ThemeButton />
+		</Fragment>
 	);
 
 	const drawer = (
@@ -115,7 +96,7 @@ function Header() {
 	console.log(`Is large screen: ${isDesktop}`);
 
 	return (
-		<>
+		<Fragment>
 			<AppBar id="appBar" position="sticky">
 				<Toolbar>
 					{isDesktop ? desktop : mobile}
@@ -123,7 +104,7 @@ function Header() {
 			</AppBar>
 			<FiltersModal open={filtersOpen} onClose={() => setFiltersOpen(false)}/>
 			{isDesktop ? null : drawer}
-		</>
+		</Fragment>
 	);
 }
 
