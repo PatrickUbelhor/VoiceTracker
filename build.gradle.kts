@@ -1,11 +1,10 @@
 
 plugins {
-	id("java")
+	java
 	id("org.springframework.boot") version("3.0.1")
 }
 
-//apply(plugin = "io.spring.dependency-management")
-apply plugin: "io.spring.dependency-management"
+apply(plugin = "io.spring.dependency-management")
 
 group = "team.gif"
 version = "2.1.2"
@@ -24,5 +23,5 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-cache")
 	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
-	implementation(group: "org.apache.logging.log4j", name: "log4j-core", version: "2.19.0")
+	implementation(group = "org.apache.logging.log4j", name = "log4j-core", version = "2.19.0")
 }
