@@ -91,7 +91,7 @@ public class Controller {
 	}
 	
 	
-	@GetMapping()
+	@GetMapping("/days")
 	public List<Day> getDays(
 			@RequestParam(defaultValue = "0") Integer newestDay,
 			@RequestParam(defaultValue = "1000") Integer oldestDay
@@ -162,6 +162,10 @@ public class Controller {
 		logger.info("Loading data from file into database...");
 		eventService.readEventsFromFile("vclog.csv");
 		logger.info("Finished loading data");
+		
+		logger.info("Loading names...");
+		snowflakeConverter.update("Snowflakes.txt");
+		logger.info("Finished loading names");
 	}
 	
 }

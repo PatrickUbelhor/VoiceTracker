@@ -18,7 +18,7 @@ class Tracker {
 
 
 	getDays = (newestDay: number, oldestDay: number): TrackerResponse<DayResponse[]> => {
-		return this.tracker.get(`?newestDay=${newestDay}&oldestDay=${oldestDay}`);
+		return this.tracker.get(`/days?newestDay=${newestDay}&oldestDay=${oldestDay}`);
 	}
 
 
