@@ -19,8 +19,10 @@ import team.gif.model.Request;
 import team.gif.model.Stats;
 import team.gif.service.DataLoaderService;
 import team.gif.service.DataStorageService;
+import team.gif.service.EventService;
 import team.gif.service.SnowflakeConverter;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -29,13 +31,19 @@ import java.util.List;
 public class Controller {
 	
 	private static final Logger logger = LogManager.getLogger(Controller.class);
+	private final EventService eventService;
 	private final DataLoaderService loaderService;
 	private final DataStorageService storage;
 	private final SnowflakeConverter snowflakeConverter = new SnowflakeConverter();
 	
 	
 	@Autowired
-	public Controller(DataLoaderService loaderService, DataStorageService storage) {
+	public Controller(
+		EventService eventService,
+		DataLoaderService loaderService,
+		DataStorageService storage
+	) {
+		this.eventService = eventService;
 		this.loaderService = loaderService;
 		this.storage = storage;
 	}
@@ -45,7 +53,9 @@ public class Controller {
 	public void join(@PathVariable Long userSnowflake, @RequestBody Request request) {
 		logger.info("JOIN " + userSnowflake);
 		LocalDateTime now = LocalDateTime.now();
+		Long ms = Instant.now().toEpochMilli();
 		storage.addJoinEvent(request.getJoiningChannelId(), userSnowflake, 60 * now.getHour() + now.getMinute());
+		eventService.saveJoinEvent(userSnowflake, ms, request.getJoiningChannelId());
 	}
 	
 	
@@ -53,12 +63,14 @@ public class Controller {
 	public void move(@PathVariable Long userSnowflake, @RequestBody Request request) {
 		logger.info("MOVE " + userSnowflake);
 		LocalDateTime now = LocalDateTime.now();
+		Long ms = Instant.now().toEpochMilli();
 		storage.addMoveEvent(
 				request.getLeavingChannelId(),
 				request.getJoiningChannelId(),
 				userSnowflake,
 				60 * now.getHour() + now.getMinute()
 		);
+		eventService.saveMoveEvent(userSnowflake, ms, request.getJoiningChannelId(), request.getLeavingChannelId());
 	}
 	
 	
@@ -66,7 +78,9 @@ public class Controller {
 	public void leave(@PathVariable Long userSnowflake, @RequestBody Request request) {
 		logger.info("LEAVE " + userSnowflake);
 		LocalDateTime now = LocalDateTime.now();
+		Long ms = Instant.now().toEpochMilli();
 		storage.addLeaveEvent(request.getLeavingChannelId(), userSnowflake, 60 * now.getHour() + now.getMinute());
+		eventService.saveLeaveEvent(userSnowflake, ms, request.getLeavingChannelId());
 	}
 	
 	
@@ -85,6 +99,19 @@ public class Controller {
 		LocalDateTime now = LocalDateTime.now();
 		List<Day> days = storage.getDays(60 * now.getHour() + now.getMinute());
 		
+		newestDay = Math.max(newestDay, 0);
+		oldestDay = Math.min(oldestDay, days.size());
+		return days.subList(newestDay, oldestDay);
+	}
+	
+	
+	@GetMapping("/db/days")
+	public List<Day> getDatabaseDays(
+		@RequestParam(defaultValue = "0") Integer newestDay,
+		@RequestParam(defaultValue = "1000") Integer oldestDay
+	) {
+		List<Day> days = eventService.load();
+		newestDay = Math.max(newestDay, 0);
 		oldestDay = Math.min(oldestDay, days.size());
 		return days.subList(newestDay, oldestDay);
 	}
@@ -127,6 +154,14 @@ public class Controller {
 		storage.updateHistogramCache();
 		
 		return ResponseEntity.status(HttpStatus.FOUND).header("Location", "/").build();
+	}
+	
+	
+	@PostMapping("/db/start")
+	public void fillDatabase() {
+		logger.info("Loading data from file into database...");
+		eventService.readEventsFromFile("vclog.csv");
+		logger.info("Finished loading data");
 	}
 	
 }
