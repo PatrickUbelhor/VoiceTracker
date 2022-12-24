@@ -27,7 +27,7 @@ public class EventService {
 	}
 	
 	
-	public LinkedList<Day> load() {
+	public LinkedList<Day> getAllDays() {
 		List<Event> events = eventRepository.findAllEvents();
 		return dataLoaderService.convertEventsToDays(events);
 	}

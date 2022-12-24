@@ -19,6 +19,7 @@ import team.gif.model.Request;
 import team.gif.model.Stats;
 import team.gif.service.DataLoaderService;
 import team.gif.service.DataStorageService;
+import team.gif.service.DayService;
 import team.gif.service.EventService;
 import team.gif.service.SnowflakeConverter;
 
@@ -33,6 +34,7 @@ public class Controller {
 	private static final Logger logger = LogManager.getLogger(Controller.class);
 	private final EventService eventService;
 	private final DataLoaderService loaderService;
+	private final DayService dayService;
 	private final DataStorageService storage;
 	private final SnowflakeConverter snowflakeConverter = new SnowflakeConverter();
 	
@@ -40,10 +42,12 @@ public class Controller {
 	@Autowired
 	public Controller(
 		EventService eventService,
+		DayService dayService,
 		DataLoaderService loaderService,
 		DataStorageService storage
 	) {
 		this.eventService = eventService;
+		this.dayService = dayService;
 		this.loaderService = loaderService;
 		this.storage = storage;
 	}
@@ -97,7 +101,8 @@ public class Controller {
 			@RequestParam(defaultValue = "1000") Integer oldestDay
 	) {
 		LocalDateTime now = LocalDateTime.now();
-		List<Day> days = storage.getDays(60 * now.getHour() + now.getMinute());
+		int currentMinute = 60 * now.getHour() + now.getMinute();
+		List<Day> days = storage.getDays(currentMinute);
 		
 		newestDay = Math.max(newestDay, 0);
 		oldestDay = Math.min(oldestDay, days.size());
@@ -110,7 +115,10 @@ public class Controller {
 		@RequestParam(defaultValue = "0") Integer newestDay,
 		@RequestParam(defaultValue = "1000") Integer oldestDay
 	) {
-		List<Day> days = eventService.load();
+		LocalDateTime now = LocalDateTime.now();
+		int currentMinute = 60 * now.getHour() + now.getMinute();
+		List<Day> days = dayService.getDays(currentMinute);
+		
 		newestDay = Math.max(newestDay, 0);
 		oldestDay = Math.min(oldestDay, days.size());
 		return days.subList(newestDay, oldestDay);
@@ -146,6 +154,11 @@ public class Controller {
 		storage.replaceDays(loaderService.load("vclog.csv"));
 		logger.info("Finished loading data");
 		
+		logger.info("Loading data from file into database...");
+		eventService.readEventsFromFile("vclog.csv");
+		dayService.replaceDays(eventService.getAllDays());
+		logger.info("Finished loading data");
+		
 		logger.info("Loading names...");
 		snowflakeConverter.update("Snowflakes.txt");
 		logger.info("Finished loading names");
@@ -154,18 +167,6 @@ public class Controller {
 		storage.updateHistogramCache();
 		
 		return ResponseEntity.status(HttpStatus.FOUND).header("Location", "/").build();
-	}
-	
-	
-	@PostMapping("/db/start")
-	public void fillDatabase() {
-		logger.info("Loading data from file into database...");
-		eventService.readEventsFromFile("vclog.csv");
-		logger.info("Finished loading data");
-		
-		logger.info("Loading names...");
-		snowflakeConverter.update("Snowflakes.txt");
-		logger.info("Finished loading names");
 	}
 	
 }
