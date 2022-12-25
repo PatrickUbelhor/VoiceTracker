@@ -21,6 +21,7 @@ import team.gif.service.DataLoaderService;
 import team.gif.service.DataStorageService;
 import team.gif.service.DayService;
 import team.gif.service.EventService;
+import team.gif.service.HistogramService;
 import team.gif.service.SnowflakeConverter;
 
 import java.time.Instant;
@@ -33,8 +34,9 @@ public class Controller {
 	
 	private static final Logger logger = LogManager.getLogger(Controller.class);
 	private final EventService eventService;
-	private final DataLoaderService loaderService;
 	private final DayService dayService;
+	private final HistogramService histogramService;
+	private final DataLoaderService loaderService;
 	private final DataStorageService storage;
 	private final SnowflakeConverter snowflakeConverter = new SnowflakeConverter();
 	
@@ -43,11 +45,13 @@ public class Controller {
 	public Controller(
 		EventService eventService,
 		DayService dayService,
+		HistogramService histogramService,
 		DataLoaderService loaderService,
 		DataStorageService storage
 	) {
 		this.eventService = eventService;
 		this.dayService = dayService;
+		this.histogramService = histogramService;
 		this.loaderService = loaderService;
 		this.storage = storage;
 	}
@@ -142,6 +146,15 @@ public class Controller {
 		if (numDays == 30) return storage.get30DayHistogram();
 		
 		return storage.computeHistograms(numDays, minActiveDays);
+	}
+	
+	
+	@GetMapping("/db/histogram")
+	public List<Histogram> getDatabaseHistograms(
+		@RequestParam(defaultValue = "28") Integer numDays,
+		@RequestParam(defaultValue = "1") Integer minActiveDays
+	) {
+		return histogramService.computeHistograms(numDays, minActiveDays);
 	}
 	
 	

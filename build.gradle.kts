@@ -1,13 +1,15 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
 	java
 	id("org.springframework.boot") version("3.0.1")
+	kotlin("jvm") version "1.7.22"
 }
 
 apply(plugin = "io.spring.dependency-management")
 
 group = "team.gif"
-version = "3.0.0-SNAPSHOT-2"
+version = "3.0.0-SNAPSHOT-3"
 
 java {
 	sourceCompatibility = JavaVersion.VERSION_17
@@ -26,4 +28,8 @@ dependencies {
 
 	implementation(group = "org.apache.logging.log4j", name = "log4j-core", version = "2.19.0")
 	runtimeOnly(group = "org.postgresql", name = "postgresql")
+}
+
+tasks.withType<KotlinCompile> {
+	kotlinOptions.jvmTarget = "17"
 }
