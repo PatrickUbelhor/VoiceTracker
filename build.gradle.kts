@@ -7,7 +7,7 @@ plugins {
 apply(plugin = "io.spring.dependency-management")
 
 group = "team.gif"
-version = "3.0.0-SNAPSHOT-1"
+version = "3.0.0-SNAPSHOT-2"
 
 java {
 	sourceCompatibility = JavaVersion.VERSION_17

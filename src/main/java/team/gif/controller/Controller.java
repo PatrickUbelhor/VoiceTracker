@@ -57,9 +57,11 @@ public class Controller {
 	public void join(@PathVariable Long userSnowflake, @RequestBody Request request) {
 		logger.info("JOIN " + userSnowflake);
 		LocalDateTime now = LocalDateTime.now();
+		int currentMinute = 60 * now.getHour() + now.getMinute();
 		Long ms = Instant.now().toEpochMilli();
-		storage.addJoinEvent(request.getJoiningChannelId(), userSnowflake, 60 * now.getHour() + now.getMinute());
+		storage.addJoinEvent(request.getJoiningChannelId(), userSnowflake, currentMinute);
 		eventService.saveJoinEvent(userSnowflake, ms, request.getJoiningChannelId());
+		dayService.addJoinEvent(request.getJoiningChannelId(), userSnowflake, currentMinute);
 	}
 	
 	
@@ -67,14 +69,16 @@ public class Controller {
 	public void move(@PathVariable Long userSnowflake, @RequestBody Request request) {
 		logger.info("MOVE " + userSnowflake);
 		LocalDateTime now = LocalDateTime.now();
+		int currentMinute = 60 * now.getHour() + now.getMinute();
 		Long ms = Instant.now().toEpochMilli();
 		storage.addMoveEvent(
 				request.getLeavingChannelId(),
 				request.getJoiningChannelId(),
 				userSnowflake,
-				60 * now.getHour() + now.getMinute()
+				currentMinute
 		);
 		eventService.saveMoveEvent(userSnowflake, ms, request.getJoiningChannelId(), request.getLeavingChannelId());
+		dayService.addMoveEvent(request.getLeavingChannelId(), request.getJoiningChannelId(), userSnowflake, currentMinute);
 	}
 	
 	
@@ -82,9 +86,11 @@ public class Controller {
 	public void leave(@PathVariable Long userSnowflake, @RequestBody Request request) {
 		logger.info("LEAVE " + userSnowflake);
 		LocalDateTime now = LocalDateTime.now();
+		int currentMinute = 60 * now.getHour() + now.getMinute();
 		Long ms = Instant.now().toEpochMilli();
 		storage.addLeaveEvent(request.getLeavingChannelId(), userSnowflake, 60 * now.getHour() + now.getMinute());
 		eventService.saveLeaveEvent(userSnowflake, ms, request.getLeavingChannelId());
+		dayService.addLeaveEvent(request.getLeavingChannelId(), userSnowflake, currentMinute);
 	}
 	
 	
