@@ -1,7 +1,7 @@
-package team.gif.model;
+package com.patrickubelhor.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import team.gif.service.SnowflakeConverter;
+import com.patrickubelhor.service.SnowflakeConverter;
 
 import java.util.LinkedList;
 

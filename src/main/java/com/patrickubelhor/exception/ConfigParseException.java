@@ -1,4 +1,4 @@
-package team.gif.exception;
+package com.patrickubelhor.exception;
 
 public class ConfigParseException extends RuntimeException {
 	

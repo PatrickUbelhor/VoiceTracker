@@ -1,13 +1,13 @@
-package team.gif.service;
+package com.patrickubelhor.service;
 
+import com.patrickubelhor.model.Channel;
+import com.patrickubelhor.model.Day;
+import com.patrickubelhor.model.Interval;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import team.gif.model.Channel;
-import team.gif.model.Day;
-import team.gif.model.Interval;
-import team.gif.model.User;
+import com.patrickubelhor.model.User;
 
 import java.util.LinkedList;
 import java.util.List;

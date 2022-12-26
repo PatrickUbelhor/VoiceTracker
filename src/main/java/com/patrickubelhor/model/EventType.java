@@ -1,4 +1,4 @@
-package team.gif.model;
+package com.patrickubelhor.model;
 
 public enum EventType {
 	JOIN("J"),

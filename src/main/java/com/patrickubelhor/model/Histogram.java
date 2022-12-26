@@ -1,4 +1,4 @@
-package team.gif.model;
+package com.patrickubelhor.model;
 
 import java.util.Arrays;
 

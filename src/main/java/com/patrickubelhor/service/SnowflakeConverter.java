@@ -1,6 +1,6 @@
-package team.gif.service;
+package com.patrickubelhor.service;
 
-import team.gif.exception.ConfigParseException;
+import com.patrickubelhor.exception.ConfigParseException;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

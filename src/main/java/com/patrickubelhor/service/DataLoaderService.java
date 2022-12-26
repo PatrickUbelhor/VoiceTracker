@@ -1,12 +1,12 @@
-package team.gif.service;
+package com.patrickubelhor.service;
 
+import com.patrickubelhor.exception.DataLoadException;
+import com.patrickubelhor.model.Day;
+import com.patrickubelhor.model.Event;
+import com.patrickubelhor.model.EventType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
-import team.gif.exception.DataLoadException;
-import team.gif.model.Day;
-import team.gif.model.Event;
-import team.gif.model.EventType;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -18,7 +18,7 @@ import java.util.List;
 @Service
 public class DataLoaderService {
 	
-	private static final Logger logger = LogManager.getLogger(DataStorageService.class);
+	private static final Logger logger = LogManager.getLogger(DataLoaderService.class);
 	
 	public LinkedList<Event> loadEventsFromFile(String filename) {
 		LinkedList<Event> events = new LinkedList<>();

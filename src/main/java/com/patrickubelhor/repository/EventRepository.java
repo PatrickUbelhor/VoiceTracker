@@ -1,9 +1,9 @@
-package team.gif.repository;
+package com.patrickubelhor.repository;
 
 
+import com.patrickubelhor.model.Event;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import team.gif.model.Event;
 
 import java.util.List;
 

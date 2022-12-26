@@ -1,13 +1,13 @@
-package team.gif.service;
+package com.patrickubelhor.service;
 
+import com.patrickubelhor.model.Day;
+import com.patrickubelhor.model.Event;
+import com.patrickubelhor.model.EventType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import team.gif.model.Day;
-import team.gif.model.Event;
-import team.gif.model.EventType;
-import team.gif.repository.EventRepository;
+import com.patrickubelhor.repository.EventRepository;
 
 import java.util.LinkedList;
 import java.util.List;
