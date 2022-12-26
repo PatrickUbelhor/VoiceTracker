@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { store } from './state/Store';
 import App from './components/App';
@@ -14,9 +14,10 @@ setTimeout(() => {
 }, 100);
 
 // Render the component
-ReactDOM.render(
+const container = document.querySelector('#root');
+const root = createRoot(container);
+root.render(
 	<Provider store={store}>
 		<App/>
-	</Provider>,
-	document.querySelector('#root')
+	</Provider>
 );

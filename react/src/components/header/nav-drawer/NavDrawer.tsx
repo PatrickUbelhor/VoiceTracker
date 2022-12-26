@@ -1,10 +1,10 @@
 import './NavDrawer.css';
 import { Drawer, Icon, IconButton } from '@mui/material';
-import React, { ElementRef, Fragment, useState } from 'react';
+import React, { Fragment, ReactNode, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
 interface IProps {
-	title: ElementRef<any>;
+	title: ReactNode;
 }
 
 export default function NavDrawer(props: IProps) {
