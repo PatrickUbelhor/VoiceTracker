@@ -23,6 +23,7 @@ import team.gif.service.DayService;
 import team.gif.service.EventService;
 import team.gif.service.HistogramService;
 import team.gif.service.SnowflakeConverter;
+import team.gif.service.StatService;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -36,6 +37,7 @@ public class Controller {
 	private final EventService eventService;
 	private final DayService dayService;
 	private final HistogramService histogramService;
+	private final StatService statService;
 	private final DataLoaderService loaderService;
 	private final DataStorageService storage;
 	private final SnowflakeConverter snowflakeConverter = new SnowflakeConverter();
@@ -46,12 +48,14 @@ public class Controller {
 		EventService eventService,
 		DayService dayService,
 		HistogramService histogramService,
+		StatService statService,
 		DataLoaderService loaderService,
 		DataStorageService storage
 	) {
 		this.eventService = eventService;
 		this.dayService = dayService;
 		this.histogramService = histogramService;
+		this.statService = statService;
 		this.loaderService = loaderService;
 		this.storage = storage;
 	}
@@ -107,8 +111,8 @@ public class Controller {
 	
 	@GetMapping("/days")
 	public List<Day> getDays(
-			@RequestParam(defaultValue = "0") Integer newestDay,
-			@RequestParam(defaultValue = "1000") Integer oldestDay
+		@RequestParam(defaultValue = "0") Integer newestDay,
+		@RequestParam(defaultValue = "1000") Integer oldestDay
 	) {
 		LocalDateTime now = LocalDateTime.now();
 		int currentMinute = 60 * now.getHour() + now.getMinute();
@@ -137,8 +141,8 @@ public class Controller {
 	
 	@GetMapping("/histogram")
 	public List<Histogram> getHistograms(
-			@RequestParam(defaultValue = "30") Integer numDays,
-			@RequestParam(defaultValue = "1") Integer minActiveDays
+		@RequestParam(defaultValue = "30") Integer numDays,
+		@RequestParam(defaultValue = "1") Integer minActiveDays
 	) {
 		// Get precomputed histogram list if applicable
 		// TODO: Will have to recompute if minActiveDays is anything other than default for cached histograms
@@ -160,10 +164,19 @@ public class Controller {
 	
 	@GetMapping("/analysis/{username}")
 	public List<Stats> getAnalysis(
-			@PathVariable String username,
-			@RequestParam(defaultValue = "30") Integer numDays
+		@PathVariable String username,
+		@RequestParam(defaultValue = "30") Integer numDays
 	) {
 		return storage.getAnalysis(numDays, username);
+	}
+	
+	
+	@GetMapping("/relations/{username}")
+	public List<Stats> getRelations(
+		@PathVariable String username,
+		@RequestParam(defaultValue = "30") Integer numDays
+	) {
+		return statService.getAnalysis(numDays, username);
 	}
 	
 	
