@@ -12,6 +12,7 @@ export default function NavDrawer(props: IProps) {
 	const [isOpen, setIsOpen] = useState(false);
 	const openDrawer = () => setIsOpen(true);
 	const closeDrawer = () => setIsOpen(false);
+	const getDrawerNavLinkClasses = ({ isActive }) => 'drawer-nav-link' + (isActive ? 'drawer-nav-link-active' : '');
 
 	return (
 		<Fragment>
@@ -35,26 +36,23 @@ export default function NavDrawer(props: IProps) {
 					<div className="drawer-divider" />
 					<ul className="drawer-nav">
 						<NavLink
-							exact
+							end
 							to="/"
-							className="drawer-nav-link"
-							activeClassName="drawer-nav-link-active"
+							className={getDrawerNavLinkClasses}
 							onClick={closeDrawer}
 						>
 							<div className="drawer-nav-link-text">Days</div>
 						</NavLink>
 						<NavLink
 							to="/histograms"
-							className="drawer-nav-link"
-							activeClassName="drawer-nav-link-active"
+							className={getDrawerNavLinkClasses}
 							onClick={closeDrawer}
 						>
 							<div className="drawer-nav-link-text">Histograms</div>
 						</NavLink>
 						<NavLink
 							to="/analytics"
-							className="drawer-nav-link"
-							activeClassName="drawer-nav-link-active"
+							className={getDrawerNavLinkClasses}
 							onClick={closeDrawer}
 						>
 							<div className="drawer-nav-link-text">Analytics</div>

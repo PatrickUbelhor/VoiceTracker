@@ -31,22 +31,23 @@ export default function Header() {
 		</Tooltip>
 	);
 
+	const getDesktopNavLinkClasses = ({ isActive }) => 'header-nav-link' + (isActive ? ' header-nav-link-active' : '');
 	const desktop = (
 		<Fragment>
 			{title}
 			<ul className="header-nav">
 				<li className="header-nav-item">
-					<NavLink exact to="/" className="header-nav-link" activeClassName="header-nav-link-active">
+					<NavLink end to="/" className={getDesktopNavLinkClasses}>
 						<span className="header-nav-link-text">DAYS</span>
 					</NavLink>
 				</li>
 				<li className="header-nav-item">
-					<NavLink to="/histograms" className="header-nav-link" activeClassName="header-nav-link-active">
+					<NavLink to="/histograms" className={getDesktopNavLinkClasses}>
 						<span className="header-nav-link-text">HISTOGRAMS</span>
 					</NavLink>
 				</li>
 				<li className="header-nav-item">
-					<NavLink to="/analytics" className="header-nav-link" activeClassName="header-nav-link-active">
+					<NavLink to="/analytics" className={getDesktopNavLinkClasses}>
 						<span className="header-nav-link-text">ANALYTICS</span>
 					</NavLink>
 				</li>

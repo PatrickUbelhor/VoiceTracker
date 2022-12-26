@@ -9,8 +9,8 @@ import Header from './header/Header';
 import HistogramList from './histogram-page/HistogramList';
 import {
 	BrowserRouter as Router,
+	Routes,
 	Route,
-	Switch
 } from 'react-router-dom';
 import { getMuiTheme, Themes } from '../model/Themes';
 import { initApp } from '../state/Effects';
@@ -31,17 +31,11 @@ export default function App() {
 				<Router>
 					<Header/>
 
-					<Switch>
-						<Route path="/analytics">
-							<AnalyticsPage/>
-						</Route>
-						<Route path="/histograms">
-							<HistogramList />
-						</Route>
-						<Route path="/">
-							<DayList />
-						</Route>
-					</Switch>
+					<Routes>
+						<Route path="/analytics" element={<AnalyticsPage />}></Route>
+						<Route path="/histograms" element={<HistogramList />}></Route>
+						<Route path="/" element={<DayList />}></Route>
+					</Routes>
 
 					<ErrorSnackbar/>
 				</Router>
