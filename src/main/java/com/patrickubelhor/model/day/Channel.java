@@ -1,4 +1,4 @@
-package com.patrickubelhor.model;
+package com.patrickubelhor.model.day;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

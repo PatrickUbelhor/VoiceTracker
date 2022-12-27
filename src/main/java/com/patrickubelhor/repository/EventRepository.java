@@ -1,7 +1,7 @@
 package com.patrickubelhor.repository;
 
 
-import com.patrickubelhor.model.Event;
+import com.patrickubelhor.model.event.Event;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 

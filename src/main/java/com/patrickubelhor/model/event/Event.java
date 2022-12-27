@@ -1,4 +1,4 @@
-package com.patrickubelhor.model;
+package com.patrickubelhor.model.event;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;

@@ -1,6 +1,4 @@
-package com.patrickubelhor.model;
-
-import com.fasterxml.jackson.annotation.JsonValue;
+package com.patrickubelhor.model.event;
 
 public enum EventType {
 	JOIN("J"),

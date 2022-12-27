@@ -1,4 +1,4 @@
-package com.patrickubelhor.model;
+package com.patrickubelhor.model.event;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;

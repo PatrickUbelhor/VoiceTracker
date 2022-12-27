@@ -1,4 +1,4 @@
-package com.patrickubelhor.model;
+package com.patrickubelhor.model.day;
 
 import java.time.LocalDate;
 import java.time.ZonedDateTime;

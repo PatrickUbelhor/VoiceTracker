@@ -1,6 +1,7 @@
-package com.patrickubelhor.model;
+package com.patrickubelhor.model.day;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.patrickubelhor.model.Interval;
 import com.patrickubelhor.service.SnowflakeConverter;
 
 import java.util.LinkedList;

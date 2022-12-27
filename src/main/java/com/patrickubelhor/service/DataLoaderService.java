@@ -1,9 +1,9 @@
 package com.patrickubelhor.service;
 
 import com.patrickubelhor.exception.DataLoadException;
-import com.patrickubelhor.model.Day;
-import com.patrickubelhor.model.Event;
-import com.patrickubelhor.model.EventType;
+import com.patrickubelhor.model.day.Day;
+import com.patrickubelhor.model.event.Event;
+import com.patrickubelhor.model.event.EventType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;

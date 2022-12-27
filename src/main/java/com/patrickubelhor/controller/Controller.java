@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import com.patrickubelhor.model.Day;
+import com.patrickubelhor.model.day.Day;
 import com.patrickubelhor.model.Request;
 import com.patrickubelhor.model.Stats;
 import com.patrickubelhor.service.DayService;
