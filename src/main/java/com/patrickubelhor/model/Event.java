@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
 import java.time.Instant;
@@ -18,7 +19,8 @@ import java.time.ZonedDateTime;
 public class Event {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "events_seq")
+	@SequenceGenerator(name = "events_seq", initialValue = 1, allocationSize = 1)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	private Long id;
 	
