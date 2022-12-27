@@ -1,9 +1,13 @@
 package com.patrickubelhor.model;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum EventType {
 	JOIN("J"),
 	LEAVE("L"),
 	MOVE("M");
+	
+	private final String value;
 	
 	public static EventType from(String value) {
 		for (EventType e : EventType.values()) {
@@ -15,10 +19,13 @@ public enum EventType {
 		throw new IllegalArgumentException("No EventType with value " + value + " found");
 	}
 	
-	public final String value;
-	
 	EventType(String type) {
 		this.value = type;
+	}
+	
+	@JsonValue
+	private String getValue() {
+		return value;
 	}
 	
 }
