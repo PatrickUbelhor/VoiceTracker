@@ -23,7 +23,6 @@ public enum EventType {
 		this.value = type;
 	}
 	
-	@JsonValue
 	public String getValue() {
 		return value;
 	}
