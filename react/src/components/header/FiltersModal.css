@@ -1,5 +1,9 @@
-
 .filters-usernames-div {
-	display: grid;
-	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  columns: 5;
+  column-width: 1fr;
+}
+
+.oneLine {
+  overflow: hidden;
+  white-space: nowrap;
 }
