@@ -89,7 +89,7 @@ public class Event {
 	
 	@JsonIgnore
 	public ZonedDateTime getIsoTime() {
-		return Instant.ofEpochMilli(instant).atZone(ZoneId.of("GMT-6"));
+		return Instant.ofEpochMilli(instant).atZone(ZoneId.of("America/Chicago"));
 	}
 	
 	public Long getPrimaryChannel() {
