@@ -1,7 +1,7 @@
 import './NavDrawer.css';
 import { Drawer, Icon, IconButton } from '@mui/material';
 import React, { Fragment, ReactNode, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router';
 
 interface IProps {
 	title: ReactNode;
@@ -31,7 +31,7 @@ export default function NavDrawer(props: IProps) {
 				<div className="drawer-content">
 					<div className="drawer-header">
 						{props.title}
-						<div>v{process.env.REACT_APP_VERSION}</div>
+						<div>v{ import.meta.env.VITE_APP_VERSION }</div>
 					</div>
 					<div className="drawer-divider" />
 					<ul className="drawer-nav">

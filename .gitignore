@@ -5,13 +5,15 @@
 
 # Server
 .gradle/
+application.yaml
+
+# Dist
 build/
 out/
-application.yaml
+dist/
 
 # React dependencies
 node_modules/
-#package-lock.json
 /.pnp
 .pnp.js
 

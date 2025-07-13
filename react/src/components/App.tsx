@@ -11,7 +11,7 @@ import {
 	BrowserRouter as Router,
 	Routes,
 	Route,
-} from 'react-router-dom';
+} from 'react-router';
 import { getMuiTheme, Themes } from '../model/Themes';
 import { initApp } from '../state/Effects';
 
@@ -41,8 +41,8 @@ export default function App() {
 				</Router>
 			</div>
 			<div className="footer">
-				<div className="copyright">© Patrick Ubelhor 2022</div>
-				<div className="version">v{process.env.REACT_APP_VERSION}</div>
+				<div className="copyright">© Patrick Ubelhor { new Date().getFullYear() }</div>
+				<div className="version">v{ import.meta.env.VITE_APP_VERSION }</div>
 			</div>
 		</ThemeProvider>
 	);

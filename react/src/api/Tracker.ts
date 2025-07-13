@@ -8,7 +8,7 @@ class Tracker {
 	tracker = axios.create({
 		// baseURL: '/api'
 		// baseURL: 'https://voicetracker.patrickubelhor.com/api'
-		baseURL: process.env.REACT_APP_SERVER_URL
+		baseURL: import.meta.env.VITE_APP_SERVER_URL
 	});
 
 
