@@ -1,7 +1,7 @@
 import './NavDrawer.css';
 import { Drawer, Icon, IconButton } from '@mui/material';
 import React, { Fragment, ReactNode, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router';
 
 interface IProps {
 	title: ReactNode;

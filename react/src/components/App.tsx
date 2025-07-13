@@ -11,7 +11,7 @@ import {
 	BrowserRouter as Router,
 	Routes,
 	Route,
-} from 'react-router-dom';
+} from 'react-router';
 import { getMuiTheme, Themes } from '../model/Themes';
 import { initApp } from '../state/Effects';
 
