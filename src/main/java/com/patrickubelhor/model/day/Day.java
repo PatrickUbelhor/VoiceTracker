@@ -1,6 +1,6 @@
 package com.patrickubelhor.model.day;
 
-import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -13,7 +13,9 @@ public class Day {
 	private final HashMap<Long, Channel> channels;
 	
 	public Day() {
-		this.date = LocalDate.now().format(DateTimeFormatter.ofPattern("eeee LLLL dd, yyyy"));
+		ZoneId tz = ZoneId.of("America/Chicago");
+		ZonedDateTime now = ZonedDateTime.now(tz);
+		this.date = now.format(DateTimeFormatter.ofPattern("eeee LLLL dd, yyyy"));
 		this.channels = new HashMap<>();
 	}
 	

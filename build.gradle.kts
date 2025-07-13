@@ -7,7 +7,7 @@ plugins {
 apply(plugin = "io.spring.dependency-management")
 
 group = "com.patrickubelhor"
-version = "3.0.1"
+version = "3.0.2"
 
 java {
 	sourceCompatibility = JavaVersion.VERSION_21

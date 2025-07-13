@@ -24,7 +24,8 @@ import com.patrickubelhor.service.HistogramService;
 import com.patrickubelhor.service.StatService;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @RestController
@@ -56,7 +57,8 @@ public class Controller {
 	@PostMapping("/join/{userSnowflake}")
 	public void join(@PathVariable Long userSnowflake, @RequestBody Request request) {
 		logger.info("JOIN " + userSnowflake);
-		LocalDateTime now = LocalDateTime.now();
+		ZoneId tz = ZoneId.of("America/Chicago");
+		ZonedDateTime now = ZonedDateTime.now(tz);
 		int currentMinute = 60 * now.getHour() + now.getMinute();
 		Long ms = Instant.now().toEpochMilli();
 		eventService.saveJoinEvent(userSnowflake, ms, request.getJoiningChannelId());
@@ -67,7 +69,8 @@ public class Controller {
 	@PostMapping("/move/{userSnowflake}")
 	public void move(@PathVariable Long userSnowflake, @RequestBody Request request) {
 		logger.info("MOVE " + userSnowflake);
-		LocalDateTime now = LocalDateTime.now();
+		ZoneId tz = ZoneId.of("America/Chicago");
+		ZonedDateTime now = ZonedDateTime.now(tz);
 		int currentMinute = 60 * now.getHour() + now.getMinute();
 		Long ms = Instant.now().toEpochMilli();
 		eventService.saveMoveEvent(userSnowflake, ms, request.getJoiningChannelId(), request.getLeavingChannelId());
@@ -78,7 +81,8 @@ public class Controller {
 	@PostMapping("/leave/{userSnowflake}")
 	public void leave(@PathVariable Long userSnowflake, @RequestBody Request request) {
 		logger.info("LEAVE " + userSnowflake);
-		LocalDateTime now = LocalDateTime.now();
+		ZoneId tz = ZoneId.of("America/Chicago");
+		ZonedDateTime now = ZonedDateTime.now(tz);
 		int currentMinute = 60 * now.getHour() + now.getMinute();
 		Long ms = Instant.now().toEpochMilli();
 		eventService.saveLeaveEvent(userSnowflake, ms, request.getLeavingChannelId());
@@ -98,7 +102,8 @@ public class Controller {
 		@RequestParam(defaultValue = "0") Integer newestDay,
 		@RequestParam(defaultValue = "1000") Integer oldestDay
 	) {
-		LocalDateTime now = LocalDateTime.now();
+		ZoneId tz = ZoneId.of("America/Chicago");
+		ZonedDateTime now = ZonedDateTime.now(tz);
 		int currentMinute = 60 * now.getHour() + now.getMinute();
 		List<Day> days = dayService.getDays(currentMinute);
 		
