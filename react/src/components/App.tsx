@@ -26,18 +26,18 @@ export default function App() {
 
 
 	return (
-		<ThemeProvider theme={getMuiTheme(theme)}>
+		<ThemeProvider theme={ getMuiTheme(theme) }>
 			<div className="wrapper">
 				<Router>
-					<Header/>
+					<Header />
 
 					<Routes>
-						<Route path="/analytics" element={<AnalyticsPage />}></Route>
-						<Route path="/histograms" element={<HistogramList />}></Route>
-						<Route path="/" element={<DayList />}></Route>
+						<Route path="/analytics" element={ <AnalyticsPage /> }></Route>
+						<Route path="/histograms" element={ <HistogramList /> }></Route>
+						<Route path="/" element={ <DayList /> }></Route>
 					</Routes>
 
-					<ErrorSnackbar/>
+					<ErrorSnackbar />
 				</Router>
 			</div>
 			<div className="footer">

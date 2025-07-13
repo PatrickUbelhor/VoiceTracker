@@ -20,20 +20,24 @@ function Histogram(props: IProps) {
 	let bars = [];
 	for (let i = 0; i < props.data.length; i++) {
 		let barDiv = (
-			<div key={i} className="histogram-bar" style={{
-				height: 100 * props.data[i] / MAX_BAR_HEIGHT + '%'
-			}} />
+			<div
+				key={ i }
+				className="histogram-bar"
+				style={{
+					height: 100 * props.data[i] / MAX_BAR_HEIGHT + '%'
+				}}
+			/>
 		);
 
 		bars.push(barDiv);
 	}
 
 	return (
-		<Card className="histogram" elevation={4}>
+		<Card className="histogram" elevation={ 4 }>
 			<CardContent className="histogram-content-wrapper">
-				<Typography className="histogram-title" variant="h6">{props.name}</Typography>
+				<Typography className="histogram-title" variant="h6">{ props.name }</Typography>
 				<div className="histogram-content">
-					{bars}
+					{ bars }
 					<Markers variant="time" direction="vertical" />
 					<Markers variant="percent" direction="horizontal" />
 				</div>

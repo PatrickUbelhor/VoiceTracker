@@ -98,4 +98,4 @@ export const getAnalytics = (numDays: number, username: string) => async (dispat
 	} catch (error) {
 		handleError(error, 'Something went wrong getting the analytics', dispatch);
 	}
-}
+};

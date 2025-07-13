@@ -30,12 +30,12 @@ export default function HistogramList() {
 
 
 	if (histograms == null) {
-		return <LoadingPage/>;
+		return <LoadingPage />;
 	}
 
 	const entries = histograms.map(histogram => (
-		<Fragment key={histogram.name}>
-			<Histogram numDays={numDays} name={histogram.name} data={histogram.data}/>
+		<Fragment key={ histogram.name }>
+			<Histogram numDays={ numDays } name={ histogram.name } data={ histogram.data } />
 		</Fragment>
 	));
 
@@ -45,15 +45,15 @@ export default function HistogramList() {
 				className="filterButton"
 				variant="contained"
 				color="primary"
-				onClick={() => _getHistograms(7, 2)}
+				onClick={ () => _getHistograms(7, 2) }
 			>7</Button>
 			<Button
 				className="filterButton"
 				variant="contained"
 				color="primary"
-				onClick={() => _getHistograms(30, 5)}
+				onClick={ () => _getHistograms(30, 5) }
 			>30</Button>
 			{ entries }
 		</div>
-	)
+	);
 }

@@ -32,7 +32,7 @@ export default function ThemeButton() {
 				<IconButton
 					className="theme-button"
 					color="primary"
-					onClick={openMenu}
+					onClick={ openMenu }
 					aria-label="Change theme"
 					aria-controls="theme-menu"
 					aria-haspopup="true"
@@ -42,26 +42,26 @@ export default function ThemeButton() {
 			</Tooltip>
 			<Menu
 				id="theme-menu"
-				anchorEl={menuAnchor}
-				open={Boolean(menuAnchor)}
-				onClose={closeMenu}
+				anchorEl={ menuAnchor }
+				open={ Boolean(menuAnchor) }
+				onClose={ closeMenu }
 				keepMounted
 			>
 				<MenuItem
-					selected={theme === Themes.light}
-					onClick={() => handleThemeChange(Themes.light)}
+					selected={ theme === Themes.light }
+					onClick={ () => handleThemeChange(Themes.light) }
 				>
 					Light
 				</MenuItem>
 				<MenuItem
-					selected={theme === Themes.dark}
-					onClick={() => handleThemeChange(Themes.dark)}
+					selected={ theme === Themes.dark }
+					onClick={ () => handleThemeChange(Themes.dark) }
 				>
 					Dark 1
 				</MenuItem>
 				<MenuItem
-					selected={theme === Themes.googleDark}
-					onClick={() => handleThemeChange(Themes.googleDark)}
+					selected={ theme === Themes.googleDark }
+					onClick={ () => handleThemeChange(Themes.googleDark) }
 				>
 					Dark 2
 				</MenuItem>

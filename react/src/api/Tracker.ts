@@ -14,22 +14,22 @@ class Tracker {
 
 	getUsers = (): TrackerResponse<string[]> => {
 		return this.tracker.get('/users');
-	}
+	};
 
 
 	getDays = (newestDay: number, oldestDay: number): TrackerResponse<DayResponse[]> => {
-		return this.tracker.get(`/days?newestDay=${newestDay}&oldestDay=${oldestDay}`);
-	}
+		return this.tracker.get(`/days?newestDay=${ newestDay }&oldestDay=${ oldestDay }`);
+	};
 
 
 	getHistograms = (numDays: number, minActiveDays: number): TrackerResponse<HistogramResponse[]> => {
-		return this.tracker.get(`/histogram?numDays=${numDays}&minActiveDays=${minActiveDays}`);
-	}
+		return this.tracker.get(`/histogram?numDays=${ numDays }&minActiveDays=${ minActiveDays }`);
+	};
 
 
 	getAnalytics = (numDays: number, username: string): TrackerResponse<StatsResponse[]> => {
-		return this.tracker.get(`/analysis/${username}?numDays=${numDays}`);
-	}
+		return this.tracker.get(`/analysis/${ username }?numDays=${ numDays }`);
+	};
 
 }
 

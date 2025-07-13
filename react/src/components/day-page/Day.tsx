@@ -32,8 +32,24 @@ function Day(props: IProps) {
 		let otherIntervals = [];
 		for (let i = 0; i < users.length; i++) {
 			if (users[i].intervals.length > 0) {
-				let intervalDiv = <Intervals key={i} color={users[i].color} intervals={users[i].intervals} owner={users[i].id}/>;
-				let nameDiv = <div className="name-listing" key={i} style={{ borderLeftColor: users[i].color }}>{users[i].id}</div>;
+				let intervalDiv = (
+					<Intervals
+						key={ i }
+						color={ users[i].color }
+						intervals={ users[i].intervals }
+						owner={ users[i].id }
+					/>
+				);
+
+				let nameDiv = (
+					<div
+						className="name-listing"
+						key={ i }
+						style={ { borderLeftColor: users[i].color } }
+					>
+						{ users[i].id }
+					</div>
+				);
 
 				// We want to put "others" at bottom of list
 				if (users[i].id === 'Other') {
@@ -51,14 +67,14 @@ function Day(props: IProps) {
 		intervals.push(...otherIntervals);
 
 		const subChannelNames = (
-			<div key={channels[i].id} className="channel" style={{ height: `${names.length * 1.75}em` }}>
-				{names}
+			<div key={ channels[i].id } className="channel" style={{ height: `${ names.length * 1.75 }em` }}>
+				{ names }
 			</div>
 		);
 
 		const subChannelIntervals = (
-			<div key={channels[i].id} className="channel" style={{ height: `${names.length * 1.75}em` }}>
-				{intervals}
+			<div key={ channels[i].id } className="channel" style={{ height: `${ names.length * 1.75 }em` }}>
+				{ intervals }
 			</div>
 		);
 
@@ -67,16 +83,16 @@ function Day(props: IProps) {
 	}
 
 	return (
-		<Card className="day" elevation={4}>
+		<Card className="day" elevation={ 4 }>
 			<CardContent>
-				<Typography className="date" variant="h6">{props.date}</Typography>
+				<Typography className="date" variant="h6">{ props.date }</Typography>
 				<div className="content">
 					<div className="names">
-						{channelNames}
+						{ channelNames }
 					</div>
 					<div className="bar-graphs">
 						<Markers variant="time" direction="vertical" />
-						{channelIntervals}
+						{ channelIntervals }
 					</div>
 				</div>
 			</CardContent>

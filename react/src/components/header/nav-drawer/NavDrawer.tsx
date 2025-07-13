@@ -18,19 +18,19 @@ export default function NavDrawer(props: IProps) {
 		<Fragment>
 			<IconButton
 				className="menu-button"
-				onClick={openDrawer}
+				onClick={ openDrawer }
 			>
 				<Icon color="inherit">menu</Icon>
 			</IconButton>
 			<Drawer
 				className="drawer"
 				anchor="left"
-				open={isOpen}
-				onClose={closeDrawer}
+				open={ isOpen }
+				onClose={ closeDrawer }
 			>
 				<div className="drawer-content">
 					<div className="drawer-header">
-						{props.title}
+						{ props.title }
 						<div>v{ import.meta.env.VITE_APP_VERSION }</div>
 					</div>
 					<div className="drawer-divider" />
@@ -38,22 +38,22 @@ export default function NavDrawer(props: IProps) {
 						<NavLink
 							end
 							to="/"
-							className={getDrawerNavLinkClasses}
-							onClick={closeDrawer}
+							className={ getDrawerNavLinkClasses }
+							onClick={ closeDrawer }
 						>
 							<div className="drawer-nav-link-text">Days</div>
 						</NavLink>
 						<NavLink
 							to="/histograms"
-							className={getDrawerNavLinkClasses}
-							onClick={closeDrawer}
+							className={ getDrawerNavLinkClasses }
+							onClick={ closeDrawer }
 						>
 							<div className="drawer-nav-link-text">Histograms</div>
 						</NavLink>
 						<NavLink
 							to="/analytics"
-							className={getDrawerNavLinkClasses}
-							onClick={closeDrawer}
+							className={ getDrawerNavLinkClasses }
+							onClick={ closeDrawer }
 						>
 							<div className="drawer-nav-link-text">Analytics</div>
 						</NavLink>
