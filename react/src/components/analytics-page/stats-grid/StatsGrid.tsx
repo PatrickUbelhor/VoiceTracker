@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import { RefinedStats } from '../../../model/Models';
 
 interface IProps {
-	stats: RefinedStats[]
+	stats: RefinedStats[];
 }
 
 function StatsGrid(props: IProps) {
@@ -22,14 +22,14 @@ function StatsGrid(props: IProps) {
 		let user = stats[i];
 
 		userCards.push(
-			<Card key={user.target} className="stats-card" elevation={4}>
+			<Card key={ user.target } className="stats-card" elevation={ 4 }>
 				<CardContent>
-					<Typography variant="h6">{user.target}</Typography>
-					<div>P({user.origin}) = {user.probOrigin}</div>
-					<div>P({user.target}) = {user.probTarget}</div>
-					<div>P({user.origin}, {user.target}) = {user.probJoint}</div>
-					<div>P({user.origin} | {user.target}) = {user.probOriginGivenTarget}</div>
-					<div>P({user.target} | {user.origin}) = {user.probTargetGivenOrigin}</div>
+					<Typography variant="h6">{ user.target }</Typography>
+					<div>P({ user.origin }) = { user.probOrigin }</div>
+					<div>P({ user.target }) = { user.probTarget }</div>
+					<div>P({ user.origin }, { user.target }) = { user.probJoint }</div>
+					<div>P({ user.origin } | { user.target }) = { user.probOriginGivenTarget }</div>
+					<div>P({ user.target } | { user.origin }) = { user.probTargetGivenOrigin }</div>
 				</CardContent>
 			</Card>
 		);
@@ -37,7 +37,7 @@ function StatsGrid(props: IProps) {
 
 	return (
 		<div className="stats-grid">
-			{userCards}
+			{ userCards }
 		</div>
 	);
 }

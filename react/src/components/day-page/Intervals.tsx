@@ -1,5 +1,5 @@
 import './Intervals.css';
-import React from 'react';
+import React, { useState } from 'react';
 import Tooltip from '@mui/material/Tooltip';
 import { IntervalModel } from '../../model/Models';
 
@@ -12,7 +12,7 @@ interface IProps {
 function Intervals(props: IProps) {
 
 	const LENGTH_OF_DAY = 1440;
-	const [isSightHelperVisible, setSightHelperVisibility] = React.useState(false);
+	const [isSightHelperVisible, setSightHelperVisibility] = useState(false);
 
 	let boxes = props.intervals?.map(interval => {
 		const duration = interval.end - interval.start;
@@ -21,18 +21,18 @@ function Intervals(props: IProps) {
 
 		const tooltipText = (
 			<div>
-				<div>{props.owner}</div>
-				<div>{Math.floor(duration / 60) + 'h ' + (duration % 60) + 'm'}</div>
+				<div>{ props.owner }</div>
+				<div>{ Math.floor(duration / 60) + 'h ' + (duration % 60) + 'm' }</div>
 			</div>
 		);
 
 		return (
 			// TODO: Maybe make custom tooltip that doesn't take forever to load?
-			<Tooltip key={interval.start} arrow title={tooltipText}>
+			<Tooltip key={ interval.start } arrow title={ tooltipText }>
 				<div
 					className="bar"
-					onMouseEnter={() => setSightHelperVisibility(true)}
-					onMouseLeave={() => setSightHelperVisibility(false)}
+					onMouseEnter={ () => setSightHelperVisibility(true) }
+					onMouseLeave={ () => setSightHelperVisibility(false) }
 					style={{
 						left: leftMargin + '%',
 						width: width + '%',
@@ -44,13 +44,13 @@ function Intervals(props: IProps) {
 	});
 
 	const sightHelper = isSightHelperVisible
-		? <div className="sight-helper" style={{ borderColor: props.color }}/>
+		? <div className="sight-helper" style={ { borderColor: props.color } } />
 		: null;
 
 	return (
 		<div className="intervals">
-			{boxes}
-			{sightHelper}
+			{ boxes }
+			{ sightHelper }
 		</div>
 	);
 }

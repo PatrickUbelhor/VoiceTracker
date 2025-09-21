@@ -4,7 +4,7 @@ import { Themes } from '../model/Themes';
 
 export interface Action {
 	type: Actions;
-	payload?: any
+	payload?: any;
 }
 
 export enum Actions {
@@ -43,7 +43,7 @@ export const setFiltersSuccess = (excluded: string[]): Action => ({
 export const getDaysSuccess = (days: DayResponse[]): Action => ({
 	type: Actions.GET_DAYS_SUCCESS,
 	payload: days
-})
+});
 
 export const getUsersSuccess = (users: string[]): Action => ({
 	type: Actions.GET_USERS_SUCCESS,

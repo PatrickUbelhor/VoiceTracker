@@ -32,12 +32,12 @@ export default function AnalyticsPage() {
 	};
 
 	const statsComponent = isDesktop
-		? <StatsTable stats={analytics}/>
-		: <StatsGrid stats={analytics}/>;
+		? <StatsTable stats={ analytics } />
+		: <StatsGrid stats={ analytics } />;
 
 	return (
 		<Fragment>
-			<StatsRequestForm handleSubmit={handleSubmit} />
+			<StatsRequestForm handleSubmit={ handleSubmit } />
 			{ loading ? <div>Loading</div> : null }
 			{ statsComponent }
 		</Fragment>

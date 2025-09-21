@@ -17,7 +17,7 @@ setTimeout(() => {
 const container = document.querySelector('#root');
 const root = createRoot(container);
 root.render(
-	<Provider store={store}>
-		<App/>
+	<Provider store={ store }>
+		<App />
 	</Provider>
 );

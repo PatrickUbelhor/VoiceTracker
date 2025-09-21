@@ -20,18 +20,18 @@ function DayList() {
 	);
 
 	if (days == null) {
-		return <LoadingPage/>;
+		return <LoadingPage />;
 	}
 
 	const entries = days.map((day: DayModel) => (
-		<Fragment key={day.date}>
-			<Day date={day.date} channels={day.channels}/>
+		<Fragment key={ day.date }>
+			<Day date={ day.date } channels={ day.channels } />
 		</Fragment>
 	));
 
 	return (
 		<div className="days-list">
-			{entries}
+			{ entries }
 		</div>
 	);
 }

@@ -30,35 +30,35 @@ export default function StatsRequestForm(props: IProps) {
 	const handleSubmit = props.handleSubmit(numDays, username);
 
 	const userListItems = users.map(name => (
-		<MenuItem key={name} value={name}>{name}</MenuItem>
+		<MenuItem key={ name } value={ name }>{ name }</MenuItem>
 	));
 
 	return (
-		<Card className="analytics-card" elevation={4}>
+		<Card className="analytics-card" elevation={ 4 }>
 			<CardContent>
 				<div className="analytics-form-div">
-					<form className="analytics-form" onSubmit={handleSubmit}>
+					<form className="analytics-form" onSubmit={ handleSubmit }>
 						<FormControl variant="outlined" margin="normal">
 							<InputLabel id="analytics-username-label">Username</InputLabel>
 							<Select
 								name="username"
-								value={username}
+								value={ username }
 								labelId="analytics-username-label"
 								label="Username"
-								onChange={(event) => setUsername(event.target.value)}
+								onChange={ (event) => setUsername(event.target.value) }
 							>
 								{ userListItems }
 							</Select>
 						</FormControl>
 						<TextField
 							name="numDays"
-							value={numDays}
+							value={ numDays }
 							placeholder="Number of Days"
 							label="Number of Days"
 							variant="outlined"
 							type="number"
 							margin="normal"
-							onChange={(event) => setNumDays(Number(event.target.value))}
+							onChange={ (event) => setNumDays(Number(event.target.value)) }
 						/>
 						<Button
 							className="analytics-submit-button"

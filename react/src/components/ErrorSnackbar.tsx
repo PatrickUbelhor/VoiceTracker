@@ -31,20 +31,22 @@ function ErrorSnackbar() {
 
 	return (
 		<Snackbar
-			anchorOrigin={{
+			anchorOrigin={ {
 				vertical: 'top',
 				horizontal: 'center',
-			}}
-			open={message !== null}
-			autoHideDuration={4000}
-			onClose={handleClose}
-			ContentProps={{
-				'aria-describedby': 'message',
+			} }
+			open={ message !== null }
+			autoHideDuration={ 4000 }
+			onClose={ handleClose }
+			slotProps={{
+				content: {
+					'aria-describedby': 'message'
+				}
 			}}
 			message={
 				<span id="message">
 					<ErrorIcon id="errorIcon" />
-					{message}
+					{ message }
 				</span>
 			}
 			action={
@@ -52,7 +54,7 @@ function ErrorSnackbar() {
 					key="close"
 					aria-label="close"
 					color="inherit"
-					onClick={handleButtonClose}
+					onClick={ handleButtonClose }
 				>
 					<CloseIcon />
 				</IconButton>

@@ -1,5 +1,5 @@
 import './Markers.css';
-import React from 'react';
+import React, { Fragment } from 'react';
 
 interface IProps {
 	direction: 'vertical' | 'horizontal';
@@ -34,7 +34,7 @@ const percentLabels = [
 function Markers(props: IProps) {
 
 	// Default direction to horizontal
-	let offsetDirection = 'left'
+	let offsetDirection = 'left';
 	let direction = 'vertical';
 	if (props.direction && props.direction === 'horizontal') {
 		offsetDirection = 'bottom';
@@ -57,10 +57,12 @@ function Markers(props: IProps) {
 
 	// Insert left label
 	markers.push(
-		<span key="label0"
-		      className={`label label-${direction}`}
-		      style={{ [offsetDirection]: labels[0].offset + 'em' }}>
-			{labels[0].label}
+		<span
+			key="label0"
+			className={ `label label-${ direction }` }
+			style={ { [offsetDirection]: labels[0].offset + 'em' } }
+		>
+			{ labels[0].label }
 		</span>
 	);
 
@@ -68,28 +70,33 @@ function Markers(props: IProps) {
 	for (let i = 1; i < labels.length - 1; i++) {
 		const left = (i * 100 / (labels.length - 1));
 		markers.push(
-			<React.Fragment key={labels[i].label}>
-				<span className={`label label-${direction}`}
-				      style={{ [offsetDirection]: `calc(${labels[i].offset}em + ${left}%)` }}>
-					{labels[i].label}
+			<Fragment key={ labels[i].label }>
+				<span
+					className={ `label label-${ direction }` }
+					style={ { [offsetDirection]: `calc(${ labels[i].offset }em + ${ left }%)` } }
+				>
+					{ labels[i].label }
 				</span>
-				<div className={i % 2 === 0 && labels.length > 6 ? `marker marker-${direction} bold` : `marker marker-${direction}`}
-				     style={{ [offsetDirection]: left + '%' }}
+				<div
+					className={ i % 2 === 0 && labels.length > 6 ? `marker marker-${ direction } bold` : `marker marker-${ direction }` }
+					style={ { [offsetDirection]: left + '%' } }
 				/>
-			</React.Fragment>
+			</Fragment>
 		);
 	}
 
 	// Insert right label
 	const lastLabel = labels[labels.length - 1];
 	markers.push(
-		<span key={lastLabel.label}
-		      className={`label label-${direction}`}
-		      style={{ [offsetDirection]: `calc(${lastLabel.offset}em + 100%)` }}>
-			{lastLabel.label}
+		<span
+			key={ lastLabel.label }
+			className={ `label label-${ direction }` }
+			style={{ [offsetDirection]: `calc(${ lastLabel.offset }em + 100%)` }}
+		>
+			{ lastLabel.label }
 		</span>);
 
-	return <>{markers}</>;
+	return <>{ markers }</>;
 }
 
 export default Markers;
