@@ -29,7 +29,7 @@ public class HistogramService {
 		
 		HashMap<String, Histogram> histograms = new HashMap<>();
 		HashMap<String, Integer> numActiveDays = new HashMap<>(); // Number of days each user was in call
-		List<Day> days = dayService.getDays(1440).subList(1, numDays + 1); // Only get data for last 30 finished days (excludes today)
+		List<Day> days = dayService.getDays(1440).subList(1, numDays + 1); // Only get data for last 28 finished days (excludes today)
 		logger.debug("Got list of days with {} entries", days.size());
 		
 		// Add each interval to the respective user's histogram

@@ -25,7 +25,7 @@ export default function HistogramList() {
 	);
 
 	useEffect(() => {
-		_getHistograms(30, 5);
+		_getHistograms(28, 4);
 	}, [_getHistograms]);
 
 
@@ -51,8 +51,8 @@ export default function HistogramList() {
 				className="filterButton"
 				variant="contained"
 				color="primary"
-				onClick={() => _getHistograms(30, 5)}
-			>30</Button>
+				onClick={() => _getHistograms(28, 4)}
+			>28</Button>
 			{ entries }
 		</div>
 	)

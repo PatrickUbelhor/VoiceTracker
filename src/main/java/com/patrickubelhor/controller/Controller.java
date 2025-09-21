@@ -56,10 +56,8 @@ public class Controller {
 	
 	@PostMapping("/join/{userSnowflake}")
 	public void join(@PathVariable Long userSnowflake, @RequestBody Request request) {
-		logger.info("JOIN " + userSnowflake);
-		ZoneId tz = ZoneId.of("America/Chicago");
-		ZonedDateTime now = ZonedDateTime.now(tz);
-		int currentMinute = 60 * now.getHour() + now.getMinute();
+		logger.info("JOIN {}", userSnowflake);
+		int currentMinute = getCurrentMinute();
 		Long ms = Instant.now().toEpochMilli();
 		eventService.saveJoinEvent(userSnowflake, ms, request.getJoiningChannelId());
 		dayService.addJoinEvent(request.getJoiningChannelId(), userSnowflake, currentMinute);
@@ -68,10 +66,8 @@ public class Controller {
 	
 	@PostMapping("/move/{userSnowflake}")
 	public void move(@PathVariable Long userSnowflake, @RequestBody Request request) {
-		logger.info("MOVE " + userSnowflake);
-		ZoneId tz = ZoneId.of("America/Chicago");
-		ZonedDateTime now = ZonedDateTime.now(tz);
-		int currentMinute = 60 * now.getHour() + now.getMinute();
+		logger.info("MOVE {}", userSnowflake);
+		int currentMinute = getCurrentMinute();
 		Long ms = Instant.now().toEpochMilli();
 		eventService.saveMoveEvent(userSnowflake, ms, request.getJoiningChannelId(), request.getLeavingChannelId());
 		dayService.addMoveEvent(request.getLeavingChannelId(), request.getJoiningChannelId(), userSnowflake, currentMinute);
@@ -80,10 +76,8 @@ public class Controller {
 	
 	@PostMapping("/leave/{userSnowflake}")
 	public void leave(@PathVariable Long userSnowflake, @RequestBody Request request) {
-		logger.info("LEAVE " + userSnowflake);
-		ZoneId tz = ZoneId.of("America/Chicago");
-		ZonedDateTime now = ZonedDateTime.now(tz);
-		int currentMinute = 60 * now.getHour() + now.getMinute();
+		logger.info("LEAVE {}", userSnowflake);
+		int currentMinute = getCurrentMinute();
 		Long ms = Instant.now().toEpochMilli();
 		eventService.saveLeaveEvent(userSnowflake, ms, request.getLeavingChannelId());
 		dayService.addLeaveEvent(request.getLeavingChannelId(), userSnowflake, currentMinute);
@@ -102,9 +96,7 @@ public class Controller {
 		@RequestParam(defaultValue = "0") Integer newestDay,
 		@RequestParam(defaultValue = "1000") Integer oldestDay
 	) {
-		ZoneId tz = ZoneId.of("America/Chicago");
-		ZonedDateTime now = ZonedDateTime.now(tz);
-		int currentMinute = 60 * now.getHour() + now.getMinute();
+		int currentMinute = getCurrentMinute();
 		List<Day> days = dayService.getDays(currentMinute);
 		
 		newestDay = Math.max(newestDay, 0);
@@ -125,7 +117,7 @@ public class Controller {
 	@GetMapping("/analysis/{username}")
 	public List<Stats> getRelations(
 		@PathVariable String username,
-		@RequestParam(defaultValue = "30") Integer numDays
+		@RequestParam(defaultValue = "28") Integer numDays
 	) {
 		return statService.getAnalysis(numDays, username);
 	}
@@ -143,6 +135,13 @@ public class Controller {
 		logger.info("Finished loading names");
 		
 		return ResponseEntity.status(HttpStatus.FOUND).header("Location", "/").build();
+	}
+
+
+	private int getCurrentMinute() {
+		ZoneId tz = ZoneId.of("America/Chicago");
+		ZonedDateTime now = ZonedDateTime.now(tz);
+		return 60 * now.getHour() + now.getMinute();
 	}
 	
 }
